@@ -28,14 +28,14 @@ resource "aws_route_table" "mod_public" {
       cidr_block = "0.0.0.0/0"
       gateway_id = "${var.internet_gateway_id}"
   }
-  tags { Name = "${var.environment_name}-public" }
+  tags { Name = "${var.name}-public" }
 }
 
 # Sets up the private subnet's route table
 # Send all traffic over the nat gateway
 resource "aws_route_table" "mod_private" {
   vpc_id = "${var.vpc_id}"
-  tags { Name = "${var.environment_name}-private" }
+  tags { Name = "${var.name}-private" }
 }
 
 # Sets up the private subnets
@@ -44,7 +44,7 @@ resource "aws_subnet" "mod_private" {
   cidr_block = "${cidrsubnet(var.vpc_cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
   count = "${length(data.aws_availability_zones.available.names)}"
-  tags { Name = "${var.environment_name}-${element(data.aws_availability_zones.available.names, count.index)}-private" }
+  tags { Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}-private" }
 }
 
 # Sets up the public subnets
@@ -53,7 +53,7 @@ resource "aws_subnet" "mod_public" {
   cidr_block = "${cidrsubnet(var.vpc_cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
   count = "${length(data.aws_availability_zones.available.names)}"
-  tags { Name = "${var.environment_name}-${element(data.aws_availability_zones.available.names, count.index)}-public" }
+  tags { Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}-public" }
 
   map_public_ip_on_launch = true
 }
