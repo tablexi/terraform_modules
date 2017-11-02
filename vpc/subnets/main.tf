@@ -1,6 +1,10 @@
 # Find the available availability zones
 data "aws_availability_zones" "available" {}
 
+data "aws_vpc" "current" {
+  id = "${var.vpc_id}"
+}
+
 locals {
   default_az_to_netnum = {
     a = 1
@@ -41,7 +45,7 @@ resource "aws_route_table" "mod_private" {
 # Sets up the private subnets
 resource "aws_subnet" "mod_private" {
   vpc_id = "${var.vpc_id}"
-  cidr_block = "${cidrsubnet(var.vpc_cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
+  cidr_block = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
   count = "${length(data.aws_availability_zones.available.names)}"
   tags { Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}-private" }
@@ -50,7 +54,7 @@ resource "aws_subnet" "mod_private" {
 # Sets up the public subnets
 resource "aws_subnet" "mod_public" {
   vpc_id = "${var.vpc_id}"
-  cidr_block = "${cidrsubnet(var.vpc_cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
+  cidr_block = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
   count = "${length(data.aws_availability_zones.available.names)}"
   tags { Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}-public" }

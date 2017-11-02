@@ -2,11 +2,6 @@ variable "name" {
   description = "The name of the subnet group. Also, used to tag the subnets."
 }
 
-variable "vpc_cidr_block" {
-  default = "10.0.0.0/16"
-  description = "The IPv4 network range for the VPC, in CIDR notation."
-}
-
 variable "vpc_id" {
   description = "The unique ID of the VPC."
 }
