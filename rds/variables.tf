@@ -44,6 +44,7 @@ variable "node_type" {
 
 variable "parameter_group_name" {
   description = "Name of a parameter group to use with the RDS instance."
+  default = ""
 }
 
 variable "sg_cidr_blocks" {
