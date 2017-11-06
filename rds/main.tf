@@ -1,5 +1,8 @@
 locals {
   engine_nickname = "${var.engine == "postgres" ? "pg" : "mysql"}"
+}
+
+locals {
   subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
   sg_for_access_by_sgs_name = "${var.name}_${var.env}-rds-${local.engine_nickname}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
