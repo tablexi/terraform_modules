@@ -46,7 +46,7 @@ resource "aws_elasticache_replication_group" "mod" {
 resource "aws_elasticache_parameter_group" "mod" {
   count = "${var.parameter_group_name != "" ? 0 : 1}"
   name = "${local.parameter_group_name}"
-  family = "${var.family}"
+  family = "${local.family}"
   description = "${var.name} ${var.env} env ${var.engine} cluster param group"
 }
 
