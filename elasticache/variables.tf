@@ -23,7 +23,7 @@ variable "parameter_group_name" {
 }
 
 variable "port" {
-  default = 6379
+  default = ""
 }
 
 variable "subnets" {
@@ -31,7 +31,7 @@ variable "subnets" {
 }
 
 variable "version" {
-  # default = "2.8.24"
+  # default = "3.2.4"
 }
 
 variable "vpc_id" {}
