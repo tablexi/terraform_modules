@@ -4,7 +4,7 @@ locals {
 
 locals {
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-params"}"
-  port = "${var.port != "" ? var.port : (var.engine == "redis" ? 6379 : 11211)}"
+  port = "${var.port != "" ? var.port : "${var.engine == "redis" ? 6379 : 11211}"}"
   family = "${var.engine}${local.version_major_minor_only}"
 }
 
