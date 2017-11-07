@@ -15,7 +15,7 @@ resource "aws_elasticache_cluster" "mod" {
   engine = "${var.engine}"
   engine_version = "${var.version}"
   node_type = "${var.node_type}"
-  port = "${var.port}"
+  port = "${local.port}"
   parameter_group_name = "${local.parameter_group_name}"
   security_group_ids = ["${aws_security_group.sg_on_elasticache_instance.id}"]
   subnet_group_name = "${aws_elasticache_subnet_group.mod.name}"
@@ -33,7 +33,7 @@ resource "aws_elasticache_replication_group" "mod" {
   engine_version = "${var.version}"
   auto_minor_version_upgrade = true
   node_type = "${var.node_type}"
-  port = "${var.port}"
+  port = "${local.port}"
   parameter_group_name = "${aws_elasticache_parameter_group.mod.id}"
   security_group_ids = ["${aws_security_group.sg_on_elasticache_instance.id}"]
   subnet_group_name = "${aws_elasticache_subnet_group.mod.name}"
