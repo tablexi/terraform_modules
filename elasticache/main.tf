@@ -72,17 +72,17 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
   vpc_id = "${var.vpc_id}"
 
   ingress {
-  from_port = "${local.port}"
-  to_port = "${local.port}"
-  protocol = "tcp"
-  security_groups = ["${aws_security_group.sg_for_access_by_sgs.id}"]
+    from_port = "${local.port}"
+    to_port = "${local.port}"
+    protocol = "tcp"
+    security_groups = ["${aws_security_group.sg_for_access_by_sgs.id}"]
   }
 
   egress {
-  from_port = 0
-  to_port = 0
-  protocol = "-1"
-  cidr_blocks = ["0.0.0.0/0"]
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags {
