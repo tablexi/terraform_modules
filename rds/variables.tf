@@ -3,6 +3,11 @@ variable "allow_major_version_upgrade" {
   default = true
 }
 
+variable "auto_minor_version_upgrade" {
+  description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window."
+  default = true
+}
+
 variable "backup_retention_period" {
   description = "Backup retention period for AWS RDS instance in days."
   default = 7
