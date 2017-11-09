@@ -8,7 +8,7 @@ locals {
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}"}"
   family = "${var.engine}${var.version}"
-  port = "${var.engine == "postgres" ? 5432 : 3306}"
+  port = "${var.port != "" ? var.port : "${var.engine == "postgres" ? 5432 : 3306}"}"
 }
 
 resource "aws_db_subnet_group" "mod" {

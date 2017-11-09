@@ -47,6 +47,11 @@ variable "parameter_group_name" {
   default = ""
 }
 
+variable "port" {
+  description = "Override the default port"
+  default = ""
+}
+
 variable "sg_cidr_blocks" {
   description = "cidr_blocks to give RDS port access to."
   default = []
