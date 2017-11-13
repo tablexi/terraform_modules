@@ -1,5 +1,5 @@
 #!/bin/bash
-# Setup terraform and aws credentials
+# Setup terraform
 
 # Defaults
 TERRAFORM_CACHED_VERSION='0'
