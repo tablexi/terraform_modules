@@ -8,7 +8,7 @@ locals {
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}"}"
   family = "${var.engine}${var.version}"
-  port = "${var.engine == "postgres" ? 5432 : 3306}"
+  port = "${var.port != "" ? var.port : "${var.engine == "postgres" ? 5432 : 3306}"}"
 }
 
 resource "aws_db_subnet_group" "mod" {
@@ -51,6 +51,7 @@ resource "aws_db_instance" "mod" {
   final_snapshot_identifier = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
   publicly_accessible = true
+  auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
 }
 
