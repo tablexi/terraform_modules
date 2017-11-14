@@ -1,5 +1,5 @@
-module "test1" {
+module "vpc-test1" {
   source = "../"
 
-  name = "test1"
+  name = "vpc-test1"
 }
