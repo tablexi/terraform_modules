@@ -28,11 +28,6 @@ variable "identifier" {
   default = ""
 }
 
-variable "identifier_suffix" {
-  description = "The RDS instance identifier is the unique name of the instance.  To make this change backwards compatibile, it can be left blank."
-  default = "-postgres"
-}
-
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
   default = true

@@ -34,7 +34,7 @@ resource "aws_db_parameter_group" "mod" {
 }
 
 resource "aws_db_instance" "mod" {
-  identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}${var.identifier_suffix}"}"
+  identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
   replicate_source_db  = "${var.source_db}"
   engine = "${var.engine}"
   engine_version = "${var.version}"
