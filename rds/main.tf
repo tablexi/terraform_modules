@@ -6,7 +6,7 @@ locals {
   subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
   sg_for_access_by_sgs_name = "${var.name}_${var.env}-rds-${local.engine_nickname}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}"}"
+  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
   family = "${var.engine}${var.version}"
   port = "${var.port != "" ? var.port : "${var.engine == "postgres" ? 5432 : 3306}"}"
 }
@@ -53,6 +53,7 @@ resource "aws_db_instance" "mod" {
   publicly_accessible = true
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
+  apply_immediately = "${var.apply_immediately}"
 }
 
 resource "aws_security_group" "sg_for_access_by_sgs" {
