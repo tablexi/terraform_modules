@@ -6,7 +6,7 @@ locals {
   subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
   sg_for_access_by_sgs_name = "${var.name}_${var.env}-rds-${local.engine_nickname}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}"}"
+  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
   family = "${var.engine}${var.version}"
   port = "${var.port != "" ? var.port : "${var.engine == "postgres" ? 5432 : 3306}"}"
 }
