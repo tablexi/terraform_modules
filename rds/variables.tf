@@ -52,6 +52,11 @@ variable "parameter_group_name" {
   default = ""
 }
 
+variable "parameter_group_provided" {
+  description = "If the parameter_group_name is provided, must be set to true."
+  default = false
+}
+
 variable "port" {
   description = "Override the default port"
   default = ""

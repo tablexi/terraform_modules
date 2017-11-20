@@ -27,7 +27,7 @@ resource "aws_db_subnet_group" "mod" {
 }
 
 resource "aws_db_parameter_group" "mod" {
-  count = "${var.parameter_group_name != "" ? 0 : 1}"
+  count = "${var.parameter_group_provided ? 0 : 1}"
   name = "${local.parameter_group_name}"
   family = "${local.family}"
   description = "${local.family} parameter group for ${var.name} ${var.env}"
