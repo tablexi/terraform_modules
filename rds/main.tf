@@ -1,5 +1,9 @@
 locals {
-  engine_nickname = "${var.engine == "postgres" ? "pg" : "mysql"}"
+  is_postgres = "${var.engine == "postgres" ? true : false}"
+}
+
+locals {
+  engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
 }
 
 locals {
@@ -7,8 +11,9 @@ locals {
   sg_for_access_by_sgs_name = "${var.name}_${var.env}-rds-${local.engine_nickname}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
+  option_group_name = "${var.option_group_name != "" ? var.option_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
   family = "${var.engine}${var.version}"
-  port = "${var.port != "" ? var.port : "${var.engine == "postgres" ? 5432 : 3306}"}"
+  port = "${var.port != "" ? var.port : "${local.is_postgres ? 5432 : 3306}"}"
 }
 
 resource "aws_db_subnet_group" "mod" {
@@ -33,6 +38,13 @@ resource "aws_db_parameter_group" "mod" {
   description = "${local.family} parameter group for ${var.name} ${var.env}"
 }
 
+resource "aws_db_option_group" "mod" {
+  count = "${local.is_postgres || var.option_group_provided ? 0 : 1}"
+  name = "${local.option_group_name}"
+  engine_name = "${var.engine}"
+  major_engine_version = "${var.version}"
+}
+
 resource "aws_db_instance" "mod" {
   identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
   replicate_source_db  = "${var.source_db}"
@@ -48,6 +60,7 @@ resource "aws_db_instance" "mod" {
   vpc_security_group_ids = ["${aws_security_group.sg_on_rds_instance.id}"]
   db_subnet_group_name = "${local.subnet_group_name}"
   parameter_group_name = "${local.parameter_group_name}"
+  option_group_name = "${!local.is_postgres ? local.option_group_name : ""}"
   final_snapshot_identifier = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
   publicly_accessible = true

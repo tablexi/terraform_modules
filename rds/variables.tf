@@ -47,6 +47,16 @@ variable "node_type" {
   default = "db.t2.medium"
 }
 
+variable "option_group_name" {
+  description = "Name of the DB option group to associate."
+  default = ""
+}
+
+variable "option_group_provided" {
+  description = ""
+  default = false
+}
+
 variable "parameter_group_name" {
   description = "Name of a parameter group to use with the RDS instance."
   default = ""
