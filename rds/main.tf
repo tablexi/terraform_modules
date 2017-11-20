@@ -1,6 +1,9 @@
 locals {
-  engine_nickname = "${var.engine == "postgres" ? "pg" : "mysql"}"
-  option_group = "${var.engine == "mysql" ? true : false}"
+  is_postgres = "${var.engine == "postgres" ? true : false}"
+}
+
+locals {
+  engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
 }
 
 locals {
@@ -10,7 +13,7 @@ locals {
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
   option_group_name = "${var.option_group_name != "" ? var.option_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
   family = "${var.engine}${var.version}"
-  port = "${var.port != "" ? var.port : "${var.engine == "postgres" ? 5432 : 3306}"}"
+  port = "${var.port != "" ? var.port : "${local.is_postgres ? 5432 : 3306}"}"
 }
 
 resource "aws_db_subnet_group" "mod" {
@@ -36,7 +39,7 @@ resource "aws_db_parameter_group" "mod" {
 }
 
 resource "aws_db_option_group" "mod" {
-  count = "${local.option_group && var.option_group_provided != true ? 1 : 0}"
+  count = "${local.is_postgres != true && var.option_group_provided != true ? 1 : 0}"
   name = "${local.option_group_name}"
   engine_name = "${var.engine}"
   major_engine_version = "${var.version}"
