@@ -36,6 +36,10 @@ resource "aws_db_parameter_group" "mod" {
   name = "${local.parameter_group_name}"
   family = "${local.family}"
   description = "${local.family} parameter group for ${var.name} ${var.env}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_db_option_group" "mod" {
@@ -43,6 +47,10 @@ resource "aws_db_option_group" "mod" {
   name = "${local.option_group_name}"
   engine_name = "${var.engine}"
   major_engine_version = "${var.version}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_db_instance" "mod" {
