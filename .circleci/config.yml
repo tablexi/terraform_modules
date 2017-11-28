@@ -7,14 +7,14 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-        key: terraform-cache-golang
+          key: terraform-cache-golang
       - run: bash .circleci/dependencies.sh
       - save_cache:
-        key: terraform-cache-golang
-        paths:
-          - ~/terraform
+          key: terraform-cache-golang
+          paths:
+              - ~/terraform
       - run:
-        name:
-        command: bash bin/planshots
-        environment:
-          PATH: "$PATH:$HOME/terraform"
+          name:
+          command: bash bin/planshots
+          environment:
+              PATH: "$PATH:$HOME/terraform"
