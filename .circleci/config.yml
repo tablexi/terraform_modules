@@ -15,6 +15,6 @@ jobs:
               - ~/terraform
       - run:
           name: Planshots
-          command: bin/planshots
+          command: bash bin/planshots
           environment:
               PATH: "$PATH:$HOME/terraform"
