@@ -14,8 +14,5 @@ jobs:
           paths:
               - ~/terraform
       - run:
-          name: Update bashrc
-          command: echo 'export PATH=$PATH:$HOME/terraform' >> $BASH_ENV
-      - run:
           name: Planshots
           command: bash bin/planshots
