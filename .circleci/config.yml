@@ -12,5 +12,7 @@ jobs:
       - save_cache:
           key: terraform-cache-golang
           paths:
-            - ~/terraform
-      - run: bash .circleci/testing.sh
+              - ~/terraform
+      - run:
+          name: Planshots
+          command: bash bin/planshots

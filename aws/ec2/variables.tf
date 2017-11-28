@@ -44,6 +44,7 @@ variable "type" {
 
 variable "vpc_security_group_ids" {
   type = "list"
+  default = []
 }
 
 variable "name" {
