@@ -24,8 +24,8 @@ if [ "$TERRAFORM_VERSION" != "$TERRAFORM_CACHED_VERSION" ]; then
     # Unzip and overright existing files
     unzip -o "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d "$TERRAFORM_DIR"
 
-    echo 'export PATH=$PATH:$HOME/terraform' >> $BASH_ENV
-
     # Update VERSION file
     echo "$TERRAFORM_VERSION" > "$TERRAFORM_DIR/VERSION"
 fi
+
+echo "export PATH=$PATH:$TERRAFORM_DIR" >> $BASH_ENV

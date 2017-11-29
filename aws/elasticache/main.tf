@@ -1,5 +1,5 @@
 locals {
-  version_major_minor_only = "${join(".", slice(split(".", var.version), 0, 2))}"
+  version_major_minor_only = "${join(".", slice(split(".", var.engine_version), 0, 2))}"
 }
 
 locals {
@@ -13,7 +13,7 @@ resource "aws_elasticache_cluster" "mod" {
   cluster_id = "${var.name}-${var.env}"
   num_cache_nodes = 1
   engine = "${var.engine}"
-  engine_version = "${var.version}"
+  engine_version = "${var.engine_version}"
   node_type = "${var.node_type}"
   port = "${local.port}"
   parameter_group_name = "${local.parameter_group_name}"
@@ -30,7 +30,7 @@ resource "aws_elasticache_replication_group" "mod" {
   replication_group_id = "${var.name}-${var.env}"
   replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
   number_cache_clusters = "${var.num_nodes}"
-  engine_version = "${var.version}"
+  engine_version = "${var.engine_version}"
   auto_minor_version_upgrade = true
   node_type = "${var.node_type}"
   port = "${local.port}"

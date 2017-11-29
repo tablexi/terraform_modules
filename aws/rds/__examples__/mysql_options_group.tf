@@ -6,7 +6,7 @@ module "rds-mysql-option-group" {
   option_group_name = "${aws_db_option_group.rds-mysql-option-group.id}"
   name = "rds-mysql-option-group"
   subnets = ["rds-mysql-option-group"]
-  version = "5.7"
+  engine_version = "5.7"
   vpc_id = "rds-mysql-option-group"
 }
 

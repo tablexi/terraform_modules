@@ -3,6 +3,10 @@ variable "engine" {
   # default = "redis"
 }
 
+variable "engine_version" {
+  # default = "3.2.4"
+}
+
 variable "env" {
   default = "production"
 }
@@ -28,10 +32,6 @@ variable "port" {
 
 variable "subnets" {
   type = "list"
-}
-
-variable "version" {
-  # default = "3.2.4"
 }
 
 variable "vpc_id" {}
