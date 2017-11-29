@@ -53,7 +53,7 @@ module "memcached" {
 }
 
 module "ssh" {
-  source = "../vpc/security_groups/ssh"
+  source = "../ec2/security_groups/ssh"
 
   vpc_id = "${module.vpc.vpc_id}"
 }
