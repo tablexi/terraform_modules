@@ -10,9 +10,9 @@ locals {
   subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
   sg_for_access_by_sgs_name = "${var.name}_${var.env}-rds-${local.engine_nickname}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
-  option_group_name = "${var.option_group_name != "" ? var.option_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.version, ".", "")}"}"
-  family = "${var.engine}${var.version}"
+  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
+  option_group_name = "${var.option_group_name != "" ? var.option_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
+  family = "${var.engine}${var.engine_version}"
   port = "${var.port != "" ? var.port : "${local.is_postgres ? 5432 : 3306}"}"
 }
 
@@ -46,7 +46,7 @@ resource "aws_db_option_group" "mod" {
   count = "${local.is_postgres || var.option_group_provided ? 0 : 1}"
   name = "${local.option_group_name}"
   engine_name = "${var.engine}"
-  major_engine_version = "${var.version}"
+  major_engine_version = "${var.engine_version}"
 
   lifecycle {
     create_before_destroy = true
@@ -57,7 +57,7 @@ resource "aws_db_instance" "mod" {
   identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
   replicate_source_db  = "${var.source_db}"
   engine = "${var.engine}"
-  engine_version = "${var.version}"
+  engine_version = "${var.engine_version}"
   instance_class = "${var.node_type}"
   storage_type = "${var.storage_type}"
   allocated_storage = "${var.storage}"
