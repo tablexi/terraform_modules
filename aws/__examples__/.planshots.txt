@@ -40,6 +40,7 @@ tags.Environment:                            "production"
 tags.Name:                                   "app01"
 tenancy:                                     <computed>
 volume_tags.%:                               <computed>
+vpc_security_group_ids.#:                    <computed>
 
 + module.ec2.aws_instance.mod[1]
 id:                                          <computed>
@@ -74,6 +75,7 @@ tags.Environment:                            "production"
 tags.Name:                                   "app02"
 tenancy:                                     <computed>
 volume_tags.%:                               <computed>
+vpc_security_group_ids.#:                    <computed>
 
 + module.memcached.aws_elasticache_cluster.mod
 id:                                          <computed>
@@ -446,6 +448,46 @@ tags.%:                                      "1"
 tags.Name:                                   "redis-production"
 vpc_id:                                      "${var.vpc_id}"
 
++ module.ssh.aws_security_group.mod
+id:                                          <computed>
+description:                                 "ssh-prod"
+egress.#:                                    "1"
+egress.482069346.cidr_blocks.#:              "1"
+egress.482069346.cidr_blocks.0:              "0.0.0.0/0"
+egress.482069346.description:                ""
+egress.482069346.from_port:                  "0"
+egress.482069346.ipv6_cidr_blocks.#:         "0"
+egress.482069346.prefix_list_ids.#:          "0"
+egress.482069346.protocol:                   "-1"
+egress.482069346.security_groups.#:          "0"
+egress.482069346.self:                       "false"
+egress.482069346.to_port:                    "0"
+ingress.#:                                   "2"
+ingress.2541437006.cidr_blocks.#:            "1"
+ingress.2541437006.cidr_blocks.0:            "0.0.0.0/0"
+ingress.2541437006.description:              ""
+ingress.2541437006.from_port:                "22"
+ingress.2541437006.ipv6_cidr_blocks.#:       "0"
+ingress.2541437006.protocol:                 "tcp"
+ingress.2541437006.security_groups.#:        "0"
+ingress.2541437006.self:                     "false"
+ingress.2541437006.to_port:                  "22"
+ingress.753360330.cidr_blocks.#:             "0"
+ingress.753360330.description:               ""
+ingress.753360330.from_port:                 "0"
+ingress.753360330.ipv6_cidr_blocks.#:        "0"
+ingress.753360330.protocol:                  "-1"
+ingress.753360330.security_groups.#:         "0"
+ingress.753360330.self:                      "true"
+ingress.753360330.to_port:                   "0"
+name:                                        "ssh-prod"
+owner_id:                                    <computed>
+revoke_rules_on_delete:                      "false"
+tags.%:                                      "2"
+tags.Environment:                            "prod"
+tags.Name:                                   "ssh-prod"
+vpc_id:                                      "${var.vpc_id}"
+
 ~ module.subnets.data.aws_vpc.current
 id:                                          "" => "${var.vpc_id}"
 cidr_block:                                  "" => <computed>
@@ -711,5 +753,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 51 to add, 1 to change, 0 to destroy.
+Plan: 52 to add, 1 to change, 0 to destroy.
 
