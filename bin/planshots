@@ -8,6 +8,11 @@ export AWS_DEFAULT_REGION=us-east-1
 for example_dir in `find . -type d -name __examples__`; do
   pushd $example_dir > /dev/null
 
+  # Work with a clean directory when generating
+  if [[ "$GENERATE" == "true" ]]; then
+    rm -Rf .terraform
+  fi
+
   terraform init > /dev/null
 
   # If init successful, run plan
