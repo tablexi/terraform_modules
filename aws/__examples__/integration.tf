@@ -19,6 +19,18 @@ module "trustor" {
   trustee_account_arn = "000000000000"
 }
 
+module "readonly_policy" {
+  source = "../iam/policies/read_only"
+}
+
+module "trustor_readonly" {
+  source = "../iam/crossaccount/trustor"
+
+  trustee_account_name = "TXIReadOnly"
+  trustee_account_arn = "000000000000"
+  access_policy = "${module.readonly_policy.json}"
+}
+
 module "trustee" {
   source = "../iam/crossaccount/trustee"
 
