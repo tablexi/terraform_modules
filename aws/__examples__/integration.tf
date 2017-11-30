@@ -12,6 +12,22 @@ module "subnets" {
   internet_gateway_id = "${module.vpc.internet_gateway_id}"
 }
 
+module "trustor" {
+  source = "../iam/crossaccount/trustor"
+
+  trustee_account_name = "TableXI"
+  trustee_account_arn = "000000000000"
+}
+
+module "trustee" {
+  source = "../iam/crossaccount/trustee"
+
+  trustor_account_name = "Client"
+  trustor_account_arn = "1111111111111"
+  trustee_account_name = "TableXI"
+  trustee_group_name = "Operations"
+}
+
 module "postgres" {
   source = "../rds"
 

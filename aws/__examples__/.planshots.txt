@@ -729,6 +729,37 @@ tags.%:                                      "1"
 tags.Name:                                   "subnets-us-east-1f-public"
 vpc_id:                                      "${var.vpc_id}"
 
++ module.trustee.aws_iam_group_policy.mod
+id:                                          <computed>
+group:                                       "Operations"
+name:                                        "ClientCrossAccountPolicy"
+policy:                                      "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": {\n    \"Effect\": \"Allow\",\n    \"Action\": \"sts:AssumeRole\",\n    \"Resource\": \"arn:aws:iam::1111111111111:role/TableXICrossAccountAccessRole\"\n  }\n}\n"
+
++ module.trustor.aws_iam_policy.mod
+id:                                          <computed>
+arn:                                         <computed>
+description:                                 "TableXI full access policy with delete provisions for cross account access."
+name:                                        "TableXICrossAccountAdminAccess"
+path:                                        "/"
+policy:                                      "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    },\n    {\n      \"Effect\": \"Deny\",\n      \"Action\": [\n        \"dynamodb:DeleteTable\",\n        \"rds:DeleteDBCluster\",\n        \"rds:DeleteDBInstance\",\n        \"s3:DeleteBucket\"\n      ],\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+
++ module.trustor.aws_iam_policy_attachment.mod
+id:                                          <computed>
+name:                                        "TableXICrossAccountAdminAccess"
+policy_arn:                                  "${aws_iam_policy.mod.arn}"
+roles.#:                                     "1"
+roles.3356258093:                            "TableXICrossAccountAccessRole"
+
++ module.trustor.aws_iam_role.mod
+id:                                          <computed>
+arn:                                         <computed>
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\n"
+create_date:                                 <computed>
+force_detach_policies:                       "false"
+name:                                        "TableXICrossAccountAccessRole"
+path:                                        "/"
+unique_id:                                   <computed>
+
 + module.vpc.aws_internet_gateway.mod
 id:                                          <computed>
 tags.%:                                      "1"
@@ -753,5 +784,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 52 to add, 1 to change, 0 to destroy.
+Plan: 56 to add, 1 to change, 0 to destroy.
 
