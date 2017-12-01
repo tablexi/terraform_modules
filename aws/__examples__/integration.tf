@@ -94,3 +94,12 @@ module "ec2" {
   subnets = "${module.subnets.public_subnets}"
   vpc_security_group_ids = ["${module.ssh.sg_id}"]
 }
+
+module "alb" {
+  source = "../ec2/load_balancers/lb"
+
+  name = "alb"
+  env = "prod"
+  type = "application"
+  vpc_id = "${module.vpc.vpc_id}"
+}
