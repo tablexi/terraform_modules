@@ -1,0 +1,167 @@
+
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
++ create
+
+Terraform will perform the following actions:
+
++ module.http.aws_lb_listener.mod
+id:                                 <computed>
+arn:                                <computed>
+default_action.#:                   "1"
+default_action.0.target_group_arn:  "${aws_lb_target_group.mod.arn}"
+default_action.0.type:              "forward"
+port:                               "80"
+protocol:                           "HTTP"
+ssl_policy:                         <computed>
+
++ module.http.aws_lb_target_group.mod
+id:                                 <computed>
+arn:                                <computed>
+arn_suffix:                         <computed>
+deregistration_delay:               "300"
+health_check.#:                     "1"
+health_check.0.healthy_threshold:   "3"
+health_check.0.interval:            "30"
+health_check.0.matcher:             "200"
+health_check.0.path:                "/"
+health_check.0.port:                "80"
+health_check.0.protocol:            "HTTP"
+health_check.0.timeout:             "5"
+health_check.0.unhealthy_threshold: "3"
+name:                               "http"
+port:                               "80"
+protocol:                           "HTTP"
+stickiness.#:                       <computed>
+target_type:                        "instance"
+vpc_id:                             "http"
+
++ module.http.aws_lb_target_group_attachment.mod
+id:                                 <computed>
+port:                               "80"
+target_group_arn:                   "${aws_lb_target_group.mod.arn}"
+target_id:                          "https"
+
++ module.http.aws_security_group_rule.mod_sg_for_access_by_sgs
+id:                                 <computed>
+from_port:                          "80"
+protocol:                           "tcp"
+security_group_id:                  "https"
+self:                               "false"
+source_security_group_id:           "https"
+to_port:                            "80"
+type:                               "ingress"
+
++ module.http.aws_security_group_rule.mod_sg_on_lb_cidr_blocks
+id:                                 <computed>
+cidr_blocks.#:                      "1"
+cidr_blocks.0:                      "0.0.0.0/0"
+from_port:                          "80"
+protocol:                           "tcp"
+security_group_id:                  "https"
+self:                               "false"
+source_security_group_id:           <computed>
+to_port:                            "80"
+type:                               "ingress"
+
++ module.https.aws_lb_listener.mod
+id:                                 <computed>
+arn:                                <computed>
+certificate_arn:                    "https"
+default_action.#:                   "1"
+default_action.0.target_group_arn:  "${aws_lb_target_group.mod.arn}"
+default_action.0.type:              "forward"
+port:                               "443"
+protocol:                           "HTTPS"
+ssl_policy:                         "ELBSecurityPolicy-2016-08"
+
++ module.https.aws_lb_target_group.mod
+id:                                 <computed>
+arn:                                <computed>
+arn_suffix:                         <computed>
+deregistration_delay:               "300"
+health_check.#:                     "1"
+health_check.0.healthy_threshold:   "3"
+health_check.0.interval:            "30"
+health_check.0.matcher:             "200"
+health_check.0.path:                "/"
+health_check.0.port:                "443"
+health_check.0.protocol:            "HTTPS"
+health_check.0.timeout:             "5"
+health_check.0.unhealthy_threshold: "3"
+name:                               "https"
+port:                               "443"
+protocol:                           "HTTPS"
+stickiness.#:                       <computed>
+target_type:                        "instance"
+vpc_id:                             "https"
+
++ module.https.aws_lb_target_group_attachment.mod
+id:                                 <computed>
+port:                               "443"
+target_group_arn:                   "${aws_lb_target_group.mod.arn}"
+target_id:                          "https"
+
++ module.https.aws_security_group_rule.mod_sg_for_access_by_sgs
+id:                                 <computed>
+from_port:                          "443"
+protocol:                           "tcp"
+security_group_id:                  "https"
+self:                               "false"
+source_security_group_id:           "https"
+to_port:                            "443"
+type:                               "ingress"
+
++ module.https.aws_security_group_rule.mod_sg_on_lb_cidr_blocks
+id:                                 <computed>
+cidr_blocks.#:                      "1"
+cidr_blocks.0:                      "0.0.0.0/0"
+from_port:                          "443"
+protocol:                           "tcp"
+security_group_id:                  "https"
+self:                               "false"
+source_security_group_id:           <computed>
+to_port:                            "443"
+type:                               "ingress"
+
++ module.provide_listener.aws_lb_listener_rule.mod
+id:                                 <computed>
+action.#:                           "1"
+action.0.target_group_arn:          "${aws_lb_target_group.mod.arn}"
+action.0.type:                      "forward"
+arn:                                <computed>
+condition.#:                        "1"
+condition.~3297828191.field:        "${local.listener_rule[\"condition_field\"]}"
+condition.~3297828191.values.#:     <computed>
+listener_arn:                       "provide_listener"
+priority:                           "0"
+
++ module.provide_listener.aws_lb_target_group.mod
+id:                                 <computed>
+arn:                                <computed>
+arn_suffix:                         <computed>
+deregistration_delay:               "300"
+health_check.#:                     "1"
+health_check.0.healthy_threshold:   "3"
+health_check.0.interval:            "30"
+health_check.0.matcher:             "200"
+health_check.0.path:                "/"
+health_check.0.port:                "80"
+health_check.0.protocol:            "HTTP"
+health_check.0.timeout:             "5"
+health_check.0.unhealthy_threshold: "3"
+name:                               "provide_listener"
+port:                               "80"
+protocol:                           "HTTP"
+stickiness.#:                       <computed>
+target_type:                        "instance"
+vpc_id:                             "provide_listener"
+
++ module.provide_listener.aws_lb_target_group_attachment.mod
+id:                                 <computed>
+port:                               "80"
+target_group_arn:                   "${aws_lb_target_group.mod.arn}"
+target_id:                          "http"
+Plan: 13 to add, 0 to change, 0 to destroy.
+

@@ -135,6 +135,72 @@ tenancy:                                     <computed>
 volume_tags.%:                               <computed>
 vpc_security_group_ids.#:                    <computed>
 
++ module.http_target_listener.aws_lb_listener.mod
+id:                                          <computed>
+arn:                                         <computed>
+default_action.#:                            "1"
+default_action.0.target_group_arn:           "${aws_lb_target_group.mod.arn}"
+default_action.0.type:                       "forward"
+load_balancer_arn:                           "${var.lb_arn}"
+port:                                        "80"
+protocol:                                    "HTTP"
+ssl_policy:                                  <computed>
+
++ module.http_target_listener.aws_lb_target_group.mod
+id:                                          <computed>
+arn:                                         <computed>
+arn_suffix:                                  <computed>
+deregistration_delay:                        "300"
+health_check.#:                              "1"
+health_check.0.healthy_threshold:            "3"
+health_check.0.interval:                     "30"
+health_check.0.matcher:                      "200"
+health_check.0.path:                         "/"
+health_check.0.port:                         "80"
+health_check.0.protocol:                     "HTTP"
+health_check.0.timeout:                      "5"
+health_check.0.unhealthy_threshold:          "3"
+name:                                        "http"
+port:                                        "80"
+protocol:                                    "HTTP"
+stickiness.#:                                <computed>
+target_type:                                 "instance"
+vpc_id:                                      "${var.vpc_id}"
+
++ module.http_target_listener.aws_lb_target_group_attachment.mod[0]
+id:                                          <computed>
+port:                                        "80"
+target_group_arn:                            "${aws_lb_target_group.mod.arn}"
+target_id:                                   "${element(var.target_ids, count.index)}"
+
++ module.http_target_listener.aws_lb_target_group_attachment.mod[1]
+id:                                          <computed>
+port:                                        "80"
+target_group_arn:                            "${aws_lb_target_group.mod.arn}"
+target_id:                                   "${element(var.target_ids, count.index)}"
+
++ module.http_target_listener.aws_security_group_rule.mod_sg_for_access_by_sgs
+id:                                          <computed>
+from_port:                                   "80"
+protocol:                                    "tcp"
+security_group_id:                           "${var.sg_for_access_by_sgs_id}"
+self:                                        "false"
+source_security_group_id:                    "${var.sg_on_lb_id}"
+to_port:                                     "80"
+type:                                        "ingress"
+
++ module.http_target_listener.aws_security_group_rule.mod_sg_on_lb_cidr_blocks
+id:                                          <computed>
+cidr_blocks.#:                               "1"
+cidr_blocks.0:                               "0.0.0.0/0"
+from_port:                                   "80"
+protocol:                                    "tcp"
+security_group_id:                           "${var.sg_on_lb_id}"
+self:                                        "false"
+source_security_group_id:                    <computed>
+to_port:                                     "80"
+type:                                        "ingress"
+
 + module.memcached.aws_elasticache_cluster.mod
 id:                                          <computed>
 apply_immediately:                           <computed>
@@ -867,5 +933,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 63 to add, 1 to change, 0 to destroy.
+Plan: 69 to add, 1 to change, 0 to destroy.
 

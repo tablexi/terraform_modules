@@ -103,3 +103,16 @@ module "alb" {
   type = "application"
   vpc_id = "${module.vpc.vpc_id}"
 }
+
+module "http_target_listener" {
+  source = "../ec2/load_balancers/lb/target_listener"
+  sg_on_lb_id = "${module.alb.sg_on_lb_id}"
+  sg_for_access_by_sgs_id = "${module.alb.sg_for_access_by_sgs_id}"
+  lb_arn = "${module.alb.lb_arn}"
+  name = "http"
+  port = 80
+  protocol = "HTTP"
+  target_id_count = 2
+  target_ids = "${module.ec2.instance_ids}"
+  vpc_id = "${module.vpc.vpc_id}"
+}
