@@ -132,10 +132,11 @@ action.0.target_group_arn:          "${aws_lb_target_group.mod.arn}"
 action.0.type:                      "forward"
 arn:                                <computed>
 condition.#:                        "1"
-condition.~3297828191.field:        "${local.listener_rule[\"condition_field\"]}"
-condition.~3297828191.values.#:     <computed>
+condition.1690931251.field:         ""
+condition.1690931251.values.#:      "1"
+condition.1690931251.values.0:      ""
 listener_arn:                       "provide_listener"
-priority:                           "0"
+priority:                           "100"
 
 + module.provide_listener.aws_lb_target_group.mod
 id:                                 <computed>
