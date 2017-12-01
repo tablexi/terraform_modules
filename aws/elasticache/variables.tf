@@ -1,3 +1,8 @@
+variable "create_parameter_group" {
+  default = true
+  description = "Create a parameter group in this module"
+}
+
 variable "engine" {
   description = "redis, memcache, etc."
   # default = "redis"
