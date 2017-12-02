@@ -297,7 +297,7 @@ monitoring_interval:                         "0"
 monitoring_role_arn:                         <computed>
 multi_az:                                    "true"
 name:                                        <computed>
-option_group_name:                           <computed>
+option_group_name:                           "default:postgres-9-6"
 parameter_group_name:                        "test-postgres-production-pg96"
 password:                                    <sensitive>
 port:                                        <computed>
