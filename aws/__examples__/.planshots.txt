@@ -753,7 +753,7 @@ roles.3356258093:                            "TableXICrossAccountAccessRole"
 + module.trustor.aws_iam_role.mod
 id:                                          <computed>
 arn:                                         <computed>
-assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\n"
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      }\n    }\n  ]\n}"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
 name:                                        "TableXICrossAccountAccessRole"
@@ -778,7 +778,7 @@ roles.2278642087:                            "TXIReadOnlyCrossAccountAccessRole"
 + module.trustor_readonly.aws_iam_role.mod
 id:                                          <computed>
 arn:                                         <computed>
-assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\n"
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      }\n    }\n  ]\n}"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
 name:                                        "TXIReadOnlyCrossAccountAccessRole"

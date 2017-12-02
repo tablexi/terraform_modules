@@ -6,6 +6,11 @@ variable "trustee_account_arn" {
   description = "Account ARN getting access"
 }
 
+variable "assume_role_policy" {
+  default = ""
+  description = "The policy that grants an entity permission to assume the role"
+}
+
 variable "access_policy" {
   default = <<JSON
 {
