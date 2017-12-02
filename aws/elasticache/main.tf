@@ -50,12 +50,20 @@ resource "aws_elasticache_parameter_group" "mod" {
   name = "${local.parameter_group_name}"
   family = "${local.family}"
   description = "${var.name} ${var.env} env ${var.engine} cluster param group"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_elasticache_subnet_group" "mod" {
   name = "${local.cluster_name}-${var.engine}-subnet"
   description = "${local.cluster_name}-${var.engine}-subnet"
   subnet_ids = ["${var.subnets}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group" "sg_for_access_by_sgs" {
@@ -66,6 +74,10 @@ resource "aws_security_group" "sg_for_access_by_sgs" {
 
   tags {
     "Name" = "${var.env}-${var.engine}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -90,5 +102,9 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
 
   tags {
     "Name" = "${var.engine}-${var.env}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
