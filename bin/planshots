@@ -5,7 +5,20 @@
 EXIT_STATUS=0
 export AWS_DEFAULT_REGION=us-east-1
 
-for example_dir in `find . -type d -name __examples__`; do
+# If no arguments given, search for all __examples__ directories
+if [ $# -eq 0 ]; then
+  example_dirs=`find . -type d -name __examples__`
+# Provide a list of __examples__ directories
+else
+  example_dirs="$@"
+fi
+
+for example_dir in $example_dirs; do
+  if [ ! -d "$example_dir" ]; then
+    echo "$example_dir does not seem to be a directory"
+    exit 1
+  fi
+
   pushd $example_dir > /dev/null
 
   # Work with a clean directory when generating
