@@ -60,8 +60,8 @@ resource "aws_elasticache_subnet_group" "mod" {
 
 resource "aws_security_group" "sg_for_access_by_sgs" {
   count = "${var.provide_sg_for_access ? 1 : 0}"
-  name = "${var.env}-${var.engine}"
-  description = "${var.env} to ${var.engine}"
+  name = "${var.name}_${var.env}-${var.engine}"
+  description = "${var.name}_$${var.env} to ${var.engine}"
   vpc_id = "${var.vpc_id}"
 
   tags {
@@ -70,8 +70,8 @@ resource "aws_security_group" "sg_for_access_by_sgs" {
 }
 
 resource "aws_security_group" "sg_on_elasticache_instance" {
-  name = "${var.engine}-${var.env}"
-  description = "${var.engine} to ${var.env}"
+  name = "${var.engine}-${var.name}_${var.env}"
+  description = "${var.engine} to ${var.name}_${var.env}"
   vpc_id = "${var.vpc_id}"
 
   ingress {

@@ -46,10 +46,10 @@ subnet_ids.2066075671:                        "redis"
 
 + module.basic_redis.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
-description:                                  "production to redis"
+description:                                  "redis_${var.env} to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
-name:                                         "production-redis"
+name:                                         "redis_production-redis"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
 tags.%:                                       "1"
@@ -58,7 +58,7 @@ vpc_id:                                       "redis"
 
 + module.basic_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
-description:                                  "redis to production"
+description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
 egress.482069346.cidr_blocks.0:               "0.0.0.0/0"
@@ -79,7 +79,7 @@ ingress.~743784797.protocol:                  "tcp"
 ingress.~743784797.security_groups.#:         <computed>
 ingress.~743784797.self:                      "false"
 ingress.~743784797.to_port:                   "6379"
-name:                                         "redis-production"
+name:                                         "redis-redis_production"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
 tags.%:                                       "1"
@@ -126,10 +126,10 @@ subnet_ids.2066075671:                        "redis"
 
 + module.external_security_group_access.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
-description:                                  "production to redis"
+description:                                  "redis_${var.env} to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
-name:                                         "production-redis"
+name:                                         "redis_production-redis"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
 tags.%:                                       "1"
@@ -138,7 +138,7 @@ vpc_id:                                       "redis"
 
 + module.external_security_group_access.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
-description:                                  "redis to production"
+description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
 egress.482069346.cidr_blocks.0:               "0.0.0.0/0"
@@ -159,7 +159,7 @@ ingress.~743784797.protocol:                  "tcp"
 ingress.~743784797.security_groups.#:         <computed>
 ingress.~743784797.self:                      "false"
 ingress.~743784797.to_port:                   "6379"
-name:                                         "redis-production"
+name:                                         "redis-redis_production"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
 tags.%:                                       "1"
@@ -206,7 +206,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.external_without_internal_sg.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
-description:                                  "redis to production"
+description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
 egress.482069346.cidr_blocks.0:               "0.0.0.0/0"
@@ -228,7 +228,7 @@ ingress.208812331.security_groups.#:          "1"
 ingress.208812331.security_groups.2066075671: "redis"
 ingress.208812331.self:                       "false"
 ingress.208812331.to_port:                    "6379"
-name:                                         "redis-production"
+name:                                         "redis-redis_production"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
 tags.%:                                       "1"

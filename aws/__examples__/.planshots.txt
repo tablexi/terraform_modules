@@ -116,10 +116,10 @@ subnet_ids.#:                                <computed>
 
 + module.memcached.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
-description:                                 "production to memcached"
+description:                                 "memcached_${var.env} to memcached"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
-name:                                        "production-memcached"
+name:                                        "memcached_production-memcached"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -128,7 +128,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.memcached.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
-description:                                 "memcached to production"
+description:                                 "memcached to memcached_production"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
 egress.482069346.cidr_blocks.0:              "0.0.0.0/0"
@@ -149,7 +149,7 @@ ingress.~1333864030.protocol:                "tcp"
 ingress.~1333864030.security_groups.#:       <computed>
 ingress.~1333864030.self:                    "false"
 ingress.~1333864030.to_port:                 "11211"
-name:                                        "memcached-production"
+name:                                        "memcached-memcached_production"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -408,10 +408,10 @@ subnet_ids.#:                                <computed>
 
 + module.redis.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
-description:                                 "production to redis"
+description:                                 "redis_${var.env} to redis"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
-name:                                        "production-redis"
+name:                                        "redis_production-redis"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -420,7 +420,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.redis.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
-description:                                 "redis to production"
+description:                                 "redis to redis_production"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
 egress.482069346.cidr_blocks.0:              "0.0.0.0/0"
@@ -441,7 +441,7 @@ ingress.~743784797.protocol:                 "tcp"
 ingress.~743784797.security_groups.#:        <computed>
 ingress.~743784797.self:                     "false"
 ingress.~743784797.to_port:                  "6379"
-name:                                        "redis-production"
+name:                                        "redis-redis_production"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
