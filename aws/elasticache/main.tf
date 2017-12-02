@@ -78,7 +78,7 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
     from_port = "${local.port}"
     to_port = "${local.port}"
     protocol = "tcp"
-    security_groups = ["${concat(local.sg_for_access_by_sgs_id, var.sg_for_access_ids)}"]
+    security_groups = ["${compact(concat(local.sg_for_access_by_sgs_id, var.sg_for_access_ids))}"]
   }
 
   egress {
