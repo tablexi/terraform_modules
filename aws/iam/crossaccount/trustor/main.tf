@@ -1,6 +1,4 @@
 data "aws_iam_policy_document" "mod" {
-  count = "${var.assume_role_policy == "" ? 1 : 0}"
-
   statement {
     sid = ""
     actions = [

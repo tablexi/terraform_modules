@@ -6,6 +6,31 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
++ module.assume_role_policy.aws_iam_policy.mod
+id:                    <computed>
+arn:                   <computed>
+description:           "TableXI full access policy with delete provisions for cross account access."
+name:                  "TableXICrossAccountAdminAccess"
+path:                  "/"
+policy:                "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Action\": \"*\",\n      \"Resource\": \"*\"\n    },\n    {\n      \"Effect\": \"Deny\",\n      \"Action\": [\n        \"dynamodb:DeleteTable\",\n        \"rds:DeleteDBCluster\",\n        \"rds:DeleteDBInstance\",\n        \"s3:DeleteBucket\"\n      ],\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+
++ module.assume_role_policy.aws_iam_policy_attachment.mod
+id:                    <computed>
+name:                  "TableXICrossAccountAdminAccess"
+policy_arn:            "${aws_iam_policy.mod.arn}"
+roles.#:               "1"
+roles.3356258093:      "TableXICrossAccountAccessRole"
+
++ module.assume_role_policy.aws_iam_role.mod
+id:                    <computed>
+arn:                   <computed>
+assume_role_policy:    "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam:::root\"\n      }\n    }\n  ]\n}"
+create_date:           <computed>
+force_detach_policies: "false"
+name:                  "TableXICrossAccountAccessRole"
+path:                  "/"
+unique_id:             <computed>
+
 + module.client.aws_iam_policy.mod
 id:                    <computed>
 arn:                   <computed>
@@ -30,5 +55,5 @@ force_detach_policies: "false"
 name:                  "TableXICrossAccountAccessRole"
 path:                  "/"
 unique_id:             <computed>
-Plan: 3 to add, 0 to change, 0 to destroy.
+Plan: 6 to add, 0 to change, 0 to destroy.
 
