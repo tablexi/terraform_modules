@@ -35,6 +35,16 @@ variable "port" {
   default = ""
 }
 
+variable "provide_sg_for_access" {
+  description = "Create a security group for accessing the redis instance."
+  default = true
+}
+
+variable "sg_for_access_ids" {
+  description = "List of security groups to give access to the elasticache instance."
+  default = []
+}
+
 variable "subnets" {
   type = "list"
 }
