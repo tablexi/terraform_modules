@@ -5,7 +5,7 @@ locals {
 locals {
   cluster_name = "${var.name}-${var.env}"
   family = "${var.engine}${local.version_major_minor_only}"
-  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params"}"
+  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"}"
   port = "${var.port != "" ? var.port : "${var.engine == "redis" ? "6379" : "11211"}"}"
   sg_for_access_by_sgs_id = "${concat(aws_security_group.sg_for_access_by_sgs.*.id, list(""))}"
 }

@@ -20,7 +20,7 @@ engine_version:                               "2.8.17"
 maintenance_window:                           <computed>
 node_type:                                    "cache.t2.micro"
 num_cache_nodes:                              "1"
-parameter_group_name:                         "redis-production-params"
+parameter_group_name:                         "redis-production-params28"
 port:                                         "6379"
 replication_group_id:                         <computed>
 security_group_ids.#:                         <computed>
@@ -35,7 +35,7 @@ tags.Environment:                             "production"
 id:                                           <computed>
 description:                                  "redis production env redis cluster param group"
 family:                                       "redis2.8"
-name:                                         "redis-production-params"
+name:                                         "redis-production-params28"
 
 + module.basic_redis.aws_elasticache_subnet_group.mod
 id:                                           <computed>
@@ -100,7 +100,7 @@ engine_version:                               "2.8.17"
 maintenance_window:                           <computed>
 node_type:                                    "cache.t2.micro"
 num_cache_nodes:                              "1"
-parameter_group_name:                         "redis-production-params"
+parameter_group_name:                         "redis-production-params28"
 port:                                         "6379"
 replication_group_id:                         <computed>
 security_group_ids.#:                         <computed>
@@ -115,7 +115,7 @@ tags.Environment:                             "production"
 id:                                           <computed>
 description:                                  "redis production env redis cluster param group"
 family:                                       "redis2.8"
-name:                                         "redis-production-params"
+name:                                         "redis-production-params28"
 
 + module.external_security_group_access.aws_elasticache_subnet_group.mod
 id:                                           <computed>
@@ -180,7 +180,7 @@ engine_version:                               "2.8.17"
 maintenance_window:                           <computed>
 node_type:                                    "cache.t2.micro"
 num_cache_nodes:                              "1"
-parameter_group_name:                         "redis-production-params"
+parameter_group_name:                         "redis-production-params28"
 port:                                         "6379"
 replication_group_id:                         <computed>
 security_group_ids.#:                         <computed>
@@ -195,7 +195,7 @@ tags.Environment:                             "production"
 id:                                           <computed>
 description:                                  "redis production env redis cluster param group"
 family:                                       "redis2.8"
-name:                                         "redis-production-params"
+name:                                         "redis-production-params28"
 
 + module.external_without_internal_sg.aws_elasticache_subnet_group.mod
 id:                                           <computed>
