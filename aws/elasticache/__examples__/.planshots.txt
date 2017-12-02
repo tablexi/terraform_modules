@@ -46,7 +46,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.basic_redis.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
-description:                                  "redis_${var.env} to redis"
+description:                                  "redis_production to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
 name:                                         "redis_production-redis"
@@ -126,7 +126,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.external_security_group_access.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
-description:                                  "redis_${var.env} to redis"
+description:                                  "redis_production to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
 name:                                         "redis_production-redis"

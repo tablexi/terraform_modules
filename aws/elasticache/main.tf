@@ -69,7 +69,7 @@ resource "aws_elasticache_subnet_group" "mod" {
 resource "aws_security_group" "sg_for_access_by_sgs" {
   count = "${var.provide_sg_for_access ? 1 : 0}"
   name = "${var.name}_${var.env}-${var.engine}"
-  description = "${var.name}_$${var.env} to ${var.engine}"
+  description = "${var.name}_${var.env} to ${var.engine}"
   vpc_id = "${var.vpc_id}"
 
   tags {

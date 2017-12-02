@@ -116,7 +116,7 @@ subnet_ids.#:                                <computed>
 
 + module.memcached.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
-description:                                 "memcached_${var.env} to memcached"
+description:                                 "memcached_production to memcached"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
 name:                                        "memcached_production-memcached"
@@ -408,7 +408,7 @@ subnet_ids.#:                                <computed>
 
 + module.redis.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
-description:                                 "redis_${var.env} to redis"
+description:                                 "redis_production to redis"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
 name:                                        "redis_production-redis"
