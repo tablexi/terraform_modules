@@ -3,14 +3,16 @@ locals {
 }
 
 locals {
-  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-params"}"
-  port = "${var.port != "" ? var.port : "${var.engine == "redis" ? "6379" : "11211"}"}"
+  cluster_name = "${var.name}-${var.env}"
   family = "${var.engine}${local.version_major_minor_only}"
+  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"}"
+  port = "${var.port != "" ? var.port : "${var.engine == "redis" ? "6379" : "11211"}"}"
+  sg_for_access_by_sgs_id = "${concat(aws_security_group.sg_for_access_by_sgs.*.id, list(""))}"
 }
 
 resource "aws_elasticache_cluster" "mod" {
   count = "${(var.num_nodes == 1) ? 1 : 0}"
-  cluster_id = "${var.name}-${var.env}"
+  cluster_id = "${local.cluster_name}"
   num_cache_nodes = 1
   engine = "${var.engine}"
   engine_version = "${var.engine_version}"
@@ -27,7 +29,7 @@ resource "aws_elasticache_cluster" "mod" {
 
 resource "aws_elasticache_replication_group" "mod" {
   count = "${(var.num_nodes != 1) ? 1 : 0}"
-  replication_group_id = "${var.name}-${var.env}"
+  replication_group_id = "${local.cluster_name}"
   replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
   number_cache_clusters = "${var.num_nodes}"
   engine_version = "${var.engine_version}"
@@ -44,38 +46,51 @@ resource "aws_elasticache_replication_group" "mod" {
 }
 
 resource "aws_elasticache_parameter_group" "mod" {
-  count = "${var.parameter_group_name != "" ? 0 : 1}"
+  count = "${var.create_parameter_group ? 1 : 0}"
   name = "${local.parameter_group_name}"
   family = "${local.family}"
   description = "${var.name} ${var.env} env ${var.engine} cluster param group"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_elasticache_subnet_group" "mod" {
-  name = "${var.name}-${var.env}-${var.engine}-subnet"
-  description = "${var.name}-${var.env}-${var.engine}-subnet"
+  name = "${local.cluster_name}-${var.engine}-subnet"
+  description = "${local.cluster_name}-${var.engine}-subnet"
   subnet_ids = ["${var.subnets}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group" "sg_for_access_by_sgs" {
-  name = "${var.env}-${var.engine}"
-  description = "${var.env} to ${var.engine}"
+  count = "${var.provide_sg_for_access ? 1 : 0}"
+  name = "${var.name}_${var.env}-${var.engine}"
+  description = "${var.name}_${var.env} to ${var.engine}"
   vpc_id = "${var.vpc_id}"
 
   tags {
     "Name" = "${var.env}-${var.engine}"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group" "sg_on_elasticache_instance" {
-  name = "${var.engine}-${var.env}"
-  description = "${var.engine} to ${var.env}"
+  name = "${var.engine}-${var.name}_${var.env}"
+  description = "${var.engine} to ${var.name}_${var.env}"
   vpc_id = "${var.vpc_id}"
 
   ingress {
     from_port = "${local.port}"
     to_port = "${local.port}"
     protocol = "tcp"
-    security_groups = ["${aws_security_group.sg_for_access_by_sgs.id}"]
+    security_groups = ["${compact(concat(local.sg_for_access_by_sgs_id, var.sg_for_access_ids))}"]
   }
 
   egress {
@@ -87,5 +102,9 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
 
   tags {
     "Name" = "${var.engine}-${var.env}"
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }

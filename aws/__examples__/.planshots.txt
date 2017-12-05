@@ -215,7 +215,7 @@ engine_version:                              "3.2.10"
 maintenance_window:                          <computed>
 node_type:                                   "cache.t2.micro"
 num_cache_nodes:                             "1"
-parameter_group_name:                        "memcached-production-params"
+parameter_group_name:                        "memcached-production-params32"
 port:                                        "11211"
 replication_group_id:                        <computed>
 security_group_ids.#:                        <computed>
@@ -230,7 +230,7 @@ tags.Environment:                            "production"
 id:                                          <computed>
 description:                                 "memcached production env memcached cluster param group"
 family:                                      "memcached3.2"
-name:                                        "memcached-production-params"
+name:                                        "memcached-production-params32"
 
 + module.memcached.aws_elasticache_subnet_group.mod
 id:                                          <computed>
@@ -240,10 +240,10 @@ subnet_ids.#:                                <computed>
 
 + module.memcached.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
-description:                                 "production to memcached"
+description:                                 "memcached_production to memcached"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
-name:                                        "production-memcached"
+name:                                        "memcached_production-memcached"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -252,7 +252,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.memcached.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
-description:                                 "memcached to production"
+description:                                 "memcached to memcached_production"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
 egress.482069346.cidr_blocks.0:              "0.0.0.0/0"
@@ -273,7 +273,7 @@ ingress.~1333864030.protocol:                "tcp"
 ingress.~1333864030.security_groups.#:       <computed>
 ingress.~1333864030.self:                    "false"
 ingress.~1333864030.to_port:                 "11211"
-name:                                        "memcached-production"
+name:                                        "memcached-memcached_production"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -421,7 +421,7 @@ monitoring_interval:                         "0"
 monitoring_role_arn:                         <computed>
 multi_az:                                    "true"
 name:                                        <computed>
-option_group_name:                           <computed>
+option_group_name:                           "default:postgres-9-6"
 parameter_group_name:                        "test-postgres-production-pg96"
 password:                                    <sensitive>
 port:                                        <computed>
@@ -507,7 +507,7 @@ engine_version:                              "3.2.4"
 maintenance_window:                          <computed>
 node_type:                                   "cache.t2.micro"
 num_cache_nodes:                             "1"
-parameter_group_name:                        "redis-production-params"
+parameter_group_name:                        "redis-production-params32"
 port:                                        "6379"
 replication_group_id:                        <computed>
 security_group_ids.#:                        <computed>
@@ -522,7 +522,7 @@ tags.Environment:                            "production"
 id:                                          <computed>
 description:                                 "redis production env redis cluster param group"
 family:                                      "redis3.2"
-name:                                        "redis-production-params"
+name:                                        "redis-production-params32"
 
 + module.redis.aws_elasticache_subnet_group.mod
 id:                                          <computed>
@@ -532,10 +532,10 @@ subnet_ids.#:                                <computed>
 
 + module.redis.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
-description:                                 "production to redis"
+description:                                 "redis_production to redis"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
-name:                                        "production-redis"
+name:                                        "redis_production-redis"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -544,7 +544,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.redis.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
-description:                                 "redis to production"
+description:                                 "redis to redis_production"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
 egress.482069346.cidr_blocks.0:              "0.0.0.0/0"
@@ -565,7 +565,7 @@ ingress.~743784797.protocol:                 "tcp"
 ingress.~743784797.security_groups.#:        <computed>
 ingress.~743784797.self:                     "false"
 ingress.~743784797.to_port:                  "6379"
-name:                                        "redis-production"
+name:                                        "redis-redis_production"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
 tags.%:                                      "1"
@@ -877,7 +877,7 @@ roles.3356258093:                            "TableXICrossAccountAccessRole"
 + module.trustor.aws_iam_role.mod
 id:                                          <computed>
 arn:                                         <computed>
-assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\n"
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      }\n    }\n  ]\n}"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
 name:                                        "TableXICrossAccountAccessRole"
@@ -902,7 +902,7 @@ roles.2278642087:                            "TXIReadOnlyCrossAccountAccessRole"
 + module.trustor_readonly.aws_iam_role.mod
 id:                                          <computed>
 arn:                                         <computed>
-assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\n"
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      }\n    }\n  ]\n}"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
 name:                                        "TXIReadOnlyCrossAccountAccessRole"
