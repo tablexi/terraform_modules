@@ -1,24 +1,15 @@
 #!/bin/bash
 # This script runs all examples and compares them to the planshots.txt file in the same directory
 # To regenerate planshots.txt run with the environment variable GENERATE_PLANSHOTS=true
+# You may also specify a path for this to run in. For example bin/planshots aws/ec2/ will only
+# look for plan shots in the aws/ec2/ directory and below.
+
+STARTING_PATH=${1-.}
 
 EXIT_STATUS=0
 export AWS_DEFAULT_REGION=us-east-1
 
-# If no arguments given, search for all __examples__ directories
-if [ $# -eq 0 ]; then
-  example_dirs=`find . -type d -name __examples__`
-# Provide a list of __examples__ directories
-else
-  example_dirs="$@"
-fi
-
-for example_dir in $example_dirs; do
-  if [ ! -d "$example_dir" ]; then
-    echo "$example_dir does not seem to be a directory"
-    exit 1
-  fi
-
+for example_dir in `find $STARTING_PATH -type d -name __examples__`; do
   pushd $example_dir > /dev/null
 
   # Work with a clean directory when generating

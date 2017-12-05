@@ -1,20 +1,22 @@
-resource "aws_iam_role" "mod" {
-    name = "${var.trustee_account_name}CrossAccountAccessRole"
-    assume_role_policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::${var.trustee_account_arn}:root"
-      },
-      "Action": "sts:AssumeRole"
+data "aws_iam_policy_document" "mod" {
+  statement {
+    sid = ""
+    actions = [
+      "sts:AssumeRole",
+    ]
+    effect = "Allow"
+    principals {
+      type = "AWS"
+      identifiers = [
+        "arn:aws:iam::${var.trustee_account_arn}:root",
+      ]
     }
-  ]
+  }
 }
-POLICY
+
+resource "aws_iam_role" "mod" {
+  name = "${var.trustee_account_name}CrossAccountAccessRole"
+  assume_role_policy = "${var.assume_role_policy == "" ? data.aws_iam_policy_document.mod.json : var.assume_role_policy}"
 }
 
 resource "aws_iam_policy" "mod" {
