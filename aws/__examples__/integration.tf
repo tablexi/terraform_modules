@@ -100,6 +100,7 @@ module "alb" {
 
   name = "alb"
   env = "prod"
+  subnets = ["${module.subnets.public_subnets}"]
   type = "application"
   vpc_id = "${module.vpc.vpc_id}"
 }

@@ -16,6 +16,8 @@ resource "aws_lb" "mod" {
     "${aws_security_group.sg_on_lb.id}"
   ]
 
+  subnets = ["${var.subnets}"]
+
   tags {
     Name = "${var.name}"
     Environment = "${var.env}"

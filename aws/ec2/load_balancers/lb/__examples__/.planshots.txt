@@ -19,7 +19,8 @@ ip_address_type:            <computed>
 load_balancer_type:         "application"
 name:                       "alb"
 security_groups.#:          <computed>
-subnets.#:                  <computed>
+subnets.#:                  "1"
+subnets.3701497050:         "alb"
 tags.%:                     "2"
 tags.Environment:           "prod"
 tags.Name:                  "alb"
