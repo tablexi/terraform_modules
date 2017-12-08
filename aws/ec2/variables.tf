@@ -15,6 +15,11 @@ variable "ebs_optimized" {
   description = "An Amazon EBS–optimized instance uses an optimized configuration stack and provides additional, dedicated capacity for Amazon EBS I/O. It is only available for certain instance types. http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSOptimized.html"
 }
 
+variable "enable_eip" {
+  default = false
+  description = "Enable EIP for instances"
+}
+
 variable "env" {
   default = "production"
 }
