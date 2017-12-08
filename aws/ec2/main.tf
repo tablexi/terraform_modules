@@ -34,3 +34,9 @@ resource "aws_instance" "mod" {
     ignore_changes = [ "key_name" ]
   }
 }
+
+resource "aws_eip" "mod" {
+  count = "${var.enable_eip ? var.count : 0}"
+  instance = "${element(aws_instance.mod.*.id, count.index)}"
+  vpc = true
+}
