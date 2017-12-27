@@ -19,7 +19,7 @@ variable "name" {}
 
 variable "subnets" {
   description = "List of subnets to attach the LB to"
-  default = []
+  type = "list"
 }
 
 variable "type" {
