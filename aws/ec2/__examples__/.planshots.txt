@@ -29,6 +29,7 @@ public_dns:                                <computed>
 public_ip:                                 <computed>
 root_block_device.#:                       "1"
 root_block_device.0.delete_on_termination: "true"
+root_block_device.0.volume_id:             <computed>
 root_block_device.0.volume_size:           "8"
 root_block_device.0.volume_type:           "gp2"
 security_groups.#:                         <computed>
@@ -63,6 +64,7 @@ public_dns:                                <computed>
 public_ip:                                 <computed>
 root_block_device.#:                       "1"
 root_block_device.0.delete_on_termination: "true"
+root_block_device.0.volume_id:             <computed>
 root_block_device.0.volume_size:           "8"
 root_block_device.0.volume_type:           "gp2"
 security_groups.#:                         <computed>
@@ -98,7 +100,7 @@ vpc:                                       "true"
 
 + module.with-eip.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-55ef662f"
+ami:                                       "ami-cb9ec1b1"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -119,6 +121,7 @@ public_dns:                                <computed>
 public_ip:                                 <computed>
 root_block_device.#:                       "1"
 root_block_device.0.delete_on_termination: "true"
+root_block_device.0.volume_id:             <computed>
 root_block_device.0.volume_size:           "8"
 root_block_device.0.volume_type:           "gp2"
 security_groups.#:                         <computed>
@@ -132,7 +135,7 @@ volume_tags.%:                             <computed>
 
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-55ef662f"
+ami:                                       "ami-cb9ec1b1"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -153,6 +156,7 @@ public_dns:                                <computed>
 public_ip:                                 <computed>
 root_block_device.#:                       "1"
 root_block_device.0.delete_on_termination: "true"
+root_block_device.0.volume_id:             <computed>
 root_block_device.0.volume_size:           "8"
 root_block_device.0.volume_type:           "gp2"
 security_groups.#:                         <computed>
@@ -166,7 +170,7 @@ volume_tags.%:                             <computed>
 
 + module.without-ami.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-55ef662f"
+ami:                                       "ami-cb9ec1b1"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -187,6 +191,7 @@ public_dns:                                <computed>
 public_ip:                                 <computed>
 root_block_device.#:                       "1"
 root_block_device.0.delete_on_termination: "true"
+root_block_device.0.volume_id:             <computed>
 root_block_device.0.volume_size:           "8"
 root_block_device.0.volume_type:           "gp2"
 security_groups.#:                         <computed>
@@ -200,7 +205,7 @@ volume_tags.%:                             <computed>
 
 + module.without-ami.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-55ef662f"
+ami:                                       "ami-cb9ec1b1"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -221,6 +226,7 @@ public_dns:                                <computed>
 public_ip:                                 <computed>
 root_block_device.#:                       "1"
 root_block_device.0.delete_on_termination: "true"
+root_block_device.0.volume_id:             <computed>
 root_block_device.0.volume_size:           "8"
 root_block_device.0.volume_type:           "gp2"
 security_groups.#:                         <computed>
