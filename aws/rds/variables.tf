@@ -129,3 +129,9 @@ variable "username_suffix" {
 variable "vpc_id" {
   description = "VPC id to associate this RDS instance with."
 }
+
+variable "vpc_security_group_ids" {
+  description = "Additional security group ids to associate this RDS instance with."
+  type = "list"
+  default = []
+}

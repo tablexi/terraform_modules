@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script runs all examples and compares them to the planshots.txt file in the same directory
-# To regenerate planshots.txt run with the environment variable GENERATE_PLANSHOTS=true
+# To regenerate planshots.txt run with the environment variable GENERATE=true
 # You may also specify a path for this to run in. For example bin/planshots aws/ec2/ will only
 # look for plan shots in the aws/ec2/ directory and below.
 
