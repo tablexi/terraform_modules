@@ -1,0 +1,20 @@
+
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
++ create
+
+Terraform will perform the following actions:
+
++ module.team.github_team.mod
+id:       <computed>
+name:     "team"
+privacy:  "secret"
+
++ module.team.github_team_membership.maintainer
+id:       <computed>
+role:     "maintainer"
+team_id:  "${github_team.mod.id}"
+username: "maintainer1"
+Plan: 2 to add, 0 to change, 0 to destroy.
+
