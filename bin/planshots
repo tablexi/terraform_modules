@@ -1,0 +1,79 @@
+#!/bin/bash
+# This script runs all examples and compares them to the planshots.txt file in the same directory
+# To regenerate planshots.txt run with the environment variable GENERATE=true
+# You may also specify a path for this to run in. For example bin/planshots aws/ec2/ will only
+# look for plan shots in the aws/ec2/ directory and below.
+
+STARTING_PATH=${1-.}
+
+EXIT_STATUS=0
+export AWS_DEFAULT_REGION=us-east-1
+
+for example_dir in `find $STARTING_PATH -type d -name __examples__`; do
+  pushd $example_dir > /dev/null
+
+  # Work with a clean directory when generating
+  if [[ "$GENERATE" == "true" ]]; then
+    rm -Rf .terraform
+  fi
+
+  terraform init > /dev/null
+
+  # If init successful, run plan
+  if [[ $? -ne 1 ]]; then
+    if [[ "$GENERATE" == "true" ]]; then
+      OUTPUT_LOCATION=".planshots.txt"
+    else
+      OUTPUT_LOCATION=".planshots.tmp.txt"
+      REMOVE_OUTPUT="true"
+    fi
+    terraform plan -refresh=true -detailed-exitcode -no-color > .temp.out
+
+    # Only return diff output.
+    unset diff_output
+    echo "" > $OUTPUT_LOCATION
+    while read -r line; do
+      if [ "$line" == "------------------------------------------------------------------------" ]; then
+        if [ -z ${diff_output+x} ]; then
+          diff_output=true
+          continue
+        else
+          break
+        fi
+      fi
+
+      if [ "$diff_output" == "true" ]; then
+        echo "$line" >> $OUTPUT_LOCATION
+      fi
+    done < .temp.out
+
+    rm .temp.out
+
+    TERRAFORM_PLAN_STATUS=$?
+
+    # Only update the EXIT_STATUS if there are no errors.
+    if [[ $EXIT_STATUS -eq 0 ]]; then
+      EXIT_STATUS=$TERRAFORM_PLAN_STATUS
+    fi
+
+    if [[ $TERRAFORM_PLAN_STATUS -ne 1 ]]; then
+      diff $OUTPUT_LOCATION .planshots.txt
+      DIFF_STATUS=$?
+
+      # Only update the EXIT_STATUS if there are no errors.
+      if [[ $EXIT_STATUS -eq 0 ]]; then
+        EXIT_STATUS=$DIFF_STATUS
+      fi
+    fi
+
+    if [[ "$REMOVE_OUTPUT" == "true" ]]; then
+      rm $OUTPUT_LOCATION
+    fi
+  else
+    EXIT_STATUS=1
+  fi
+  echo "Finished: $example_dir"
+  popd > /dev/null
+done
+
+exit $EXIT_STATUS
