@@ -67,7 +67,7 @@ type:                                        "egress"
 
 + module.ec2.aws_instance.mod[0]
 id:                                          <computed>
-ami:                                         "ami-cb9ec1b1"
+ami:                                         "ami-97785bed"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
@@ -103,7 +103,7 @@ vpc_security_group_ids.#:                    <computed>
 
 + module.ec2.aws_instance.mod[1]
 id:                                          <computed>
-ami:                                         "ami-cb9ec1b1"
+ami:                                         "ami-97785bed"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>

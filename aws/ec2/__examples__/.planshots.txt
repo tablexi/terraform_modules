@@ -100,7 +100,7 @@ vpc:                                       "true"
 
 + module.with-eip.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-cb9ec1b1"
+ami:                                       "ami-97785bed"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -135,7 +135,7 @@ volume_tags.%:                             <computed>
 
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-cb9ec1b1"
+ami:                                       "ami-97785bed"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -170,7 +170,7 @@ volume_tags.%:                             <computed>
 
 + module.without-ami.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-cb9ec1b1"
+ami:                                       "ami-97785bed"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -205,7 +205,7 @@ volume_tags.%:                             <computed>
 
 + module.without-ami.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-cb9ec1b1"
+ami:                                       "ami-97785bed"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
