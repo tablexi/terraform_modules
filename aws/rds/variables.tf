@@ -102,6 +102,11 @@ variable "storage" {
   default = 5
 }
 
+variable "storage_encrypted" {
+  description = "Encryption at rest"
+  default = false
+}
+
 variable "storage_type" {
   description = "Volume type to use.  Options: Standard(magnetic), gp2(SSD), or io1(provisioned IOPS SSD)"
   default = "gp2"
