@@ -321,6 +321,7 @@ replicas.#:                                  <computed>
 resource_id:                                 <computed>
 skip_final_snapshot:                         "false"
 status:                                      <computed>
+storage_encrypted:                           "false"
 storage_type:                                "gp2"
 timezone:                                    <computed>
 username:                                    "test-mysqladmin"
@@ -432,6 +433,7 @@ replicas.#:                                  <computed>
 resource_id:                                 <computed>
 skip_final_snapshot:                         "false"
 status:                                      <computed>
+storage_encrypted:                           "false"
 storage_type:                                "gp2"
 timezone:                                    <computed>
 username:                                    "test-postgresadmin"
