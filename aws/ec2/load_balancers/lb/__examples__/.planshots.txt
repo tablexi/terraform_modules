@@ -7,62 +7,64 @@ Resource actions are indicated with the following symbols:
 Terraform will perform the following actions:
 
 + module.alb.aws_lb.mod
-id:                         <computed>
-access_logs.#:              <computed>
-arn:                        <computed>
-arn_suffix:                 <computed>
-dns_name:                   <computed>
-enable_deletion_protection: "false"
-idle_timeout:               "60"
-internal:                   "false"
-ip_address_type:            <computed>
-load_balancer_type:         "application"
-name:                       "alb"
-security_groups.#:          <computed>
-subnets.#:                  "1"
-subnets.3701497050:         "alb"
-tags.%:                     "2"
-tags.Environment:           "prod"
-tags.Name:                  "alb"
-vpc_id:                     <computed>
-zone_id:                    <computed>
+id:                               <computed>
+access_logs.#:                    <computed>
+arn:                              <computed>
+arn_suffix:                       <computed>
+dns_name:                         <computed>
+enable_cross_zone_load_balancing: "false"
+enable_deletion_protection:       "false"
+enable_http2:                     "true"
+idle_timeout:                     "60"
+internal:                         "false"
+ip_address_type:                  <computed>
+load_balancer_type:               "application"
+name:                             "alb"
+security_groups.#:                <computed>
+subnets.#:                        "1"
+subnets.3701497050:               "alb"
+tags.%:                           "2"
+tags.Environment:                 "prod"
+tags.Name:                        "alb"
+vpc_id:                           <computed>
+zone_id:                          <computed>
 
 + module.alb.aws_security_group.sg_for_access_by_sgs
-id:                         <computed>
-description:                "Managed by Terraform"
-egress.#:                   <computed>
-ingress.#:                  <computed>
-name:                       "alb_prod-alb"
-owner_id:                   <computed>
-revoke_rules_on_delete:     "false"
-tags.%:                     "2"
-tags.Environment:           "prod"
-tags.Name:                  "alb_prod-alb"
-vpc_id:                     "alb"
+id:                               <computed>
+description:                      "Managed by Terraform"
+egress.#:                         <computed>
+ingress.#:                        <computed>
+name:                             "alb_prod-alb"
+owner_id:                         <computed>
+revoke_rules_on_delete:           "false"
+tags.%:                           "2"
+tags.Environment:                 "prod"
+tags.Name:                        "alb_prod-alb"
+vpc_id:                           "alb"
 
 + module.alb.aws_security_group.sg_on_lb
-id:                         <computed>
-description:                "Managed by Terraform"
-egress.#:                   <computed>
-ingress.#:                  <computed>
-name:                       "alb-alb_prod"
-owner_id:                   <computed>
-revoke_rules_on_delete:     "false"
-tags.%:                     "2"
-tags.Environment:           "prod"
-tags.Name:                  "alb-alb_prod"
-vpc_id:                     "alb"
+id:                               <computed>
+description:                      "Managed by Terraform"
+egress.#:                         <computed>
+ingress.#:                        <computed>
+name:                             "alb-alb_prod"
+owner_id:                         <computed>
+revoke_rules_on_delete:           "false"
+tags.%:                           "2"
+tags.Environment:                 "prod"
+tags.Name:                        "alb-alb_prod"
+vpc_id:                           "alb"
 
 + module.alb.aws_security_group_rule.sg_on_lb_egress
-id:                         <computed>
-cidr_blocks.#:              "1"
-cidr_blocks.0:              "0.0.0.0/0"
-from_port:                  "0"
-protocol:                   "-1"
-security_group_id:          "${aws_security_group.sg_on_lb.id}"
-self:                       "false"
-source_security_group_id:   <computed>
-to_port:                    "0"
-type:                       "egress"
+id:                               <computed>
+cidr_blocks.#:                    "1"
+cidr_blocks.0:                    "0.0.0.0/0"
+from_port:                        "0"
+protocol:                         "-1"
+security_group_id:                "${aws_security_group.sg_on_lb.id}"
+self:                             "false"
+source_security_group_id:         <computed>
+to_port:                          "0"
+type:                             "egress"
 Plan: 4 to add, 0 to change, 0 to destroy.
 
