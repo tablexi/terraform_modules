@@ -66,11 +66,12 @@ resource "aws_db_instance" "mod" {
   backup_retention_period = "${var.backup_retention_period}"
   multi_az = "${var.multi_az}"
   vpc_security_group_ids = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
-  db_subnet_group_name = "${local.subnet_group_name}"
+  db_subnet_group_name = "${var.source_db == "" ? local.subnet_group_name : ""}"
   parameter_group_name = "${local.parameter_group_name}"
   option_group_name = "${!local.is_postgres ? local.option_group_name : "default:postgres-${replace(var.engine_version, ".", "-")}"}"
   final_snapshot_identifier = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
+  storage_encrypted = "${var.storage_encrypted}"
   publicly_accessible = true
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"

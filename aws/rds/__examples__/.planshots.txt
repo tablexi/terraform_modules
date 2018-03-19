@@ -72,6 +72,7 @@ replicas.#:                             <computed>
 resource_id:                            <computed>
 skip_final_snapshot:                    "false"
 status:                                 <computed>
+storage_encrypted:                      "false"
 storage_type:                           "gp2"
 timezone:                               <computed>
 username:                               "rds-mysql-option-groupadmin"
@@ -175,6 +176,7 @@ replicas.#:                             <computed>
 resource_id:                            <computed>
 skip_final_snapshot:                    "false"
 status:                                 <computed>
+storage_encrypted:                      "false"
 storage_type:                           "gp2"
 timezone:                               <computed>
 username:                               "rds-mysqladmin"
@@ -287,6 +289,7 @@ replicas.#:                             <computed>
 resource_id:                            <computed>
 skip_final_snapshot:                    "false"
 status:                                 <computed>
+storage_encrypted:                      "false"
 storage_type:                           "gp2"
 timezone:                               <computed>
 username:                               "rds-parameter-group-providedadmin"
@@ -382,6 +385,7 @@ replicas.#:                             <computed>
 resource_id:                            <computed>
 skip_final_snapshot:                    "false"
 status:                                 <computed>
+storage_encrypted:                      "false"
 storage_type:                           "gp2"
 timezone:                               <computed>
 username:                               "rds-postgresadmin"
@@ -417,6 +421,111 @@ tags.Name:                              "rds-postgres_production-rds-pg"
 vpc_id:                                 "rds-postgres"
 
 + module.rds-postgres.aws_security_group.sg_on_rds_instance
+id:                                     <computed>
+description:                            "rds-rds-postgres_production-pg"
+egress.#:                               "1"
+egress.482069346.cidr_blocks.#:         "1"
+egress.482069346.cidr_blocks.0:         "0.0.0.0/0"
+egress.482069346.description:           ""
+egress.482069346.from_port:             "0"
+egress.482069346.ipv6_cidr_blocks.#:    "0"
+egress.482069346.prefix_list_ids.#:     "0"
+egress.482069346.protocol:              "-1"
+egress.482069346.security_groups.#:     "0"
+egress.482069346.self:                  "false"
+egress.482069346.to_port:               "0"
+ingress.#:                              "1"
+ingress.~2994424545.cidr_blocks.#:      "0"
+ingress.~2994424545.description:        ""
+ingress.~2994424545.from_port:          "5432"
+ingress.~2994424545.ipv6_cidr_blocks.#: "0"
+ingress.~2994424545.protocol:           "tcp"
+ingress.~2994424545.security_groups.#:  <computed>
+ingress.~2994424545.self:               "false"
+ingress.~2994424545.to_port:            "5432"
+name:                                   "rds-rds-postgres_production-pg"
+owner_id:                               <computed>
+revoke_rules_on_delete:                 "false"
+tags.%:                                 "1"
+tags.Name:                              "rds-rds-postgres_production-pg"
+vpc_id:                                 "rds-postgres"
+
++ module.read-replica.aws_db_instance.mod
+id:                                     <computed>
+address:                                <computed>
+allocated_storage:                      "5"
+allow_major_version_upgrade:            "true"
+apply_immediately:                      "true"
+arn:                                    <computed>
+auto_minor_version_upgrade:             "true"
+availability_zone:                      <computed>
+backup_retention_period:                "7"
+backup_window:                          <computed>
+ca_cert_identifier:                     <computed>
+character_set_name:                     <computed>
+copy_tags_to_snapshot:                  "false"
+db_subnet_group_name:                   <computed>
+endpoint:                               <computed>
+engine:                                 "postgres"
+engine_version:                         "9.6"
+final_snapshot_identifier:              "rds-postgres-production-postgres-final-snapshot"
+hosted_zone_id:                         <computed>
+identifier:                             "rds-postgres-production-postgres"
+identifier_prefix:                      <computed>
+instance_class:                         "db.t2.medium"
+kms_key_id:                             <computed>
+license_model:                          <computed>
+maintenance_window:                     <computed>
+monitoring_interval:                    "0"
+monitoring_role_arn:                    <computed>
+multi_az:                               "true"
+name:                                   <computed>
+option_group_name:                      "default:postgres-9-6"
+parameter_group_name:                   "rds-postgres-production-pg96"
+password:                               <sensitive>
+port:                                   <computed>
+publicly_accessible:                    "true"
+replicas.#:                             <computed>
+replicate_source_db:                    "primary-db-id"
+resource_id:                            <computed>
+skip_final_snapshot:                    "false"
+status:                                 <computed>
+storage_encrypted:                      "false"
+storage_type:                           "gp2"
+timezone:                               <computed>
+username:                               "rds-postgresadmin"
+vpc_security_group_ids.#:               <computed>
+
++ module.read-replica.aws_db_parameter_group.mod
+id:                                     <computed>
+arn:                                    <computed>
+description:                            "postgres9.6 parameter group for rds-postgres production"
+family:                                 "postgres9.6"
+name:                                   "rds-postgres-production-pg96"
+name_prefix:                            <computed>
+
++ module.read-replica.aws_db_subnet_group.mod
+id:                                     <computed>
+arn:                                    <computed>
+description:                            "rds-postgres production db postgres subnet group"
+name:                                   "rds-postgres-production-pg-sg"
+name_prefix:                            <computed>
+subnet_ids.#:                           "1"
+subnet_ids.1294024653:                  "rds-postgres"
+
++ module.read-replica.aws_security_group.sg_for_access_by_sgs
+id:                                     <computed>
+description:                            "rds-postgres_production-rds-pg"
+egress.#:                               <computed>
+ingress.#:                              <computed>
+name:                                   "rds-postgres_production-rds-pg"
+owner_id:                               <computed>
+revoke_rules_on_delete:                 "false"
+tags.%:                                 "1"
+tags.Name:                              "rds-postgres_production-rds-pg"
+vpc_id:                                 "rds-postgres"
+
++ module.read-replica.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
 description:                            "rds-rds-postgres_production-pg"
 egress.#:                               "1"
@@ -485,6 +594,7 @@ replicas.#:                             <computed>
 resource_id:                            <computed>
 skip_final_snapshot:                    "false"
 status:                                 <computed>
+storage_encrypted:                      "true"
 storage_type:                           "gp2"
 timezone:                               <computed>
 username:                               "sg-spec-postgresadmin"
@@ -548,5 +658,5 @@ revoke_rules_on_delete:                 "false"
 tags.%:                                 "1"
 tags.Name:                              "rds-sg-spec-postgres_production-pg"
 vpc_id:                                 "sg-spec-postgres"
-Plan: 28 to add, 0 to change, 0 to destroy.
+Plan: 33 to add, 0 to change, 0 to destroy.
 

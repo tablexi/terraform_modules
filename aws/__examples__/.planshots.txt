@@ -13,7 +13,9 @@ access_logs.#:                               <computed>
 arn:                                         <computed>
 arn_suffix:                                  <computed>
 dns_name:                                    <computed>
+enable_cross_zone_load_balancing:            "false"
 enable_deletion_protection:                  "false"
+enable_http2:                                "true"
 idle_timeout:                                "60"
 internal:                                    "false"
 ip_address_type:                             <computed>
@@ -67,7 +69,7 @@ type:                                        "egress"
 
 + module.ec2.aws_instance.mod[0]
 id:                                          <computed>
-ami:                                         "ami-97785bed"
+ami:                                         "ami-07fc3cb791f32513e"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
@@ -103,7 +105,7 @@ vpc_security_group_ids.#:                    <computed>
 
 + module.ec2.aws_instance.mod[1]
 id:                                          <computed>
-ami:                                         "ami-97785bed"
+ami:                                         "ami-07fc3cb791f32513e"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
@@ -321,6 +323,7 @@ replicas.#:                                  <computed>
 resource_id:                                 <computed>
 skip_final_snapshot:                         "false"
 status:                                      <computed>
+storage_encrypted:                           "false"
 storage_type:                                "gp2"
 timezone:                                    <computed>
 username:                                    "test-mysqladmin"
@@ -432,6 +435,7 @@ replicas.#:                                  <computed>
 resource_id:                                 <computed>
 skip_final_snapshot:                         "false"
 status:                                      <computed>
+storage_encrypted:                           "false"
 storage_type:                                "gp2"
 timezone:                                    <computed>
 username:                                    "test-postgresadmin"
