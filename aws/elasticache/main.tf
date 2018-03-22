@@ -8,10 +8,11 @@ locals {
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"}"
   port = "${var.port != "" ? var.port : "${var.engine == "redis" ? "6379" : "11211"}"}"
   sg_for_access_by_sgs_id = "${concat(aws_security_group.sg_for_access_by_sgs.*.id, list(""))}"
+  elasticache_replication_group = "${(var.force_replication_group) || (var.num_nodes != 1)}"
 }
 
 resource "aws_elasticache_cluster" "mod" {
-  count = "${(var.num_nodes == 1) ? 1 : 0}"
+  count = "${local.elasticache_replication_group ? 0 : 1}"
   cluster_id = "${local.cluster_name}"
   num_cache_nodes = 1
   engine = "${var.engine}"
@@ -28,7 +29,7 @@ resource "aws_elasticache_cluster" "mod" {
 }
 
 resource "aws_elasticache_replication_group" "mod" {
-  count = "${(var.num_nodes != 1) ? 1 : 0}"
+  count = "${local.elasticache_replication_group ? 1 : 0}"
   replication_group_id = "${local.cluster_name}"
   replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
   number_cache_clusters = "${var.num_nodes}"
@@ -39,6 +40,10 @@ resource "aws_elasticache_replication_group" "mod" {
   parameter_group_name = "${aws_elasticache_parameter_group.mod.id}"
   security_group_ids = ["${aws_security_group.sg_on_elasticache_instance.id}"]
   subnet_group_name = "${aws_elasticache_subnet_group.mod.name}"
+
+  at_rest_encryption_enabled = "${var.at_rest_encryption_enabled}"
+  transit_encryption_enabled = "${var.transit_encryption_enabled}"
+
   tags = {
     Environment = "${var.env}"
     Description = "${var.name} ${var.env} ${var.engine} instance"

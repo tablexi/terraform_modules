@@ -1,3 +1,7 @@
+variable "at_rest_encryption_enabled" {
+  default = false
+}
+
 variable "create_parameter_group" {
   default = true
   description = "Create a parameter group in this module"
@@ -14,6 +18,10 @@ variable "engine_version" {
 
 variable "env" {
   default = "production"
+}
+
+variable "force_replication_group" {
+  default = false
 }
 
 variable "name" {}
@@ -47,6 +55,10 @@ variable "sg_for_access_ids" {
 
 variable "subnets" {
   type = "list"
+}
+
+variable "transit_encryption_enabled" {
+  default = false
 }
 
 variable "vpc_id" {}
