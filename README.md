@@ -19,6 +19,8 @@ For testing of these modules we created a technique called `planshots` (based on
 * Force's developers to see the ramifications of the changes to modules that they edit
 * Allows reviewers to see the `terraform plan` that gets caused by changes when doing PR review
 
+Running the planshots presumes that you have at least some AWS credentials setup in your environment. [Here](https://www.terraform.io/docs/providers/aws/#environment-variables) are some instructions on how to do this. No changes will be made to the AWS account in question.
+
 ---
 Running Planshots:
 
