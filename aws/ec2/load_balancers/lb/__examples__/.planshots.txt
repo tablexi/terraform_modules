@@ -31,6 +31,7 @@ zone_id:                          <computed>
 
 + module.alb.aws_security_group.sg_for_access_by_sgs
 id:                               <computed>
+arn:                              <computed>
 description:                      "Managed by Terraform"
 egress.#:                         <computed>
 ingress.#:                        <computed>
@@ -44,6 +45,7 @@ vpc_id:                           "alb"
 
 + module.alb.aws_security_group.sg_on_lb
 id:                               <computed>
+arn:                              <computed>
 description:                      "Managed by Terraform"
 egress.#:                         <computed>
 ingress.#:                        <computed>

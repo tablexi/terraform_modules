@@ -1,4 +1,5 @@
 
+stopping operation...
 
 An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
@@ -14,6 +15,7 @@ availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
+get_password_data:                         "false"
 instance_state:                            <computed>
 instance_type:                             "t2.small"
 ipv6_address_count:                        <computed>
@@ -21,6 +23,7 @@ ipv6_addresses.#:                          <computed>
 key_name:                                  "with-ami"
 network_interface.#:                       <computed>
 network_interface_id:                      <computed>
+password_data:                             <computed>
 placement_group:                           <computed>
 primary_network_interface_id:              <computed>
 private_dns:                               <computed>
@@ -49,6 +52,7 @@ availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
+get_password_data:                         "false"
 instance_state:                            <computed>
 instance_type:                             "t2.small"
 ipv6_address_count:                        <computed>
@@ -56,6 +60,7 @@ ipv6_addresses.#:                          <computed>
 key_name:                                  "with-ami"
 network_interface.#:                       <computed>
 network_interface_id:                      <computed>
+password_data:                             <computed>
 placement_group:                           <computed>
 primary_network_interface_id:              <computed>
 private_dns:                               <computed>
@@ -106,6 +111,7 @@ availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
+get_password_data:                         "false"
 instance_state:                            <computed>
 instance_type:                             "t2.small"
 ipv6_address_count:                        <computed>
@@ -113,6 +119,7 @@ ipv6_addresses.#:                          <computed>
 key_name:                                  "without-ami"
 network_interface.#:                       <computed>
 network_interface_id:                      <computed>
+password_data:                             <computed>
 placement_group:                           <computed>
 primary_network_interface_id:              <computed>
 private_dns:                               <computed>
@@ -141,6 +148,7 @@ availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
+get_password_data:                         "false"
 instance_state:                            <computed>
 instance_type:                             "t2.small"
 ipv6_address_count:                        <computed>
@@ -148,6 +156,7 @@ ipv6_addresses.#:                          <computed>
 key_name:                                  "without-ami"
 network_interface.#:                       <computed>
 network_interface_id:                      <computed>
+password_data:                             <computed>
 placement_group:                           <computed>
 primary_network_interface_id:              <computed>
 private_dns:                               <computed>
@@ -176,6 +185,7 @@ availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
+get_password_data:                         "false"
 instance_state:                            <computed>
 instance_type:                             "t2.small"
 ipv6_address_count:                        <computed>
@@ -183,6 +193,7 @@ ipv6_addresses.#:                          <computed>
 key_name:                                  "without-ami"
 network_interface.#:                       <computed>
 network_interface_id:                      <computed>
+password_data:                             <computed>
 placement_group:                           <computed>
 primary_network_interface_id:              <computed>
 private_dns:                               <computed>
@@ -211,6 +222,7 @@ availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
+get_password_data:                         "false"
 instance_state:                            <computed>
 instance_type:                             "t2.small"
 ipv6_address_count:                        <computed>
@@ -218,6 +230,7 @@ ipv6_addresses.#:                          <computed>
 key_name:                                  "without-ami"
 network_interface.#:                       <computed>
 network_interface_id:                      <computed>
+password_data:                             <computed>
 placement_group:                           <computed>
 primary_network_interface_id:              <computed>
 private_dns:                               <computed>

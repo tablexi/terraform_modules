@@ -8,6 +8,7 @@ Terraform will perform the following actions:
 
 + module.basic_ssh.aws_security_group.mod
 id:                                    <computed>
+arn:                                   <computed>
 description:                           "ssh-prod"
 egress.#:                              "1"
 egress.482069346.cidr_blocks.#:        "1"

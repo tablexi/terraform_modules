@@ -46,6 +46,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.basic_redis.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis_production to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
@@ -58,6 +59,7 @@ vpc_id:                                       "redis"
 
 + module.basic_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
@@ -127,6 +129,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.encrypted_redis.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis_production to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
@@ -139,6 +142,7 @@ vpc_id:                                       "redis"
 
 + module.encrypted_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
@@ -207,6 +211,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.external_security_group_access.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis_production to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
@@ -219,6 +224,7 @@ vpc_id:                                       "redis"
 
 + module.external_security_group_access.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
@@ -287,6 +293,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.external_without_internal_sg.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
@@ -357,6 +364,7 @@ subnet_ids.2066075671:                        "redis"
 
 + module.force_replication_group_redis.aws_security_group.sg_for_access_by_sgs
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis_production to redis"
 egress.#:                                     <computed>
 ingress.#:                                    <computed>
@@ -369,6 +377,7 @@ vpc_id:                                       "redis"
 
 + module.force_replication_group_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
+arn:                                          <computed>
 description:                                  "redis to redis_production"
 egress.#:                                     "1"
 egress.482069346.cidr_blocks.#:               "1"
