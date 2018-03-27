@@ -31,6 +31,7 @@ zone_id:                                     <computed>
 
 + module.alb.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "Managed by Terraform"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
@@ -44,6 +45,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.alb.aws_security_group.sg_on_lb
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "Managed by Terraform"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
@@ -67,6 +69,31 @@ source_security_group_id:                    <computed>
 to_port:                                     "0"
 type:                                        "egress"
 
++ module.datadog.aws_iam_policy.mod
+id:                                          <computed>
+arn:                                         <computed>
+description:                                 "DataDogReadOnlyPolicy"
+name:                                        "DataDogReadOnlyPolicy"
+path:                                        "/"
+policy:                                      "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"autoscaling:Describe*\",\n        \"budgets:ViewBudget\",\n        \"cloudfront:GetDistributionConfig\",\n        \"cloudfront:ListDistributions\",\n        \"cloudtrail:DescribeTrails\",\n        \"cloudtrail:GetTrailStatus\",\n        \"cloudwatch:Describe*\",\n        \"cloudwatch:Get*\",\n        \"cloudwatch:List*\",\n        \"codedeploy:List*\",\n        \"codedeploy:BatchGet*\",\n        \"directconnect:Describe*\",\n        \"dynamodb:List*\",\n        \"dynamodb:Describe*\",\n        \"ec2:Describe*\",\n        \"ecs:Describe*\",\n        \"ecs:List*\",\n        \"elasticache:Describe*\",\n        \"elasticache:List*\",\n        \"elasticfilesystem:DescribeFileSystems\",\n        \"elasticfilesystem:DescribeTags\",\n        \"elasticloadbalancing:Describe*\",\n        \"elasticmapreduce:List*\",\n        \"elasticmapreduce:Describe*\",\n        \"es:ListTags\",\n        \"es:ListDomainNames\",\n        \"es:DescribeElasticsearchDomains\",\n        \"health:DescribeEvents\",\n        \"health:DescribeEventDetails\",\n        \"health:DescribeAffectedEntities\",\n        \"kinesis:List*\",\n        \"kinesis:Describe*\",\n        \"lambda:AddPermission\",\n        \"lambda:GetPolicy\",\n        \"lambda:List*\",\n        \"lambda:RemovePermission\",\n        \"logs:Get*\",\n        \"logs:Describe*\",\n        \"logs:FilterLogEvents\",\n        \"logs:TestMetricFilter\",\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"redshift:DescribeClusters\",\n        \"redshift:DescribeLoggingStatus\",\n        \"route53:List*\",\n        \"s3:GetBucketLogging\",\n        \"s3:GetBucketLocation\",\n        \"s3:GetBucketNotification\",\n        \"s3:GetBucketTagging\",\n        \"s3:ListAllMyBuckets\",\n        \"s3:PutBucketNotification\",\n        \"ses:Get*\",\n        \"sns:List*\",\n        \"sns:Publish\",\n        \"sqs:ListQueues\",\n        \"support:*\",\n        \"tag:getResources\",\n        \"tag:getTagKeys\",\n        \"tag:getTagValues\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+
++ module.datadog.aws_iam_policy_attachment.mod
+id:                                          <computed>
+name:                                        "Allow Datadog PolicyAccess via Role"
+policy_arn:                                  "${aws_iam_policy.mod.arn}"
+roles.#:                                     "1"
+roles.2812037976:                            "DataDogReadOnlyRole"
+
++ module.datadog.aws_iam_role.mod
+id:                                          <computed>
+arn:                                         <computed>
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": {\n    \"Effect\": \"Allow\",\n    \"Principal\": { \"AWS\": \"arn:aws:iam::464622532012:root\" },\n    \"Action\": \"sts:AssumeRole\",\n    \"Condition\": {\n      \"StringEquals\": {\n        \"sts:ExternalId\": \"123456789\"\n      }\n    }\n  }\n}\n"
+create_date:                                 <computed>
+force_detach_policies:                       "false"
+name:                                        "DataDogReadOnlyRole"
+path:                                        "/"
+unique_id:                                   <computed>
+
 + module.ec2.aws_instance.mod[0]
 id:                                          <computed>
 ami:                                         "ami-07fc3cb791f32513e"
@@ -75,6 +102,7 @@ availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
 ebs_optimized:                               "false"
 ephemeral_block_device.#:                    <computed>
+get_password_data:                           "false"
 instance_state:                              <computed>
 instance_type:                               "t2.small"
 ipv6_address_count:                          <computed>
@@ -82,6 +110,7 @@ ipv6_addresses.#:                            <computed>
 key_name:                                    "ec2-key"
 network_interface.#:                         <computed>
 network_interface_id:                        <computed>
+password_data:                               <computed>
 placement_group:                             <computed>
 primary_network_interface_id:                <computed>
 private_dns:                                 <computed>
@@ -111,6 +140,7 @@ availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
 ebs_optimized:                               "false"
 ephemeral_block_device.#:                    <computed>
+get_password_data:                           "false"
 instance_state:                              <computed>
 instance_type:                               "t2.small"
 ipv6_address_count:                          <computed>
@@ -118,6 +148,7 @@ ipv6_addresses.#:                            <computed>
 key_name:                                    "ec2-key"
 network_interface.#:                         <computed>
 network_interface_id:                        <computed>
+password_data:                               <computed>
 placement_group:                             <computed>
 primary_network_interface_id:                <computed>
 private_dns:                                 <computed>
@@ -244,6 +275,7 @@ subnet_ids.#:                                <computed>
 
 + module.memcached.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "memcached_production to memcached"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
@@ -256,6 +288,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.memcached.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "memcached to memcached_production"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
@@ -356,6 +389,7 @@ subnet_ids.#:                                <computed>
 
 + module.mysql.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "test-mysql_production-rds-mysql"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
@@ -368,6 +402,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.mysql.aws_security_group.sg_on_rds_instance
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "rds-test-mysql_production-mysql"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
@@ -459,6 +494,7 @@ subnet_ids.#:                                <computed>
 
 + module.postgres.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "test-postgres_production-rds-pg"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
@@ -471,6 +507,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.postgres.aws_security_group.sg_on_rds_instance
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "rds-test-postgres_production-pg"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
@@ -538,6 +575,7 @@ subnet_ids.#:                                <computed>
 
 + module.redis.aws_security_group.sg_for_access_by_sgs
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "redis_production to redis"
 egress.#:                                    <computed>
 ingress.#:                                   <computed>
@@ -550,6 +588,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.redis.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "redis to redis_production"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
@@ -580,6 +619,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.ssh.aws_security_group.mod
 id:                                          <computed>
+arn:                                         <computed>
 description:                                 "ssh-prod"
 egress.#:                                    "1"
 egress.482069346.cidr_blocks.#:              "1"
@@ -939,5 +979,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 69 to add, 1 to change, 0 to destroy.
+Plan: 72 to add, 1 to change, 0 to destroy.
 

@@ -25,6 +25,7 @@ name_prefix:                            <computed>
 
 + aws_security_group.specified_sg
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "Managed by Terraform"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -97,6 +98,7 @@ subnet_ids.240054867:                   "rds-mysql-option-group"
 
 + module.rds-mysql-option-group.aws_security_group.sg_for_access_by_sgs
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-mysql-option-group_production-rds-mysql"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -109,6 +111,7 @@ vpc_id:                                 "rds-mysql-option-group"
 
 + module.rds-mysql-option-group.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-rds-mysql-option-group_production-mysql"
 egress.#:                               "1"
 egress.482069346.cidr_blocks.#:         "1"
@@ -210,6 +213,7 @@ subnet_ids.1498243781:                  "rds-mysql"
 
 + module.rds-mysql.aws_security_group.sg_for_access_by_sgs
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-mysql_production-rds-mysql"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -222,6 +226,7 @@ vpc_id:                                 "rds-mysql"
 
 + module.rds-mysql.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-rds-mysql_production-mysql"
 egress.#:                               "1"
 egress.482069346.cidr_blocks.#:         "1"
@@ -306,6 +311,7 @@ subnet_ids.2855652957:                  "rds-parameter-group-provided"
 
 + module.rds-parameter-group-provided.aws_security_group.sg_for_access_by_sgs
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-parameter-group-provided_production-rds-pg"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -318,6 +324,7 @@ vpc_id:                                 "rds-parameter-group-provided"
 
 + module.rds-parameter-group-provided.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-rds-parameter-group-provided_production-pg"
 egress.#:                               "1"
 egress.482069346.cidr_blocks.#:         "1"
@@ -410,6 +417,7 @@ subnet_ids.1294024653:                  "rds-postgres"
 
 + module.rds-postgres.aws_security_group.sg_for_access_by_sgs
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-postgres_production-rds-pg"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -422,6 +430,7 @@ vpc_id:                                 "rds-postgres"
 
 + module.rds-postgres.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-rds-postgres_production-pg"
 egress.#:                               "1"
 egress.482069346.cidr_blocks.#:         "1"
@@ -515,6 +524,7 @@ subnet_ids.1294024653:                  "rds-postgres"
 
 + module.read-replica.aws_security_group.sg_for_access_by_sgs
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-postgres_production-rds-pg"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -527,6 +537,7 @@ vpc_id:                                 "rds-postgres"
 
 + module.read-replica.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-rds-postgres_production-pg"
 egress.#:                               "1"
 egress.482069346.cidr_blocks.#:         "1"
@@ -619,6 +630,7 @@ subnet_ids.2187667355:                  "sg-spec-postgres"
 
 + module.sg-spec-postgres.aws_security_group.sg_for_access_by_sgs
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "sg-spec-postgres_production-rds-pg"
 egress.#:                               <computed>
 ingress.#:                              <computed>
@@ -631,6 +643,7 @@ vpc_id:                                 "sg-spec-postgres"
 
 + module.sg-spec-postgres.aws_security_group.sg_on_rds_instance
 id:                                     <computed>
+arn:                                    <computed>
 description:                            "rds-sg-spec-postgres_production-pg"
 egress.#:                               "1"
 egress.482069346.cidr_blocks.#:         "1"

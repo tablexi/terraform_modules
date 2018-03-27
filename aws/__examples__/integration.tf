@@ -40,6 +40,12 @@ module "trustee" {
   trustee_group_name = "Operations"
 }
 
+module "datadog" {
+  source = "../iam/datadog"
+
+  datadog_external_id = "123456789"
+}
+
 module "postgres" {
   source = "../rds"
 
