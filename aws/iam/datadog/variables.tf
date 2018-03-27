@@ -4,11 +4,11 @@ variable "datadog_external_id" {
 }
 
 variable "datadog_policy_name" {
-  default     = "DatadogReadOnlyPolicy"
+  default     = "DataDogReadOnlyPolicy"
   description = "AWS policy name"
 }
 
 variable "datadog_role_name" {
-  default     = "DataDogReadonlyRole"
+  default     = "DataDogReadOnlyRole"
   description = "AWS Role name"
 }
