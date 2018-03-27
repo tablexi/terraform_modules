@@ -85,7 +85,7 @@ resource "aws_iam_role" "mod" {
   "Version": "2012-10-17",
   "Statement": {
     "Effect": "Allow",
-    "Principal": { "AWS": "arn:aws:iam::${var.datadog_aws_account}:root" },
+    "Principal": { "AWS": "arn:aws:iam::464622532012:root" },
     "Action": "sts:AssumeRole",
     "Condition": {
       "StringEquals": {
