@@ -72,25 +72,25 @@ type:                                        "egress"
 + module.datadog.aws_iam_policy.mod
 id:                                          <computed>
 arn:                                         <computed>
-description:                                 "DatadogReadOnlyPolicy"
-name:                                        "DatadogReadOnlyPolicy"
+description:                                 "DataDogReadOnlyPolicy"
+name:                                        "DataDogReadOnlyPolicy"
 path:                                        "/"
-policy:                                      "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"autoscaling:Describe*\",\n        \"cloudtrail:DescribeTrails\",\n        \"cloudtrail:GetTrailStatus\",\n        \"cloudwatch:Describe*\",\n        \"cloudwatch:Get*\",\n        \"cloudwatch:List*\",\n        \"ec2:Describe*\",\n        \"ec2:Get*\",\n        \"ecs:Describe*\",\n        \"ecs:List*\",\n        \"elasticache:Describe*\",\n        \"elasticache:List*\",\n        \"elasticloadbalancing:Describe*\",\n        \"elasticmapreduce:List*\",\n        \"iam:Get*\",\n        \"iam:List*\",\n        \"kinesis:Get*\",\n        \"kinesis:List*\",\n        \"kinesis:Describe*\",\n        \"logs:Get*\",\n        \"logs:Describe*\",\n        \"logs:TestMetricFilter\",\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"route53:List*\",\n        \"s3:GetBucketTagging\",\n        \"ses:Get*\",\n        \"ses:List*\",\n        \"sns:List*\",\n        \"sns:Publish\",\n        \"sqs:GetQueueAttributes\",\n        \"sqs:ListQueues\",\n        \"sqs:ReceiveMessage\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
+policy:                                      "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"autoscaling:Describe*\",\n        \"budgets:ViewBudget\",\n        \"cloudfront:GetDistributionConfig\",\n        \"cloudfront:ListDistributions\",\n        \"cloudtrail:DescribeTrails\",\n        \"cloudtrail:GetTrailStatus\",\n        \"cloudwatch:Describe*\",\n        \"cloudwatch:Get*\",\n        \"cloudwatch:List*\",\n        \"codedeploy:List*\",\n        \"codedeploy:BatchGet*\",\n        \"directconnect:Describe*\",\n        \"dynamodb:List*\",\n        \"dynamodb:Describe*\",\n        \"ec2:Describe*\",\n        \"ecs:Describe*\",\n        \"ecs:List*\",\n        \"elasticache:Describe*\",\n        \"elasticache:List*\",\n        \"elasticfilesystem:DescribeFileSystems\",\n        \"elasticfilesystem:DescribeTags\",\n        \"elasticloadbalancing:Describe*\",\n        \"elasticmapreduce:List*\",\n        \"elasticmapreduce:Describe*\",\n        \"es:ListTags\",\n        \"es:ListDomainNames\",\n        \"es:DescribeElasticsearchDomains\",\n        \"health:DescribeEvents\",\n        \"health:DescribeEventDetails\",\n        \"health:DescribeAffectedEntities\",\n        \"kinesis:List*\",\n        \"kinesis:Describe*\",\n        \"lambda:AddPermission\",\n        \"lambda:GetPolicy\",\n        \"lambda:List*\",\n        \"lambda:RemovePermission\",\n        \"logs:Get*\",\n        \"logs:Describe*\",\n        \"logs:FilterLogEvents\",\n        \"logs:TestMetricFilter\",\n        \"rds:Describe*\",\n        \"rds:List*\",\n        \"redshift:DescribeClusters\",\n        \"redshift:DescribeLoggingStatus\",\n        \"route53:List*\",\n        \"s3:GetBucketLogging\",\n        \"s3:GetBucketLocation\",\n        \"s3:GetBucketNotification\",\n        \"s3:GetBucketTagging\",\n        \"s3:ListAllMyBuckets\",\n        \"s3:PutBucketNotification\",\n        \"ses:Get*\",\n        \"sns:List*\",\n        \"sns:Publish\",\n        \"sqs:ListQueues\",\n        \"support:*\",\n        \"tag:getResources\",\n        \"tag:getTagKeys\",\n        \"tag:getTagValues\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"*\"\n    }\n  ]\n}\n"
 
 + module.datadog.aws_iam_policy_attachment.mod
 id:                                          <computed>
 name:                                        "Allow Datadog PolicyAccess via Role"
 policy_arn:                                  "${aws_iam_policy.mod.arn}"
 roles.#:                                     "1"
-roles.1592404238:                            "DataDogReadonlyRole"
+roles.2812037976:                            "DataDogReadOnlyRole"
 
 + module.datadog.aws_iam_role.mod
 id:                                          <computed>
 arn:                                         <computed>
-assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": {\n    \"Effect\": \"Allow\",\n    \"Principal\": { \"AWS\": \"arn:aws:iam::464622532012:root\" },\n    \"Action\": \"sts:AssumeRole\",\n    \"Condition\": { \"StringEquals\": { \"sts:ExternalId\": \"123456789\" } }\n  }\n}\n"
+assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": {\n    \"Effect\": \"Allow\",\n    \"Principal\": { \"AWS\": \"arn:aws:iam::464622532012:root\" },\n    \"Action\": \"sts:AssumeRole\",\n    \"Condition\": {\n      \"StringEquals\": {\n        \"sts:ExternalId\": \"123456789\"\n      }\n    }\n  }\n}\n"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
-name:                                        "DataDogReadonlyRole"
+name:                                        "DataDogReadOnlyRole"
 path:                                        "/"
 unique_id:                                   <computed>
 
