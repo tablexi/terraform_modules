@@ -87,7 +87,11 @@ resource "aws_iam_role" "mod" {
     "Effect": "Allow",
     "Principal": { "AWS": "arn:aws:iam::${var.datadog_aws_account}:root" },
     "Action": "sts:AssumeRole",
-    "Condition": { "StringEquals": { "sts:ExternalId": "${var.datadog_external_id}" } }
+    "Condition": {
+      "StringEquals": {
+        "sts:ExternalId": "${var.datadog_external_id}"
+      }
+    }
   }
 }
 JSON
