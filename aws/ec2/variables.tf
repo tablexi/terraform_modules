@@ -55,3 +55,8 @@ variable "vpc_security_group_ids" {
 variable "name" {
   description = "The name of the instance. This will be appended with the count number. IE test-app01."
 }
+
+variable "monitoring" {
+  default = false
+  description = "If true, the launched EC2 instance will have detailed monitoring enabled."
+}

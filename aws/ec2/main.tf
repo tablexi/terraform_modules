@@ -18,6 +18,7 @@ resource "aws_instance" "mod" {
   vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
   subnet_id = "${element(var.subnets, count.index)}"
   associate_public_ip_address = "${var.associate_public_ip_address}"
+  monitoring = "${var.monitoring}"
 
   tags {
     Name = "${format("%s%02d", var.name, count.index + var.name_tag_starting_count)}"
