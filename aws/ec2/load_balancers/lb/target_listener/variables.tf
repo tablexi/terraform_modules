@@ -30,7 +30,7 @@ variable "create_listener" {
 
 variable "deregistration_delay" {
   description = "The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused"
-  default = 300
+  default = 30
 }
 variable "health_check" {
   description = "Map of target health check parameters"
