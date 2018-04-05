@@ -22,6 +22,7 @@ ip_address_type:                             <computed>
 load_balancer_type:                          "application"
 name:                                        "alb"
 security_groups.#:                           <computed>
+subnet_mapping.#:                            <computed>
 subnets.#:                                   <computed>
 tags.%:                                      "2"
 tags.Environment:                            "prod"
@@ -185,7 +186,7 @@ ssl_policy:                                  <computed>
 id:                                          <computed>
 arn:                                         <computed>
 arn_suffix:                                  <computed>
-deregistration_delay:                        "300"
+deregistration_delay:                        "30"
 health_check.#:                              "1"
 health_check.0.healthy_threshold:            "3"
 health_check.0.interval:                     "30"

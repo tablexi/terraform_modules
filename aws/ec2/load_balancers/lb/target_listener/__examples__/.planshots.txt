@@ -20,7 +20,7 @@ ssl_policy:                         <computed>
 id:                                 <computed>
 arn:                                <computed>
 arn_suffix:                         <computed>
-deregistration_delay:               "300"
+deregistration_delay:               "30"
 health_check.#:                     "1"
 health_check.0.healthy_threshold:   "3"
 health_check.0.interval:            "30"
@@ -80,7 +80,7 @@ ssl_policy:                         "ELBSecurityPolicy-2016-08"
 id:                                 <computed>
 arn:                                <computed>
 arn_suffix:                         <computed>
-deregistration_delay:               "300"
+deregistration_delay:               "30"
 health_check.#:                     "1"
 health_check.0.healthy_threshold:   "3"
 health_check.0.interval:            "30"
@@ -142,7 +142,7 @@ priority:                           "100"
 id:                                 <computed>
 arn:                                <computed>
 arn_suffix:                         <computed>
-deregistration_delay:               "300"
+deregistration_delay:               "30"
 health_check.#:                     "1"
 health_check.0.healthy_threshold:   "3"
 health_check.0.interval:            "30"
