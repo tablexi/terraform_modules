@@ -9,7 +9,9 @@ STARTING_PATH=${1-.}
 EXIT_STATUS=0
 export AWS_DEFAULT_REGION=us-east-1
 
-for example_dir in `find $STARTING_PATH -type d -name __examples__`; do
+EXAMPLES_DIRS=$(find $STARTING_PATH -type d -name __examples__ | sort)
+
+for example_dir in $EXAMPLES_DIRS; do
   pushd $example_dir > /dev/null
 
   # Work with a clean directory when generating
