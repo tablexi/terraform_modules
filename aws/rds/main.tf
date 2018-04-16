@@ -72,7 +72,7 @@ resource "aws_db_instance" "mod" {
   final_snapshot_identifier = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
   storage_encrypted = "${var.storage_encrypted}"
-  publicly_accessible = true
+  publicly_accessible = "${var.publicly_accessible}"
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
   apply_immediately = "${var.apply_immediately}"

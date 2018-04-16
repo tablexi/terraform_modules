@@ -82,6 +82,11 @@ variable "port" {
   default = ""
 }
 
+variable "publicly_accessible" {
+  description = "Bool to control if instance is publicly accessible."
+  default = true
+}
+
 variable "sg_cidr_blocks" {
   description = "cidr_blocks to give RDS port access to."
   default = []
