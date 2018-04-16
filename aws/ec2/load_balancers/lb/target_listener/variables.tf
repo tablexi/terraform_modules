@@ -32,11 +32,6 @@ variable "health_check" {
   default = {}
 }
 
-variable "listener_arn" {
-  description = "If creating a LB listener rule, provide the ARN of the LB listener"
-  default = ""
-}
-
 variable "listener_rule" {
   description = "Map of listener rule parameters"
   default = {}
