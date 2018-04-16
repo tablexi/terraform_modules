@@ -13,7 +13,6 @@ access_logs.#:                               <computed>
 arn:                                         <computed>
 arn_suffix:                                  <computed>
 dns_name:                                    <computed>
-enable_cross_zone_load_balancing:            "false"
 enable_deletion_protection:                  "false"
 enable_http2:                                "true"
 idle_timeout:                                "60"
@@ -91,6 +90,7 @@ arn:                                         <computed>
 assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": {\n    \"Effect\": \"Allow\",\n    \"Principal\": { \"AWS\": \"arn:aws:iam::464622532012:root\" },\n    \"Action\": \"sts:AssumeRole\",\n    \"Condition\": {\n      \"StringEquals\": {\n        \"sts:ExternalId\": \"123456789\"\n      }\n    }\n  }\n}\n"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
+max_session_duration:                        "3600"
 name:                                        "DataDogReadOnlyRole"
 path:                                        "/"
 unique_id:                                   <computed>
@@ -927,6 +927,7 @@ arn:                                         <computed>
 assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      }\n    }\n  ]\n}"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
+max_session_duration:                        "3600"
 name:                                        "TableXICrossAccountAccessRole"
 path:                                        "/"
 unique_id:                                   <computed>
@@ -952,6 +953,7 @@ arn:                                         <computed>
 assume_role_policy:                          "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Sid\": \"\",\n      \"Effect\": \"Allow\",\n      \"Action\": \"sts:AssumeRole\",\n      \"Principal\": {\n        \"AWS\": \"arn:aws:iam::000000000000:root\"\n      }\n    }\n  ]\n}"
 create_date:                                 <computed>
 force_detach_policies:                       "false"
+max_session_duration:                        "3600"
 name:                                        "TXIReadOnlyCrossAccountAccessRole"
 path:                                        "/"
 unique_id:                                   <computed>

@@ -100,6 +100,7 @@ apply_immediately:                            <computed>
 at_rest_encryption_enabled:                   "true"
 auto_minor_version_upgrade:                   "true"
 automatic_failover_enabled:                   "false"
+cluster_mode.#:                               <computed>
 configuration_endpoint_address:               <computed>
 engine:                                       "redis"
 engine_version:                               "3.2.6"
@@ -335,6 +336,7 @@ apply_immediately:                            <computed>
 at_rest_encryption_enabled:                   "false"
 auto_minor_version_upgrade:                   "true"
 automatic_failover_enabled:                   "false"
+cluster_mode.#:                               <computed>
 configuration_endpoint_address:               <computed>
 engine:                                       "redis"
 engine_version:                               "2.8.17"
