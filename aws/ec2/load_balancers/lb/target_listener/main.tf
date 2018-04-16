@@ -9,11 +9,6 @@ locals {
     unhealthy_threshold = 3
     matcher = "200"
   }
-  default_listener_rule = {
-    priority = 100
-    condition_field = ""
-    condition_value = ""
-  }
 }
 
 locals {
