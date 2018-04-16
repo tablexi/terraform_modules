@@ -23,11 +23,6 @@ variable "sg_on_lb_source_ids" {
   default = []
 }
 
-variable "create_listener" {
-  description = "If true, create a LB listener or, if false, create an LB listener rule"
-  default = true
-}
-
 variable "deregistration_delay" {
   description = "The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused"
   default = 30
