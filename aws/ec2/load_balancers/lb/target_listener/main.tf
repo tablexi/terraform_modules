@@ -18,7 +18,6 @@ locals {
 
 locals {
   health_check = "${merge(local.default_health_check, var.health_check)}"
-  listener_rule = "${merge(local.default_listener_rule, var.listener_rule)}"
 }
 
 resource "aws_lb_target_group" "mod" {
