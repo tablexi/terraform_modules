@@ -32,11 +32,6 @@ variable "health_check" {
   default = {}
 }
 
-variable "listener_rule" {
-  description = "Map of listener rule parameters"
-  default = {}
-}
-
 variable "lb_arn" {
   description = "The ARN of the load balancer"
   default = ""
