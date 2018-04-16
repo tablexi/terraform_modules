@@ -27,6 +27,7 @@ arn:                   <computed>
 assume_role_policy:    "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": {\n    \"Effect\": \"Allow\",\n    \"Principal\": { \"AWS\": \"arn:aws:iam::464622532012:root\" },\n    \"Action\": \"sts:AssumeRole\",\n    \"Condition\": {\n      \"StringEquals\": {\n        \"sts:ExternalId\": \"123456789\"\n      }\n    }\n  }\n}\n"
 create_date:           <computed>
 force_detach_policies: "false"
+max_session_duration:  "3600"
 name:                  "DataDogReadOnlyRole"
 path:                  "/"
 unique_id:             <computed>
