@@ -121,7 +121,7 @@ public_ip:                                   <computed>
 root_block_device.#:                         "1"
 root_block_device.0.delete_on_termination:   "true"
 root_block_device.0.volume_id:               <computed>
-root_block_device.0.volume_size:             "8"
+root_block_device.0.volume_size:             "16"
 root_block_device.0.volume_type:             "gp2"
 security_groups.#:                           <computed>
 source_dest_check:                           "true"
@@ -159,7 +159,7 @@ public_ip:                                   <computed>
 root_block_device.#:                         "1"
 root_block_device.0.delete_on_termination:   "true"
 root_block_device.0.volume_id:               <computed>
-root_block_device.0.volume_size:             "8"
+root_block_device.0.volume_size:             "16"
 root_block_device.0.volume_type:             "gp2"
 security_groups.#:                           <computed>
 source_dest_check:                           "true"
