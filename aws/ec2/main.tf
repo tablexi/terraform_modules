@@ -1,18 +1,16 @@
 data "aws_ami" "mod" {
-  count = "${var.ami == "" ? 1 : 0}"
   most_recent = true
+  owners      = ["amazon"]
 
   filter {
-    name = "name"
+    name   = "name"
     values = ["amzn-ami-hvm-*x86_64-gp2"]
   }
-
-  owners = ["amazon"]
 }
 
 resource "aws_instance" "mod" {
   count = "${var.count}"
-  ami = "${var.ami != "" ? var.ami : element(concat(data.aws_ami.mod.*.id, list("")), 0)}"
+  ami = "${var.ami != "" ? var.ami : data.aws_ami.mod.id}"
   instance_type = "${var.type}"
   key_name = "${var.key_name}"
   vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
