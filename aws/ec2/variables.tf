@@ -36,7 +36,7 @@ variable "root_block_type" {
 }
 
 variable "root_block_size" {
-  default = "8"
+  default = 16
 }
 
 variable "subnets" {
