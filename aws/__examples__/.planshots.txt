@@ -171,6 +171,46 @@ tenancy:                                     <computed>
 volume_tags.%:                               <computed>
 vpc_security_group_ids.#:                    <computed>
 
++ module.ec2.aws_security_group.security_group_on_instances
+id:                                          <computed>
+arn:                                         <computed>
+description:                                 "Managed by Terraform"
+egress.#:                                    "1"
+egress.482069346.cidr_blocks.#:              "1"
+egress.482069346.cidr_blocks.0:              "0.0.0.0/0"
+egress.482069346.description:                ""
+egress.482069346.from_port:                  "0"
+egress.482069346.ipv6_cidr_blocks.#:         "0"
+egress.482069346.prefix_list_ids.#:          "0"
+egress.482069346.protocol:                   "-1"
+egress.482069346.security_groups.#:          "0"
+egress.482069346.self:                       "false"
+egress.482069346.to_port:                    "0"
+ingress.#:                                   "2"
+ingress.2541437006.cidr_blocks.#:            "1"
+ingress.2541437006.cidr_blocks.0:            "0.0.0.0/0"
+ingress.2541437006.description:              ""
+ingress.2541437006.from_port:                "22"
+ingress.2541437006.ipv6_cidr_blocks.#:       "0"
+ingress.2541437006.protocol:                 "tcp"
+ingress.2541437006.security_groups.#:        "0"
+ingress.2541437006.self:                     "false"
+ingress.2541437006.to_port:                  "22"
+ingress.753360330.cidr_blocks.#:             "0"
+ingress.753360330.description:               ""
+ingress.753360330.from_port:                 "0"
+ingress.753360330.ipv6_cidr_blocks.#:        "0"
+ingress.753360330.protocol:                  "-1"
+ingress.753360330.security_groups.#:         "0"
+ingress.753360330.self:                      "true"
+ingress.753360330.to_port:                   "0"
+name:                                        "app-ec2-instances"
+owner_id:                                    <computed>
+revoke_rules_on_delete:                      "false"
+tags.%:                                      "1"
+tags.Name:                                   "app-ec2-instances"
+vpc_id:                                      "${var.vpc_id}"
+
 + module.http_target_listener.aws_lb_listener.mod
 id:                                          <computed>
 arn:                                         <computed>
@@ -982,5 +1022,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 72 to add, 1 to change, 0 to destroy.
+Plan: 73 to add, 1 to change, 0 to destroy.
 

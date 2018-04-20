@@ -42,6 +42,7 @@ tags.Environment:                          "production"
 tags.Name:                                 "with-ami01"
 tenancy:                                   <computed>
 volume_tags.%:                             <computed>
+vpc_security_group_ids.#:                  <computed>
 
 + module.with-ami.aws_instance.mod[1]
 id:                                        <computed>
@@ -79,6 +80,47 @@ tags.Environment:                          "production"
 tags.Name:                                 "with-ami02"
 tenancy:                                   <computed>
 volume_tags.%:                             <computed>
+vpc_security_group_ids.#:                  <computed>
+
++ module.with-ami.aws_security_group.security_group_on_instances
+id:                                        <computed>
+arn:                                       <computed>
+description:                               "Managed by Terraform"
+egress.#:                                  "1"
+egress.482069346.cidr_blocks.#:            "1"
+egress.482069346.cidr_blocks.0:            "0.0.0.0/0"
+egress.482069346.description:              ""
+egress.482069346.from_port:                "0"
+egress.482069346.ipv6_cidr_blocks.#:       "0"
+egress.482069346.prefix_list_ids.#:        "0"
+egress.482069346.protocol:                 "-1"
+egress.482069346.security_groups.#:        "0"
+egress.482069346.self:                     "false"
+egress.482069346.to_port:                  "0"
+ingress.#:                                 "2"
+ingress.2541437006.cidr_blocks.#:          "1"
+ingress.2541437006.cidr_blocks.0:          "0.0.0.0/0"
+ingress.2541437006.description:            ""
+ingress.2541437006.from_port:              "22"
+ingress.2541437006.ipv6_cidr_blocks.#:     "0"
+ingress.2541437006.protocol:               "tcp"
+ingress.2541437006.security_groups.#:      "0"
+ingress.2541437006.self:                   "false"
+ingress.2541437006.to_port:                "22"
+ingress.753360330.cidr_blocks.#:           "0"
+ingress.753360330.description:             ""
+ingress.753360330.from_port:               "0"
+ingress.753360330.ipv6_cidr_blocks.#:      "0"
+ingress.753360330.protocol:                "-1"
+ingress.753360330.security_groups.#:       "0"
+ingress.753360330.self:                    "true"
+ingress.753360330.to_port:                 "0"
+name:                                      "with-ami-ec2-instances"
+owner_id:                                  <computed>
+revoke_rules_on_delete:                    "false"
+tags.%:                                    "1"
+tags.Name:                                 "with-ami-ec2-instances"
+vpc_id:                                    "vpc_abc123"
 
 + module.with-eip.aws_eip.mod[0]
 id:                                        <computed>
@@ -138,6 +180,7 @@ tags.Environment:                          "production"
 tags.Name:                                 "without-ami01"
 tenancy:                                   <computed>
 volume_tags.%:                             <computed>
+vpc_security_group_ids.#:                  <computed>
 
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
@@ -175,6 +218,47 @@ tags.Environment:                          "production"
 tags.Name:                                 "without-ami02"
 tenancy:                                   <computed>
 volume_tags.%:                             <computed>
+vpc_security_group_ids.#:                  <computed>
+
++ module.with-eip.aws_security_group.security_group_on_instances
+id:                                        <computed>
+arn:                                       <computed>
+description:                               "Managed by Terraform"
+egress.#:                                  "1"
+egress.482069346.cidr_blocks.#:            "1"
+egress.482069346.cidr_blocks.0:            "0.0.0.0/0"
+egress.482069346.description:              ""
+egress.482069346.from_port:                "0"
+egress.482069346.ipv6_cidr_blocks.#:       "0"
+egress.482069346.prefix_list_ids.#:        "0"
+egress.482069346.protocol:                 "-1"
+egress.482069346.security_groups.#:        "0"
+egress.482069346.self:                     "false"
+egress.482069346.to_port:                  "0"
+ingress.#:                                 "2"
+ingress.2541437006.cidr_blocks.#:          "1"
+ingress.2541437006.cidr_blocks.0:          "0.0.0.0/0"
+ingress.2541437006.description:            ""
+ingress.2541437006.from_port:              "22"
+ingress.2541437006.ipv6_cidr_blocks.#:     "0"
+ingress.2541437006.protocol:               "tcp"
+ingress.2541437006.security_groups.#:      "0"
+ingress.2541437006.self:                   "false"
+ingress.2541437006.to_port:                "22"
+ingress.753360330.cidr_blocks.#:           "0"
+ingress.753360330.description:             ""
+ingress.753360330.from_port:               "0"
+ingress.753360330.ipv6_cidr_blocks.#:      "0"
+ingress.753360330.protocol:                "-1"
+ingress.753360330.security_groups.#:       "0"
+ingress.753360330.self:                    "true"
+ingress.753360330.to_port:                 "0"
+name:                                      "without-ami-ec2-instances"
+owner_id:                                  <computed>
+revoke_rules_on_delete:                    "false"
+tags.%:                                    "1"
+tags.Name:                                 "without-ami-ec2-instances"
+vpc_id:                                    "vpc_abc123"
 
 + module.without-ami.aws_instance.mod[0]
 id:                                        <computed>
@@ -212,6 +296,7 @@ tags.Environment:                          "production"
 tags.Name:                                 "without-ami01"
 tenancy:                                   <computed>
 volume_tags.%:                             <computed>
+vpc_security_group_ids.#:                  <computed>
 
 + module.without-ami.aws_instance.mod[1]
 id:                                        <computed>
@@ -249,5 +334,46 @@ tags.Environment:                          "production"
 tags.Name:                                 "without-ami02"
 tenancy:                                   <computed>
 volume_tags.%:                             <computed>
-Plan: 8 to add, 0 to change, 0 to destroy.
+vpc_security_group_ids.#:                  <computed>
+
++ module.without-ami.aws_security_group.security_group_on_instances
+id:                                        <computed>
+arn:                                       <computed>
+description:                               "Managed by Terraform"
+egress.#:                                  "1"
+egress.482069346.cidr_blocks.#:            "1"
+egress.482069346.cidr_blocks.0:            "0.0.0.0/0"
+egress.482069346.description:              ""
+egress.482069346.from_port:                "0"
+egress.482069346.ipv6_cidr_blocks.#:       "0"
+egress.482069346.prefix_list_ids.#:        "0"
+egress.482069346.protocol:                 "-1"
+egress.482069346.security_groups.#:        "0"
+egress.482069346.self:                     "false"
+egress.482069346.to_port:                  "0"
+ingress.#:                                 "2"
+ingress.2541437006.cidr_blocks.#:          "1"
+ingress.2541437006.cidr_blocks.0:          "0.0.0.0/0"
+ingress.2541437006.description:            ""
+ingress.2541437006.from_port:              "22"
+ingress.2541437006.ipv6_cidr_blocks.#:     "0"
+ingress.2541437006.protocol:               "tcp"
+ingress.2541437006.security_groups.#:      "0"
+ingress.2541437006.self:                   "false"
+ingress.2541437006.to_port:                "22"
+ingress.753360330.cidr_blocks.#:           "0"
+ingress.753360330.description:             ""
+ingress.753360330.from_port:               "0"
+ingress.753360330.ipv6_cidr_blocks.#:      "0"
+ingress.753360330.protocol:                "-1"
+ingress.753360330.security_groups.#:       "0"
+ingress.753360330.self:                    "true"
+ingress.753360330.to_port:                 "0"
+name:                                      "without-ami-ec2-instances"
+owner_id:                                  <computed>
+revoke_rules_on_delete:                    "false"
+tags.%:                                    "1"
+tags.Name:                                 "without-ami-ec2-instances"
+vpc_id:                                    "vpc_abc123"
+Plan: 11 to add, 0 to change, 0 to destroy.
 
