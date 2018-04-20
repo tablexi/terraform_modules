@@ -314,19 +314,6 @@ description:                                 "memcached-production-memcached-sub
 name:                                        "memcached-production-memcached-subnet"
 subnet_ids.#:                                <computed>
 
-+ module.memcached.aws_security_group.sg_for_access_by_sgs
-id:                                          <computed>
-arn:                                         <computed>
-description:                                 "memcached_production to memcached"
-egress.#:                                    <computed>
-ingress.#:                                   <computed>
-name:                                        "memcached_production-memcached"
-owner_id:                                    <computed>
-revoke_rules_on_delete:                      "false"
-tags.%:                                      "1"
-tags.Name:                                   "production-memcached"
-vpc_id:                                      "${var.vpc_id}"
-
 + module.memcached.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
 arn:                                         <computed>
@@ -343,14 +330,14 @@ egress.482069346.security_groups.#:          "0"
 egress.482069346.self:                       "false"
 egress.482069346.to_port:                    "0"
 ingress.#:                                   "1"
-ingress.~1333864030.cidr_blocks.#:           "0"
-ingress.~1333864030.description:             ""
-ingress.~1333864030.from_port:               "11211"
-ingress.~1333864030.ipv6_cidr_blocks.#:      "0"
-ingress.~1333864030.protocol:                "tcp"
-ingress.~1333864030.security_groups.#:       <computed>
-ingress.~1333864030.self:                    "false"
-ingress.~1333864030.to_port:                 "11211"
+ingress.1333864030.cidr_blocks.#:            "0"
+ingress.1333864030.description:              ""
+ingress.1333864030.from_port:                "11211"
+ingress.1333864030.ipv6_cidr_blocks.#:       "0"
+ingress.1333864030.protocol:                 "tcp"
+ingress.1333864030.security_groups.#:        "0"
+ingress.1333864030.self:                     "false"
+ingress.1333864030.to_port:                  "11211"
 name:                                        "memcached-memcached_production"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
@@ -588,19 +575,6 @@ description:                                 "redis-production-redis-subnet"
 name:                                        "redis-production-redis-subnet"
 subnet_ids.#:                                <computed>
 
-+ module.redis.aws_security_group.sg_for_access_by_sgs
-id:                                          <computed>
-arn:                                         <computed>
-description:                                 "redis_production to redis"
-egress.#:                                    <computed>
-ingress.#:                                   <computed>
-name:                                        "redis_production-redis"
-owner_id:                                    <computed>
-revoke_rules_on_delete:                      "false"
-tags.%:                                      "1"
-tags.Name:                                   "production-redis"
-vpc_id:                                      "${var.vpc_id}"
-
 + module.redis.aws_security_group.sg_on_elasticache_instance
 id:                                          <computed>
 arn:                                         <computed>
@@ -617,14 +591,14 @@ egress.482069346.security_groups.#:          "0"
 egress.482069346.self:                       "false"
 egress.482069346.to_port:                    "0"
 ingress.#:                                   "1"
-ingress.~743784797.cidr_blocks.#:            "0"
-ingress.~743784797.description:              ""
-ingress.~743784797.from_port:                "6379"
-ingress.~743784797.ipv6_cidr_blocks.#:       "0"
-ingress.~743784797.protocol:                 "tcp"
-ingress.~743784797.security_groups.#:        <computed>
-ingress.~743784797.self:                     "false"
-ingress.~743784797.to_port:                  "6379"
+ingress.743784797.cidr_blocks.#:             "0"
+ingress.743784797.description:               ""
+ingress.743784797.from_port:                 "6379"
+ingress.743784797.ipv6_cidr_blocks.#:        "0"
+ingress.743784797.protocol:                  "tcp"
+ingress.743784797.security_groups.#:         "0"
+ingress.743784797.self:                      "false"
+ingress.743784797.to_port:                   "6379"
 name:                                        "redis-redis_production"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
@@ -996,5 +970,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 71 to add, 1 to change, 0 to destroy.
+Plan: 69 to add, 1 to change, 0 to destroy.
 

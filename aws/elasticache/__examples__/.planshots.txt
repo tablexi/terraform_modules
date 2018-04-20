@@ -44,19 +44,6 @@ name:                                         "redis-production-redis-subnet"
 subnet_ids.#:                                 "1"
 subnet_ids.2066075671:                        "redis"
 
-+ module.basic_redis.aws_security_group.sg_for_access_by_sgs
-id:                                           <computed>
-arn:                                          <computed>
-description:                                  "redis_production to redis"
-egress.#:                                     <computed>
-ingress.#:                                    <computed>
-name:                                         "redis_production-redis"
-owner_id:                                     <computed>
-revoke_rules_on_delete:                       "false"
-tags.%:                                       "1"
-tags.Name:                                    "production-redis"
-vpc_id:                                       "redis"
-
 + module.basic_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
 arn:                                          <computed>
@@ -73,14 +60,15 @@ egress.482069346.security_groups.#:           "0"
 egress.482069346.self:                        "false"
 egress.482069346.to_port:                     "0"
 ingress.#:                                    "1"
-ingress.~743784797.cidr_blocks.#:             "0"
-ingress.~743784797.description:               ""
-ingress.~743784797.from_port:                 "6379"
-ingress.~743784797.ipv6_cidr_blocks.#:        "0"
-ingress.~743784797.protocol:                  "tcp"
-ingress.~743784797.security_groups.#:         <computed>
-ingress.~743784797.self:                      "false"
-ingress.~743784797.to_port:                   "6379"
+ingress.2474484989.cidr_blocks.#:             "0"
+ingress.2474484989.description:               ""
+ingress.2474484989.from_port:                 "6379"
+ingress.2474484989.ipv6_cidr_blocks.#:        "0"
+ingress.2474484989.protocol:                  "tcp"
+ingress.2474484989.security_groups.#:         "1"
+ingress.2474484989.security_groups.479754121: "sg_ec1234"
+ingress.2474484989.self:                      "false"
+ingress.2474484989.to_port:                   "6379"
 name:                                         "redis-redis_production"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
@@ -128,19 +116,6 @@ name:                                         "redis-production-redis-subnet"
 subnet_ids.#:                                 "1"
 subnet_ids.2066075671:                        "redis"
 
-+ module.encrypted_redis.aws_security_group.sg_for_access_by_sgs
-id:                                           <computed>
-arn:                                          <computed>
-description:                                  "redis_production to redis"
-egress.#:                                     <computed>
-ingress.#:                                    <computed>
-name:                                         "redis_production-redis"
-owner_id:                                     <computed>
-revoke_rules_on_delete:                       "false"
-tags.%:                                       "1"
-tags.Name:                                    "production-redis"
-vpc_id:                                       "redis"
-
 + module.encrypted_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
 arn:                                          <computed>
@@ -157,166 +132,14 @@ egress.482069346.security_groups.#:           "0"
 egress.482069346.self:                        "false"
 egress.482069346.to_port:                     "0"
 ingress.#:                                    "1"
-ingress.~743784797.cidr_blocks.#:             "0"
-ingress.~743784797.description:               ""
-ingress.~743784797.from_port:                 "6379"
-ingress.~743784797.ipv6_cidr_blocks.#:        "0"
-ingress.~743784797.protocol:                  "tcp"
-ingress.~743784797.security_groups.#:         <computed>
-ingress.~743784797.self:                      "false"
-ingress.~743784797.to_port:                   "6379"
-name:                                         "redis-redis_production"
-owner_id:                                     <computed>
-revoke_rules_on_delete:                       "false"
-tags.%:                                       "1"
-tags.Name:                                    "redis-production"
-vpc_id:                                       "redis"
-
-+ module.external_security_group_access.aws_elasticache_cluster.mod
-id:                                           <computed>
-apply_immediately:                            <computed>
-availability_zone:                            <computed>
-az_mode:                                      <computed>
-cache_nodes.#:                                <computed>
-cluster_address:                              <computed>
-cluster_id:                                   "redis-production"
-configuration_endpoint:                       <computed>
-engine:                                       "redis"
-engine_version:                               "2.8.17"
-maintenance_window:                           <computed>
-node_type:                                    "cache.t2.micro"
-num_cache_nodes:                              "1"
-parameter_group_name:                         "redis-production-params28"
-port:                                         "6379"
-replication_group_id:                         <computed>
-security_group_ids.#:                         <computed>
-security_group_names.#:                       <computed>
-snapshot_window:                              <computed>
-subnet_group_name:                            "redis-production-redis-subnet"
-tags.%:                                       "2"
-tags.Description:                             "redis production redis instance"
-tags.Environment:                             "production"
-
-+ module.external_security_group_access.aws_elasticache_parameter_group.mod
-id:                                           <computed>
-description:                                  "redis production env redis cluster param group"
-family:                                       "redis2.8"
-name:                                         "redis-production-params28"
-
-+ module.external_security_group_access.aws_elasticache_subnet_group.mod
-id:                                           <computed>
-description:                                  "redis-production-redis-subnet"
-name:                                         "redis-production-redis-subnet"
-subnet_ids.#:                                 "1"
-subnet_ids.2066075671:                        "redis"
-
-+ module.external_security_group_access.aws_security_group.sg_for_access_by_sgs
-id:                                           <computed>
-arn:                                          <computed>
-description:                                  "redis_production to redis"
-egress.#:                                     <computed>
-ingress.#:                                    <computed>
-name:                                         "redis_production-redis"
-owner_id:                                     <computed>
-revoke_rules_on_delete:                       "false"
-tags.%:                                       "1"
-tags.Name:                                    "production-redis"
-vpc_id:                                       "redis"
-
-+ module.external_security_group_access.aws_security_group.sg_on_elasticache_instance
-id:                                           <computed>
-arn:                                          <computed>
-description:                                  "redis to redis_production"
-egress.#:                                     "1"
-egress.482069346.cidr_blocks.#:               "1"
-egress.482069346.cidr_blocks.0:               "0.0.0.0/0"
-egress.482069346.description:                 ""
-egress.482069346.from_port:                   "0"
-egress.482069346.ipv6_cidr_blocks.#:          "0"
-egress.482069346.prefix_list_ids.#:           "0"
-egress.482069346.protocol:                    "-1"
-egress.482069346.security_groups.#:           "0"
-egress.482069346.self:                        "false"
-egress.482069346.to_port:                     "0"
-ingress.#:                                    "1"
-ingress.~743784797.cidr_blocks.#:             "0"
-ingress.~743784797.description:               ""
-ingress.~743784797.from_port:                 "6379"
-ingress.~743784797.ipv6_cidr_blocks.#:        "0"
-ingress.~743784797.protocol:                  "tcp"
-ingress.~743784797.security_groups.#:         <computed>
-ingress.~743784797.self:                      "false"
-ingress.~743784797.to_port:                   "6379"
-name:                                         "redis-redis_production"
-owner_id:                                     <computed>
-revoke_rules_on_delete:                       "false"
-tags.%:                                       "1"
-tags.Name:                                    "redis-production"
-vpc_id:                                       "redis"
-
-+ module.external_without_internal_sg.aws_elasticache_cluster.mod
-id:                                           <computed>
-apply_immediately:                            <computed>
-availability_zone:                            <computed>
-az_mode:                                      <computed>
-cache_nodes.#:                                <computed>
-cluster_address:                              <computed>
-cluster_id:                                   "redis-production"
-configuration_endpoint:                       <computed>
-engine:                                       "redis"
-engine_version:                               "2.8.17"
-maintenance_window:                           <computed>
-node_type:                                    "cache.t2.micro"
-num_cache_nodes:                              "1"
-parameter_group_name:                         "redis-production-params28"
-port:                                         "6379"
-replication_group_id:                         <computed>
-security_group_ids.#:                         <computed>
-security_group_names.#:                       <computed>
-snapshot_window:                              <computed>
-subnet_group_name:                            "redis-production-redis-subnet"
-tags.%:                                       "2"
-tags.Description:                             "redis production redis instance"
-tags.Environment:                             "production"
-
-+ module.external_without_internal_sg.aws_elasticache_parameter_group.mod
-id:                                           <computed>
-description:                                  "redis production env redis cluster param group"
-family:                                       "redis2.8"
-name:                                         "redis-production-params28"
-
-+ module.external_without_internal_sg.aws_elasticache_subnet_group.mod
-id:                                           <computed>
-description:                                  "redis-production-redis-subnet"
-name:                                         "redis-production-redis-subnet"
-subnet_ids.#:                                 "1"
-subnet_ids.2066075671:                        "redis"
-
-+ module.external_without_internal_sg.aws_security_group.sg_on_elasticache_instance
-id:                                           <computed>
-arn:                                          <computed>
-description:                                  "redis to redis_production"
-egress.#:                                     "1"
-egress.482069346.cidr_blocks.#:               "1"
-egress.482069346.cidr_blocks.0:               "0.0.0.0/0"
-egress.482069346.description:                 ""
-egress.482069346.from_port:                   "0"
-egress.482069346.ipv6_cidr_blocks.#:          "0"
-egress.482069346.prefix_list_ids.#:           "0"
-egress.482069346.protocol:                    "-1"
-egress.482069346.security_groups.#:           "0"
-egress.482069346.self:                        "false"
-egress.482069346.to_port:                     "0"
-ingress.#:                                    "1"
-ingress.208812331.cidr_blocks.#:              "0"
-ingress.208812331.description:                ""
-ingress.208812331.from_port:                  "6379"
-ingress.208812331.ipv6_cidr_blocks.#:         "0"
-ingress.208812331.protocol:                   "tcp"
-ingress.208812331.security_groups.#:          "1"
-ingress.208812331.security_groups.2066075671: "redis"
-ingress.208812331.self:                       "false"
-ingress.208812331.to_port:                    "6379"
+ingress.743784797.cidr_blocks.#:              "0"
+ingress.743784797.description:                ""
+ingress.743784797.from_port:                  "6379"
+ingress.743784797.ipv6_cidr_blocks.#:         "0"
+ingress.743784797.protocol:                   "tcp"
+ingress.743784797.security_groups.#:          "0"
+ingress.743784797.self:                       "false"
+ingress.743784797.to_port:                    "6379"
 name:                                         "redis-redis_production"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
@@ -364,19 +187,6 @@ name:                                         "redis-production-redis-subnet"
 subnet_ids.#:                                 "1"
 subnet_ids.2066075671:                        "redis"
 
-+ module.force_replication_group_redis.aws_security_group.sg_for_access_by_sgs
-id:                                           <computed>
-arn:                                          <computed>
-description:                                  "redis_production to redis"
-egress.#:                                     <computed>
-ingress.#:                                    <computed>
-name:                                         "redis_production-redis"
-owner_id:                                     <computed>
-revoke_rules_on_delete:                       "false"
-tags.%:                                       "1"
-tags.Name:                                    "production-redis"
-vpc_id:                                       "redis"
-
 + module.force_replication_group_redis.aws_security_group.sg_on_elasticache_instance
 id:                                           <computed>
 arn:                                          <computed>
@@ -393,19 +203,19 @@ egress.482069346.security_groups.#:           "0"
 egress.482069346.self:                        "false"
 egress.482069346.to_port:                     "0"
 ingress.#:                                    "1"
-ingress.~743784797.cidr_blocks.#:             "0"
-ingress.~743784797.description:               ""
-ingress.~743784797.from_port:                 "6379"
-ingress.~743784797.ipv6_cidr_blocks.#:        "0"
-ingress.~743784797.protocol:                  "tcp"
-ingress.~743784797.security_groups.#:         <computed>
-ingress.~743784797.self:                      "false"
-ingress.~743784797.to_port:                   "6379"
+ingress.743784797.cidr_blocks.#:              "0"
+ingress.743784797.description:                ""
+ingress.743784797.from_port:                  "6379"
+ingress.743784797.ipv6_cidr_blocks.#:         "0"
+ingress.743784797.protocol:                   "tcp"
+ingress.743784797.security_groups.#:          "0"
+ingress.743784797.self:                       "false"
+ingress.743784797.to_port:                    "6379"
 name:                                         "redis-redis_production"
 owner_id:                                     <computed>
 revoke_rules_on_delete:                       "false"
 tags.%:                                       "1"
 tags.Name:                                    "redis-production"
 vpc_id:                                       "redis"
-Plan: 24 to add, 0 to change, 0 to destroy.
+Plan: 12 to add, 0 to change, 0 to destroy.
 

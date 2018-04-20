@@ -9,12 +9,9 @@ variable "create_parameter_group" {
 
 variable "engine" {
   description = "redis, memcache, etc."
-  # default = "redis"
 }
 
-variable "engine_version" {
-  # default = "3.2.4"
-}
+variable "engine_version" {}
 
 variable "env" {
   default = "production"
@@ -43,13 +40,8 @@ variable "port" {
   default = ""
 }
 
-variable "provide_sg_for_access" {
-  description = "Create a security group for accessing the redis instance."
-  default = true
-}
-
-variable "sg_for_access_ids" {
-  description = "List of security groups to give access to the elasticache instance."
+variable "security_groups_for_ingress" {
+  description = "Security groups which should be allowed ingress on the ElastiCache instance."
   default = []
 }
 
