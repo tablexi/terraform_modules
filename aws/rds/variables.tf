@@ -87,6 +87,11 @@ variable "publicly_accessible" {
   default = true
 }
 
+variable "security_groups_for_ingress" {
+  description = "Security groups which should be allowed ingress on the RDS instance."
+  default = []
+}
+
 variable "sg_cidr_blocks" {
   description = "cidr_blocks to give RDS port access to."
   default = []

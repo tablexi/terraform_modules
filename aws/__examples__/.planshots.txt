@@ -428,19 +428,6 @@ name:                                        "test-mysql-production-mysql-sg"
 name_prefix:                                 <computed>
 subnet_ids.#:                                <computed>
 
-+ module.mysql.aws_security_group.sg_for_access_by_sgs
-id:                                          <computed>
-arn:                                         <computed>
-description:                                 "test-mysql_production-rds-mysql"
-egress.#:                                    <computed>
-ingress.#:                                   <computed>
-name:                                        "test-mysql_production-rds-mysql"
-owner_id:                                    <computed>
-revoke_rules_on_delete:                      "false"
-tags.%:                                      "1"
-tags.Name:                                   "test-mysql_production-rds-mysql"
-vpc_id:                                      "${var.vpc_id}"
-
 + module.mysql.aws_security_group.sg_on_rds_instance
 id:                                          <computed>
 arn:                                         <computed>
@@ -457,14 +444,14 @@ egress.482069346.security_groups.#:          "0"
 egress.482069346.self:                       "false"
 egress.482069346.to_port:                    "0"
 ingress.#:                                   "1"
-ingress.~471043921.cidr_blocks.#:            "0"
-ingress.~471043921.description:              ""
-ingress.~471043921.from_port:                "3306"
-ingress.~471043921.ipv6_cidr_blocks.#:       "0"
-ingress.~471043921.protocol:                 "tcp"
-ingress.~471043921.security_groups.#:        <computed>
-ingress.~471043921.self:                     "false"
-ingress.~471043921.to_port:                  "3306"
+ingress.471043921.cidr_blocks.#:             "0"
+ingress.471043921.description:               ""
+ingress.471043921.from_port:                 "3306"
+ingress.471043921.ipv6_cidr_blocks.#:        "0"
+ingress.471043921.protocol:                  "tcp"
+ingress.471043921.security_groups.#:         "0"
+ingress.471043921.self:                      "false"
+ingress.471043921.to_port:                   "3306"
 name:                                        "rds-test-mysql_production-mysql"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
@@ -533,19 +520,6 @@ name:                                        "test-postgres-production-pg-sg"
 name_prefix:                                 <computed>
 subnet_ids.#:                                <computed>
 
-+ module.postgres.aws_security_group.sg_for_access_by_sgs
-id:                                          <computed>
-arn:                                         <computed>
-description:                                 "test-postgres_production-rds-pg"
-egress.#:                                    <computed>
-ingress.#:                                   <computed>
-name:                                        "test-postgres_production-rds-pg"
-owner_id:                                    <computed>
-revoke_rules_on_delete:                      "false"
-tags.%:                                      "1"
-tags.Name:                                   "test-postgres_production-rds-pg"
-vpc_id:                                      "${var.vpc_id}"
-
 + module.postgres.aws_security_group.sg_on_rds_instance
 id:                                          <computed>
 arn:                                         <computed>
@@ -562,14 +536,14 @@ egress.482069346.security_groups.#:          "0"
 egress.482069346.self:                       "false"
 egress.482069346.to_port:                    "0"
 ingress.#:                                   "1"
-ingress.~2994424545.cidr_blocks.#:           "0"
-ingress.~2994424545.description:             ""
-ingress.~2994424545.from_port:               "5432"
-ingress.~2994424545.ipv6_cidr_blocks.#:      "0"
-ingress.~2994424545.protocol:                "tcp"
-ingress.~2994424545.security_groups.#:       <computed>
-ingress.~2994424545.self:                    "false"
-ingress.~2994424545.to_port:                 "5432"
+ingress.2994424545.cidr_blocks.#:            "0"
+ingress.2994424545.description:              ""
+ingress.2994424545.from_port:                "5432"
+ingress.2994424545.ipv6_cidr_blocks.#:       "0"
+ingress.2994424545.protocol:                 "tcp"
+ingress.2994424545.security_groups.#:        "0"
+ingress.2994424545.self:                     "false"
+ingress.2994424545.to_port:                  "5432"
 name:                                        "rds-test-postgres_production-pg"
 owner_id:                                    <computed>
 revoke_rules_on_delete:                      "false"
@@ -1022,5 +996,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 73 to add, 1 to change, 0 to destroy.
+Plan: 71 to add, 1 to change, 0 to destroy.
 
