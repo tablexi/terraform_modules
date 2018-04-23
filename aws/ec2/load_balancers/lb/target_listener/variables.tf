@@ -18,11 +18,6 @@ variable "sg_on_lb_id" {
   default = ""
 }
 
-variable "sg_on_lb_source_ids" {
-  description = "List of security groups to give access to the LB"
-  default = []
-}
-
 variable "deregistration_delay" {
   description = "The amount time for Elastic Load Balancing to wait before changing the state of a deregistering target from draining to unused"
   default = 30

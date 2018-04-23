@@ -73,13 +73,3 @@ resource "aws_security_group_rule" "mod_sg_on_lb_cidr_blocks" {
   protocol = "tcp"
   cidr_blocks = ["${var.sg_on_lb_cidr_blocks}"]
 }
-
-resource "aws_security_group_rule" "mod_sg_on_lb_security_groups" {
-  count = "${length(var.sg_on_lb_source_ids) > 0 ? length(var.sg_on_lb_source_ids) : 0}"
-  security_group_id = "${var.sg_on_lb_id}"
-  type = "ingress"
-  from_port = "${var.port}"
-  to_port = "${var.port}"
-  protocol = "tcp"
-  source_security_group_id = "${element(var.sg_on_lb_source_ids, count.index)}"
-}
