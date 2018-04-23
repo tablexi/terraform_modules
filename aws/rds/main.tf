@@ -8,7 +8,6 @@ locals {
 
 locals {
   subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
-  sg_for_access_by_sgs_name = "${var.name}_${var.env}-rds-${local.engine_nickname}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
   option_group_name = "${var.option_group_name != "" ? var.option_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
@@ -78,20 +77,6 @@ resource "aws_db_instance" "mod" {
   apply_immediately = "${var.apply_immediately}"
 }
 
-resource "aws_security_group" "sg_for_access_by_sgs" {
-  name = "${local.sg_for_access_by_sgs_name}"
-  description = "${local.sg_for_access_by_sgs_name}"
-  vpc_id = "${var.vpc_id}"
-
-  tags {
-    "Name" = "${local.sg_for_access_by_sgs_name}"
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "aws_security_group" "sg_on_rds_instance" {
   name = "${local.sg_on_rds_instance_name}"
   description = "${local.sg_on_rds_instance_name}"
@@ -101,7 +86,7 @@ resource "aws_security_group" "sg_on_rds_instance" {
     from_port = "${local.port}"
     to_port = "${local.port}"
     protocol = "tcp"
-    security_groups = ["${aws_security_group.sg_for_access_by_sgs.id}"]
+    security_groups = ["${var.security_groups_for_ingress}"]
     cidr_blocks = ["${var.sg_cidr_blocks}"]
   }
 

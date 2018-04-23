@@ -7,7 +7,6 @@ locals {
   family = "${var.engine}${local.version_major_minor_only}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"}"
   port = "${var.port != "" ? var.port : "${var.engine == "redis" ? "6379" : "11211"}"}"
-  sg_for_access_by_sgs_id = "${concat(aws_security_group.sg_for_access_by_sgs.*.id, list(""))}"
   elasticache_replication_group = "${(var.force_replication_group) || (var.num_nodes != 1)}"
 }
 
@@ -71,21 +70,6 @@ resource "aws_elasticache_subnet_group" "mod" {
   }
 }
 
-resource "aws_security_group" "sg_for_access_by_sgs" {
-  count = "${var.provide_sg_for_access ? 1 : 0}"
-  name = "${var.name}_${var.env}-${var.engine}"
-  description = "${var.name}_${var.env} to ${var.engine}"
-  vpc_id = "${var.vpc_id}"
-
-  tags {
-    "Name" = "${var.env}-${var.engine}"
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "aws_security_group" "sg_on_elasticache_instance" {
   name = "${var.engine}-${var.name}_${var.env}"
   description = "${var.engine} to ${var.name}_${var.env}"
@@ -95,7 +79,7 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
     from_port = "${local.port}"
     to_port = "${local.port}"
     protocol = "tcp"
-    security_groups = ["${compact(concat(local.sg_for_access_by_sgs_id, var.sg_for_access_ids))}"]
+    security_groups = ["${var.security_groups_for_ingress}"]
   }
 
   egress {

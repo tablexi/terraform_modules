@@ -99,6 +99,7 @@ module "ec2" {
   name = "app"
   subnets = "${module.subnets.public_subnets}"
   vpc_security_group_ids = ["${module.ssh.sg_id}"]
+  vpc_id = "${module.vpc.vpc_id}"
 }
 
 module "alb" {

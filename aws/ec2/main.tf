@@ -13,7 +13,7 @@ resource "aws_instance" "mod" {
   ami = "${var.ami != "" ? var.ami : data.aws_ami.mod.id}"
   instance_type = "${var.type}"
   key_name = "${var.key_name}"
-  vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
+  vpc_security_group_ids = ["${aws_security_group.security_group_on_instances.id}", "${var.vpc_security_group_ids}"]
   subnet_id = "${element(var.subnets, count.index)}"
   associate_public_ip_address = "${var.associate_public_ip_address}"
 
@@ -37,4 +37,34 @@ resource "aws_eip" "mod" {
   count = "${var.enable_eip ? var.count : 0}"
   instance = "${element(aws_instance.mod.*.id, count.index)}"
   vpc = true
+}
+
+resource "aws_security_group" "security_group_on_instances" {
+  name   = "${var.name}-ec2-instances"
+  vpc_id = "${var.vpc_id}"
+
+  ingress {
+    from_port = 0
+    protocol  = "-1"
+    self      = true
+    to_port   = 0
+  }
+
+  ingress {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 22
+    protocol    = "tcp"
+    to_port     = 22
+  }
+
+  egress {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+  }
+
+  tags {
+    "Name" = "${var.name}-ec2-instances"
+  }
 }
