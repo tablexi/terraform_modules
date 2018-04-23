@@ -65,11 +65,10 @@ resource "aws_security_group_rule" "mod_sg_for_access_by_sgs" {
 }
 
 resource "aws_security_group_rule" "mod_sg_on_lb_cidr_blocks" {
-  count = "${length(var.sg_on_lb_cidr_blocks) > 0 ? 1 : 0}"
   security_group_id = "${var.sg_on_lb_id}"
   type = "ingress"
   from_port = "${var.port}"
   to_port = "${var.port}"
   protocol = "tcp"
-  cidr_blocks = ["${var.sg_on_lb_cidr_blocks}"]
+  cidr_blocks = ["0.0.0.0/0"]
 }
