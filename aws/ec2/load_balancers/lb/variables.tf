@@ -5,11 +5,6 @@ variable "internal" {
   default = false
 }
 
-variable "ip_address_type" {
-  description = "The type of IP addresses used by the subnets for the LB"
-  default = "dualstack"
-}
-
 variable "name" {}
 
 variable "subnets" {
