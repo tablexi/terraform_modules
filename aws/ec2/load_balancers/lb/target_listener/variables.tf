@@ -8,19 +8,9 @@ variable "sg_for_access_by_sgs_id" {
   default = ""
 }
 
-variable "sg_on_lb_cidr_blocks" {
-  description = "List of cidr_blocks to give access to the LB"
-  default = ["0.0.0.0/0"]
-}
-
 variable "sg_on_lb_id" {
   description = "The security group to apply the ingress port changes to."
   default = ""
-}
-
-variable "sg_on_lb_source_ids" {
-  description = "List of security groups to give access to the LB"
-  default = []
 }
 
 variable "deregistration_delay" {

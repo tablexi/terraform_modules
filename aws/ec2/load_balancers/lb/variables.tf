@@ -1,18 +1,8 @@
 variable "env" {}
 
-variable "idle_timeout" {
-  description = "The time in seconds that the connection is allowed to be idle"
-  default = 60
-}
-
 variable "internal" {
   description = "The LB is only accessible inside the VPC"
   default = false
-}
-
-variable "ip_address_type" {
-  description = "The type of IP addresses used by the subnets for the LB"
-  default = "dualstack"
 }
 
 variable "name" {}
