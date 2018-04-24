@@ -86,41 +86,48 @@ vpc_security_group_ids.#:                  <computed>
 id:                                        <computed>
 arn:                                       <computed>
 description:                               "Managed by Terraform"
-egress.#:                                  "1"
-egress.482069346.cidr_blocks.#:            "1"
-egress.482069346.cidr_blocks.0:            "0.0.0.0/0"
-egress.482069346.description:              ""
-egress.482069346.from_port:                "0"
-egress.482069346.ipv6_cidr_blocks.#:       "0"
-egress.482069346.prefix_list_ids.#:        "0"
-egress.482069346.protocol:                 "-1"
-egress.482069346.security_groups.#:        "0"
-egress.482069346.self:                     "false"
-egress.482069346.to_port:                  "0"
-ingress.#:                                 "2"
-ingress.2541437006.cidr_blocks.#:          "1"
-ingress.2541437006.cidr_blocks.0:          "0.0.0.0/0"
-ingress.2541437006.description:            ""
-ingress.2541437006.from_port:              "22"
-ingress.2541437006.ipv6_cidr_blocks.#:     "0"
-ingress.2541437006.protocol:               "tcp"
-ingress.2541437006.security_groups.#:      "0"
-ingress.2541437006.self:                   "false"
-ingress.2541437006.to_port:                "22"
-ingress.753360330.cidr_blocks.#:           "0"
-ingress.753360330.description:             ""
-ingress.753360330.from_port:               "0"
-ingress.753360330.ipv6_cidr_blocks.#:      "0"
-ingress.753360330.protocol:                "-1"
-ingress.753360330.security_groups.#:       "0"
-ingress.753360330.self:                    "true"
-ingress.753360330.to_port:                 "0"
+egress.#:                                  <computed>
+ingress.#:                                 <computed>
 name:                                      "with-ami-ec2-instances"
 owner_id:                                  <computed>
 revoke_rules_on_delete:                    "false"
 tags.%:                                    "1"
 tags.Name:                                 "with-ami-ec2-instances"
 vpc_id:                                    "vpc_abc123"
+
++ module.with-ami.aws_security_group_rule.all_egress_on_instances_to_anywhere
+id:                                        <computed>
+cidr_blocks.#:                             "1"
+cidr_blocks.0:                             "0.0.0.0/0"
+from_port:                                 "0"
+protocol:                                  "-1"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "false"
+source_security_group_id:                  <computed>
+to_port:                                   "0"
+type:                                      "egress"
+
++ module.with-ami.aws_security_group_rule.all_ingress_on_instances_from_self
+id:                                        <computed>
+from_port:                                 "0"
+protocol:                                  "-1"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "true"
+source_security_group_id:                  <computed>
+to_port:                                   "0"
+type:                                      "ingress"
+
++ module.with-ami.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
+id:                                        <computed>
+cidr_blocks.#:                             "1"
+cidr_blocks.0:                             "0.0.0.0/0"
+from_port:                                 "22"
+protocol:                                  "tcp"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "false"
+source_security_group_id:                  <computed>
+to_port:                                   "22"
+type:                                      "ingress"
 
 + module.with-eip.aws_eip.mod[0]
 id:                                        <computed>
@@ -146,7 +153,7 @@ vpc:                                       "true"
 
 + module.with-eip.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-07fc3cb791f32513e"
+ami:                                       "ami-467ca739"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -184,7 +191,7 @@ vpc_security_group_ids.#:                  <computed>
 
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-07fc3cb791f32513e"
+ami:                                       "ami-467ca739"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -224,35 +231,8 @@ vpc_security_group_ids.#:                  <computed>
 id:                                        <computed>
 arn:                                       <computed>
 description:                               "Managed by Terraform"
-egress.#:                                  "1"
-egress.482069346.cidr_blocks.#:            "1"
-egress.482069346.cidr_blocks.0:            "0.0.0.0/0"
-egress.482069346.description:              ""
-egress.482069346.from_port:                "0"
-egress.482069346.ipv6_cidr_blocks.#:       "0"
-egress.482069346.prefix_list_ids.#:        "0"
-egress.482069346.protocol:                 "-1"
-egress.482069346.security_groups.#:        "0"
-egress.482069346.self:                     "false"
-egress.482069346.to_port:                  "0"
-ingress.#:                                 "2"
-ingress.2541437006.cidr_blocks.#:          "1"
-ingress.2541437006.cidr_blocks.0:          "0.0.0.0/0"
-ingress.2541437006.description:            ""
-ingress.2541437006.from_port:              "22"
-ingress.2541437006.ipv6_cidr_blocks.#:     "0"
-ingress.2541437006.protocol:               "tcp"
-ingress.2541437006.security_groups.#:      "0"
-ingress.2541437006.self:                   "false"
-ingress.2541437006.to_port:                "22"
-ingress.753360330.cidr_blocks.#:           "0"
-ingress.753360330.description:             ""
-ingress.753360330.from_port:               "0"
-ingress.753360330.ipv6_cidr_blocks.#:      "0"
-ingress.753360330.protocol:                "-1"
-ingress.753360330.security_groups.#:       "0"
-ingress.753360330.self:                    "true"
-ingress.753360330.to_port:                 "0"
+egress.#:                                  <computed>
+ingress.#:                                 <computed>
 name:                                      "without-ami-ec2-instances"
 owner_id:                                  <computed>
 revoke_rules_on_delete:                    "false"
@@ -260,9 +240,43 @@ tags.%:                                    "1"
 tags.Name:                                 "without-ami-ec2-instances"
 vpc_id:                                    "vpc_abc123"
 
++ module.with-eip.aws_security_group_rule.all_egress_on_instances_to_anywhere
+id:                                        <computed>
+cidr_blocks.#:                             "1"
+cidr_blocks.0:                             "0.0.0.0/0"
+from_port:                                 "0"
+protocol:                                  "-1"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "false"
+source_security_group_id:                  <computed>
+to_port:                                   "0"
+type:                                      "egress"
+
++ module.with-eip.aws_security_group_rule.all_ingress_on_instances_from_self
+id:                                        <computed>
+from_port:                                 "0"
+protocol:                                  "-1"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "true"
+source_security_group_id:                  <computed>
+to_port:                                   "0"
+type:                                      "ingress"
+
++ module.with-eip.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
+id:                                        <computed>
+cidr_blocks.#:                             "1"
+cidr_blocks.0:                             "0.0.0.0/0"
+from_port:                                 "22"
+protocol:                                  "tcp"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "false"
+source_security_group_id:                  <computed>
+to_port:                                   "22"
+type:                                      "ingress"
+
 + module.without-ami.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-07fc3cb791f32513e"
+ami:                                       "ami-467ca739"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -300,7 +314,7 @@ vpc_security_group_ids.#:                  <computed>
 
 + module.without-ami.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-07fc3cb791f32513e"
+ami:                                       "ami-467ca739"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -340,40 +354,47 @@ vpc_security_group_ids.#:                  <computed>
 id:                                        <computed>
 arn:                                       <computed>
 description:                               "Managed by Terraform"
-egress.#:                                  "1"
-egress.482069346.cidr_blocks.#:            "1"
-egress.482069346.cidr_blocks.0:            "0.0.0.0/0"
-egress.482069346.description:              ""
-egress.482069346.from_port:                "0"
-egress.482069346.ipv6_cidr_blocks.#:       "0"
-egress.482069346.prefix_list_ids.#:        "0"
-egress.482069346.protocol:                 "-1"
-egress.482069346.security_groups.#:        "0"
-egress.482069346.self:                     "false"
-egress.482069346.to_port:                  "0"
-ingress.#:                                 "2"
-ingress.2541437006.cidr_blocks.#:          "1"
-ingress.2541437006.cidr_blocks.0:          "0.0.0.0/0"
-ingress.2541437006.description:            ""
-ingress.2541437006.from_port:              "22"
-ingress.2541437006.ipv6_cidr_blocks.#:     "0"
-ingress.2541437006.protocol:               "tcp"
-ingress.2541437006.security_groups.#:      "0"
-ingress.2541437006.self:                   "false"
-ingress.2541437006.to_port:                "22"
-ingress.753360330.cidr_blocks.#:           "0"
-ingress.753360330.description:             ""
-ingress.753360330.from_port:               "0"
-ingress.753360330.ipv6_cidr_blocks.#:      "0"
-ingress.753360330.protocol:                "-1"
-ingress.753360330.security_groups.#:       "0"
-ingress.753360330.self:                    "true"
-ingress.753360330.to_port:                 "0"
+egress.#:                                  <computed>
+ingress.#:                                 <computed>
 name:                                      "without-ami-ec2-instances"
 owner_id:                                  <computed>
 revoke_rules_on_delete:                    "false"
 tags.%:                                    "1"
 tags.Name:                                 "without-ami-ec2-instances"
 vpc_id:                                    "vpc_abc123"
-Plan: 11 to add, 0 to change, 0 to destroy.
+
++ module.without-ami.aws_security_group_rule.all_egress_on_instances_to_anywhere
+id:                                        <computed>
+cidr_blocks.#:                             "1"
+cidr_blocks.0:                             "0.0.0.0/0"
+from_port:                                 "0"
+protocol:                                  "-1"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "false"
+source_security_group_id:                  <computed>
+to_port:                                   "0"
+type:                                      "egress"
+
++ module.without-ami.aws_security_group_rule.all_ingress_on_instances_from_self
+id:                                        <computed>
+from_port:                                 "0"
+protocol:                                  "-1"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "true"
+source_security_group_id:                  <computed>
+to_port:                                   "0"
+type:                                      "ingress"
+
++ module.without-ami.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
+id:                                        <computed>
+cidr_blocks.#:                             "1"
+cidr_blocks.0:                             "0.0.0.0/0"
+from_port:                                 "22"
+protocol:                                  "tcp"
+security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
+self:                                      "false"
+source_security_group_id:                  <computed>
+to_port:                                   "22"
+type:                                      "ingress"
+Plan: 20 to add, 0 to change, 0 to destroy.
 
