@@ -7,68 +7,6 @@ Resource actions are indicated with the following symbols:
 
 Terraform will perform the following actions:
 
-+ module.alb.aws_lb.mod
-id:                                          <computed>
-access_logs.#:                               <computed>
-arn:                                         <computed>
-arn_suffix:                                  <computed>
-dns_name:                                    <computed>
-enable_deletion_protection:                  "false"
-enable_http2:                                "true"
-idle_timeout:                                "60"
-internal:                                    "false"
-ip_address_type:                             <computed>
-load_balancer_type:                          "application"
-name:                                        "alb"
-security_groups.#:                           <computed>
-subnet_mapping.#:                            <computed>
-subnets.#:                                   <computed>
-tags.%:                                      "2"
-tags.Environment:                            "prod"
-tags.Name:                                   "alb"
-vpc_id:                                      <computed>
-zone_id:                                     <computed>
-
-+ module.alb.aws_security_group.sg_for_access_by_sgs
-id:                                          <computed>
-arn:                                         <computed>
-description:                                 "Managed by Terraform"
-egress.#:                                    <computed>
-ingress.#:                                   <computed>
-name:                                        "alb_prod-alb"
-owner_id:                                    <computed>
-revoke_rules_on_delete:                      "false"
-tags.%:                                      "2"
-tags.Environment:                            "prod"
-tags.Name:                                   "alb_prod-alb"
-vpc_id:                                      "${var.vpc_id}"
-
-+ module.alb.aws_security_group.sg_on_lb
-id:                                          <computed>
-arn:                                         <computed>
-description:                                 "Managed by Terraform"
-egress.#:                                    <computed>
-ingress.#:                                   <computed>
-name:                                        "alb-alb_prod"
-owner_id:                                    <computed>
-revoke_rules_on_delete:                      "false"
-tags.%:                                      "2"
-tags.Environment:                            "prod"
-tags.Name:                                   "alb-alb_prod"
-vpc_id:                                      "${var.vpc_id}"
-
-+ module.alb.aws_security_group_rule.sg_on_lb_egress
-id:                                          <computed>
-cidr_blocks.#:                               "1"
-cidr_blocks.0:                               "0.0.0.0/0"
-from_port:                                   "0"
-protocol:                                    "-1"
-security_group_id:                           "${aws_security_group.sg_on_lb.id}"
-self:                                        "false"
-source_security_group_id:                    <computed>
-to_port:                                     "0"
-type:                                        "egress"
-
 + module.datadog.aws_iam_policy.mod
 id:                                          <computed>
 arn:                                         <computed>
@@ -216,72 +154,6 @@ security_group_id:                           "${aws_security_group.security_grou
 self:                                        "false"
 source_security_group_id:                    <computed>
 to_port:                                     "22"
-type:                                        "ingress"
-
-+ module.http_target_listener.aws_lb_listener.mod
-id:                                          <computed>
-arn:                                         <computed>
-default_action.#:                            "1"
-default_action.0.target_group_arn:           "${aws_lb_target_group.mod.arn}"
-default_action.0.type:                       "forward"
-load_balancer_arn:                           "${var.lb_arn}"
-port:                                        "80"
-protocol:                                    "HTTP"
-ssl_policy:                                  <computed>
-
-+ module.http_target_listener.aws_lb_target_group.mod
-id:                                          <computed>
-arn:                                         <computed>
-arn_suffix:                                  <computed>
-deregistration_delay:                        "30"
-health_check.#:                              "1"
-health_check.0.healthy_threshold:            "3"
-health_check.0.interval:                     "30"
-health_check.0.matcher:                      "200"
-health_check.0.path:                         "/"
-health_check.0.port:                         "80"
-health_check.0.protocol:                     "HTTP"
-health_check.0.timeout:                      "5"
-health_check.0.unhealthy_threshold:          "3"
-name:                                        "http"
-port:                                        "80"
-protocol:                                    "HTTP"
-stickiness.#:                                <computed>
-target_type:                                 "instance"
-vpc_id:                                      "${var.vpc_id}"
-
-+ module.http_target_listener.aws_lb_target_group_attachment.mod[0]
-id:                                          <computed>
-port:                                        "80"
-target_group_arn:                            "${aws_lb_target_group.mod.arn}"
-target_id:                                   "${element(var.target_ids, count.index)}"
-
-+ module.http_target_listener.aws_lb_target_group_attachment.mod[1]
-id:                                          <computed>
-port:                                        "80"
-target_group_arn:                            "${aws_lb_target_group.mod.arn}"
-target_id:                                   "${element(var.target_ids, count.index)}"
-
-+ module.http_target_listener.aws_security_group_rule.mod_sg_for_access_by_sgs
-id:                                          <computed>
-from_port:                                   "80"
-protocol:                                    "tcp"
-security_group_id:                           "${var.sg_for_access_by_sgs_id}"
-self:                                        "false"
-source_security_group_id:                    "${var.sg_on_lb_id}"
-to_port:                                     "80"
-type:                                        "ingress"
-
-+ module.http_target_listener.aws_security_group_rule.mod_sg_on_lb_cidr_blocks
-id:                                          <computed>
-cidr_blocks.#:                               "1"
-cidr_blocks.0:                               "0.0.0.0/0"
-from_port:                                   "80"
-protocol:                                    "tcp"
-security_group_id:                           "${var.sg_on_lb_id}"
-self:                                        "false"
-source_security_group_id:                    <computed>
-to_port:                                     "80"
 type:                                        "ingress"
 
 + module.memcached.aws_elasticache_cluster.mod
@@ -977,5 +849,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 72 to add, 1 to change, 0 to destroy.
+Plan: 62 to add, 1 to change, 0 to destroy.
 
