@@ -14,8 +14,8 @@ variable "env" {
 }
 
 variable "engine_version" {
-  description = "Version # of the Postgres or MySQL installation. Do not include patch version as it is auto upgraded."
-  # default = "9.6"
+  description = "Engine version. Defaults to the version of the source database."
+  default = ""
 }
 
 variable "identifier" {
