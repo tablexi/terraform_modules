@@ -25,7 +25,7 @@ variable "identifier" {
 
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
-  default = true
+  default = false
 }
 
 variable "name" {
