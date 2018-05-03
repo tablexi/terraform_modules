@@ -64,7 +64,7 @@ variable "sg_cidr_blocks" {
 
 variable "skip_final_snapshot" {
   description = "Skip final snapshot before destroying instance."
-  default = false
+  default = true
 }
 
 variable "source_db" {
