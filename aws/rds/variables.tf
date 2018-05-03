@@ -67,11 +67,6 @@ variable "parameter_group_provided" {
   default = false
 }
 
-variable "port" {
-  description = "Override the default port"
-  default = ""
-}
-
 variable "publicly_accessible" {
   description = "Bool to control if instance is publicly accessible."
   default = true

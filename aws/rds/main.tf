@@ -12,7 +12,7 @@ locals {
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
   option_group_name = "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"
   family = "${var.engine}${var.engine_version}"
-  port = "${var.port != "" ? var.port : "${local.is_postgres ? 5432 : 3306}"}"
+  port = "${local.is_postgres ? 5432 : 3306}"
 }
 
 resource "aws_db_subnet_group" "mod" {
