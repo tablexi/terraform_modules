@@ -1,13 +1,3 @@
-variable "allow_major_version_upgrade" {
-  description = "Allow for major version upgrade from terraform"
-  default = true
-}
-
-variable "apply_immediately" {
-  description = "Specifies whether any database modifications are applied immediately, or during the next maintenance window"
-  default = true
-}
-
 variable "auto_minor_version_upgrade" {
   description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window."
   default = true
@@ -57,16 +47,6 @@ variable "node_type" {
   default = "db.t2.medium"
 }
 
-variable "option_group_name" {
-  description = "Name of the DB option group to associate."
-  default = ""
-}
-
-variable "option_group_provided" {
-  description = ""
-  default = false
-}
-
 variable "parameter_group_name" {
   description = "Name of a parameter group to use with the RDS instance."
   default = ""
@@ -75,11 +55,6 @@ variable "parameter_group_name" {
 variable "parameter_group_provided" {
   description = "If the parameter_group_name is provided, must be set to true."
   default = false
-}
-
-variable "port" {
-  description = "Override the default port"
-  default = ""
 }
 
 variable "publicly_accessible" {
