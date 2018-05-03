@@ -74,7 +74,7 @@ resource "aws_db_instance" "mod" {
   publicly_accessible = "${var.publicly_accessible}"
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
-  apply_immediately = "${var.apply_immediately}"
+  apply_immediately = true
 }
 
 resource "aws_security_group" "sg_on_rds_instance" {
