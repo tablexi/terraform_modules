@@ -57,8 +57,8 @@ variable "security_groups_for_ingress" {
   default = []
 }
 
-variable "sg_cidr_blocks" {
-  description = "cidr_blocks to give RDS port access to."
+variable "cidr_blocks_for_ingress" {
+  description = "CIDR blocks which should be allowed ingress on the RDS instance."
   default = []
 }
 
