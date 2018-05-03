@@ -4,6 +4,7 @@ data "aws_db_instance" "source_db" {
 
 locals {
   engine = "${data.aws_db_instance.source_db.engine}"
+  storage_encrypted = "${data.aws_db_instance.source_db.storage_encrypted}"
 
   engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
   family = "${local.engine}${var.engine_version}"
@@ -53,7 +54,7 @@ resource "aws_db_instance" "mod" {
   option_group_name = "${!local.is_postgres ? local.option_group_name : "default:postgres-${replace(var.engine_version, ".", "-")}"}"
   final_snapshot_identifier = "${var.name}-${var.env}-${local.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
-  storage_encrypted = "${var.storage_encrypted}"
+  storage_encrypted = "${local.storage_encrypted}"
   publicly_accessible = "${var.publicly_accessible}"
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = true
