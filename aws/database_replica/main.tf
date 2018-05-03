@@ -12,22 +12,6 @@ locals {
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
   port = "${local.is_postgres ? 5432 : 3306}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
-}
-
-resource "aws_db_subnet_group" "mod" {
-  count = "${var.create_db_subnet_group ? 1 : 0}"
-  name = "${local.subnet_group_name}"
-  description = "${var.name} ${var.env} db ${local.engine} subnet group"
-  subnet_ids = ["${var.subnets}"]
-
-  lifecycle {
-    create_before_destroy = true
-    # Apparently subnet groups cannot be changed within the same VPC. Even
-    # though the AWS documentation says otherwise.
-    # http://serverfault.com/a/817598
-    ignore_changes = ["name",]
-  }
 }
 
 resource "aws_db_parameter_group" "mod" {
@@ -65,7 +49,6 @@ resource "aws_db_instance" "mod" {
   backup_retention_period = "${var.backup_retention_period}"
   multi_az = "${var.multi_az}"
   vpc_security_group_ids = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
-  db_subnet_group_name = "${var.source_db == "" ? local.subnet_group_name : ""}"
   parameter_group_name = "${local.parameter_group_name}"
   option_group_name = "${!local.is_postgres ? local.option_group_name : "default:postgres-${replace(var.engine_version, ".", "-")}"}"
   final_snapshot_identifier = "${var.name}-${var.env}-${local.engine}-final-snapshot"

@@ -8,11 +8,6 @@ variable "backup_retention_period" {
   default = 7
 }
 
-variable "create_db_subnet_group" {
-  description = "Create a db subnet group specific to this database"
-  default = true
-}
-
 variable "env" {
   description = "Environment the RDS instance is associated with."
   default = "production"
@@ -92,15 +87,6 @@ variable "storage_type" {
   default = "gp2"
 }
 
-variable "subnets" {
-  description = "A list of subnets that the RDS instance can be added to."
-  type = "list"
-}
-
-variable "subnet_group_name" {
-  description = "Set db subnet group name"
-  default = ""
-}
 variable "username" {
   description = "RDS instance username"
   default = ""
