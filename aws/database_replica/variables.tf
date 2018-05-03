@@ -72,16 +72,6 @@ variable "source_db" {
   default = ""
 }
 
-variable "storage" {
-  description = "Volume storage size for the RDS instance in gigabytes."
-  default = 5
-}
-
-variable "storage_type" {
-  description = "Volume type to use.  Options: Standard(magnetic), gp2(SSD), or io1(provisioned IOPS SSD)"
-  default = "gp2"
-}
-
 variable "username" {
   description = "RDS instance username"
   default = ""

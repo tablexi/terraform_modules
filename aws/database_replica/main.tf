@@ -3,8 +3,10 @@ data "aws_db_instance" "source_db" {
 }
 
 locals {
+  allocated_storage = "${data.aws_db_instance.source_db.allocated_storage}"
   engine = "${data.aws_db_instance.source_db.engine}"
   storage_encrypted = "${data.aws_db_instance.source_db.storage_encrypted}"
+  storage_type = "${data.aws_db_instance.source_db.storage_type}"
 
   engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
   family = "${local.engine}${var.engine_version}"
@@ -43,8 +45,8 @@ resource "aws_db_instance" "mod" {
   engine = "${local.engine}"
   engine_version = "${var.engine_version}"
   instance_class = "${var.node_type}"
-  storage_type = "${var.storage_type}"
-  allocated_storage = "${var.storage}"
+  storage_type = "${local.storage_type}"
+  allocated_storage = "${local.allocated_storage}"
   username = "${var.username != "" ? var.username : "${var.name}${var.username_suffix}"}"
   password = "nopassword"
   backup_retention_period = "${var.backup_retention_period}"
