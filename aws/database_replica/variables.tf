@@ -5,7 +5,7 @@ variable "auto_minor_version_upgrade" {
 
 variable "backup_retention_period" {
   description = "Backup retention period for AWS RDS instance in days."
-  default = 7
+  default = 0
 }
 
 variable "env" {
