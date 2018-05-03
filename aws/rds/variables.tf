@@ -62,11 +62,6 @@ variable "option_group_name" {
   default = ""
 }
 
-variable "option_group_provided" {
-  description = ""
-  default = false
-}
-
 variable "parameter_group_name" {
   description = "Name of a parameter group to use with the RDS instance."
   default = ""

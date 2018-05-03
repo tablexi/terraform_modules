@@ -42,7 +42,7 @@ resource "aws_db_parameter_group" "mod" {
 }
 
 resource "aws_db_option_group" "mod" {
-  count = "${local.is_postgres || var.option_group_provided ? 0 : 1}"
+  count = "${local.is_postgres ? 0 : 1}"
   name = "${local.option_group_name}"
   engine_name = "${var.engine}"
   major_engine_version = "${var.engine_version}"
