@@ -1,13 +1,13 @@
-data "aws_db_instance" "source_db" {
+data "aws_db_instance" "source_database" {
   db_instance_identifier = "${var.source_db}"
 }
 
 locals {
-  allocated_storage = "${data.aws_db_instance.source_db.allocated_storage}"
-  engine = "${data.aws_db_instance.source_db.engine}"
-  engine_version = "${var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_db.engine_version}"
-  storage_encrypted = "${data.aws_db_instance.source_db.storage_encrypted}"
-  storage_type = "${data.aws_db_instance.source_db.storage_type}"
+  allocated_storage = "${data.aws_db_instance.source_database.allocated_storage}"
+  engine = "${data.aws_db_instance.source_database.engine}"
+  engine_version = "${var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_database.engine_version}"
+  storage_encrypted = "${data.aws_db_instance.source_database.storage_encrypted}"
+  storage_type = "${data.aws_db_instance.source_database.storage_type}"
 
   major_engine_version = "${join(".", slice(split(".", local.engine_version), 0, 2))}"
   default_option_and_parameter_group_name = "${var.name}-${var.env}-${local.engine_nickname}${replace(local.major_engine_version, ".", "")}"
@@ -45,7 +45,7 @@ resource "aws_db_option_group" "mod" {
 
 resource "aws_db_instance" "mod" {
   identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${local.engine}"}"
-  replicate_source_db  = "${var.source_db}"
+  replicate_source_db = "${data.aws_db_instance.source_database.id}"
   engine = "${local.engine}"
   engine_version = "${local.engine_version}"
   instance_class = "${var.node_type}"
