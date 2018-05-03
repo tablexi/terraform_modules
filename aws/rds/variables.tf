@@ -1,8 +1,3 @@
-variable "allow_major_version_upgrade" {
-  description = "Allow for major version upgrade from terraform"
-  default = true
-}
-
 variable "auto_minor_version_upgrade" {
   description = "Indicates that minor engine upgrades will be applied automatically to the DB instance during the maintenance window."
   default = true

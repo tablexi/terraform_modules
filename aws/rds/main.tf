@@ -73,7 +73,7 @@ resource "aws_db_instance" "mod" {
   storage_encrypted = "${var.storage_encrypted}"
   publicly_accessible = "${var.publicly_accessible}"
   auto_minor_version_upgrade = "${var.auto_minor_version_upgrade}"
-  allow_major_version_upgrade = "${var.allow_major_version_upgrade}"
+  allow_major_version_upgrade = true
   apply_immediately = true
 }
 
