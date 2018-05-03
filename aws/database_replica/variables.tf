@@ -18,11 +18,6 @@ variable "env" {
   default = "production"
 }
 
-variable "engine" {
-  description = "Postgres, MySQL, etc."
-  # default = "postgres"
-}
-
 variable "engine_version" {
   description = "Version # of the Postgres or MySQL installation. Do not include patch version as it is auto upgraded."
   # default = "9.6"

@@ -3,9 +3,11 @@ data "aws_db_instance" "source_db" {
 }
 
 locals {
+  engine = "${data.aws_db_instance.source_db.engine}"
+
   engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
-  family = "${var.engine}${var.engine_version}"
-  is_postgres = "${var.engine == "postgres" ? true : false}"
+  family = "${local.engine}${var.engine_version}"
+  is_postgres = "${local.engine == "postgres" ? true : false}"
   option_group_name = "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
   port = "${local.is_postgres ? 5432 : 3306}"
@@ -16,7 +18,7 @@ locals {
 resource "aws_db_subnet_group" "mod" {
   count = "${var.create_db_subnet_group ? 1 : 0}"
   name = "${local.subnet_group_name}"
-  description = "${var.name} ${var.env} db ${var.engine} subnet group"
+  description = "${var.name} ${var.env} db ${local.engine} subnet group"
   subnet_ids = ["${var.subnets}"]
 
   lifecycle {
@@ -42,7 +44,7 @@ resource "aws_db_parameter_group" "mod" {
 resource "aws_db_option_group" "mod" {
   count = "${local.is_postgres ? 0 : 1}"
   name = "${local.option_group_name}"
-  engine_name = "${var.engine}"
+  engine_name = "${local.engine}"
   major_engine_version = "${var.engine_version}"
 
   lifecycle {
@@ -51,9 +53,9 @@ resource "aws_db_option_group" "mod" {
 }
 
 resource "aws_db_instance" "mod" {
-  identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
+  identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${local.engine}"}"
   replicate_source_db  = "${var.source_db}"
-  engine = "${var.engine}"
+  engine = "${local.engine}"
   engine_version = "${var.engine_version}"
   instance_class = "${var.node_type}"
   storage_type = "${var.storage_type}"
@@ -66,7 +68,7 @@ resource "aws_db_instance" "mod" {
   db_subnet_group_name = "${var.source_db == "" ? local.subnet_group_name : ""}"
   parameter_group_name = "${local.parameter_group_name}"
   option_group_name = "${!local.is_postgres ? local.option_group_name : "default:postgres-${replace(var.engine_version, ".", "-")}"}"
-  final_snapshot_identifier = "${var.name}-${var.env}-${var.engine}-final-snapshot"
+  final_snapshot_identifier = "${var.name}-${var.env}-${local.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
   storage_encrypted = "${var.storage_encrypted}"
   publicly_accessible = "${var.publicly_accessible}"
