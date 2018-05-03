@@ -47,8 +47,6 @@ resource "aws_db_instance" "mod" {
   instance_class = "${var.node_type}"
   storage_type = "${local.storage_type}"
   allocated_storage = "${local.allocated_storage}"
-  username = "${var.username != "" ? var.username : "${var.name}${var.username_suffix}"}"
-  password = "nopassword"
   backup_retention_period = "${var.backup_retention_period}"
   multi_az = "${var.multi_az}"
   vpc_security_group_ids = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]

@@ -72,16 +72,6 @@ variable "source_db" {
   default = ""
 }
 
-variable "username" {
-  description = "RDS instance username"
-  default = ""
-}
-
-variable "username_suffix" {
-  description = "Allows for greater customization of the RDS instance superuser.  The username arguments starts with the name variable and then this variable is appended to it."
-  default = "admin"
-}
-
 variable "vpc_id" {
   description = "VPC id to associate this RDS instance with."
 }
