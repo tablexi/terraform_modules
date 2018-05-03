@@ -55,7 +55,7 @@ resource "aws_db_instance" "mod" {
   multi_az = "${var.multi_az}"
   vpc_security_group_ids = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
   parameter_group_name = "${local.parameter_group_name}"
-  option_group_name = "${!local.is_postgres ? local.option_group_name : "default:postgres-${replace(local.major_engine_version, ".", "-")}"}"
+  option_group_name = "${"default:${local.engine}-${replace(local.major_engine_version, ".", "-")}"}"
   final_snapshot_identifier = "${var.name}-${var.env}-${local.engine}-final-snapshot"
   skip_final_snapshot = "${var.skip_final_snapshot}"
   storage_encrypted = "${local.storage_encrypted}"
