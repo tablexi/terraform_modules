@@ -1,18 +1,12 @@
 locals {
-  is_postgres = "${var.engine == "postgres" ? true : false}"
-}
-
-locals {
   engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
-}
-
-locals {
-  subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
-  sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
-  option_group_name = "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"
   family = "${var.engine}${var.engine_version}"
+  is_postgres = "${var.engine == "postgres" ? true : false}"
+  option_group_name = "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"
+  parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
   port = "${local.is_postgres ? 5432 : 3306}"
+  sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
+  subnet_group_name = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
 }
 
 resource "aws_db_subnet_group" "mod" {
