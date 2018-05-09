@@ -148,7 +148,7 @@ monitoring_interval:                           "0"
 monitoring_role_arn:                           <computed>
 multi_az:                                      "true"
 name:                                          <computed>
-option_group_name:                             "rds-mysql-production-mysql57"
+option_group_name:                             "default:mysql-5-7"
 parameter_group_name:                          "rds-mysql-production-mysql57"
 password:                                      <sensitive>
 port:                                          <computed>
