@@ -38,6 +38,11 @@ variable "vpc_id" {
   type        = "string"
 }
 
+variable "access_logs_enabled" {
+  description = "(Optional) Boolean to enable / disable access_logs. Defaults to false."
+  default     = false
+}
+
 variable "health_check_path" {
   description = "(Optional) The destination for the health check request. Default /healthz."
   default     = "/healthz"
