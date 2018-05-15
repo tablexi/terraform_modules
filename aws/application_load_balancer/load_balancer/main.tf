@@ -67,7 +67,7 @@ resource "aws_s3_bucket_policy" "load_balancer_access_logs" {
 
   policy = <<-JSON
     {
-      "Version": "2018-05-11",
+      "Version": "2012-10-17",
       "Statement": [
         {
           "Action": [

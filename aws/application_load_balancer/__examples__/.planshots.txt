@@ -565,6 +565,6 @@ website_endpoint:                                     <computed>
 + module.initech_production_load_balancer.module.load_balancer.aws_s3_bucket_policy.load_balancer_access_logs
 id:                                                   <computed>
 bucket:                                               "${aws_s3_bucket.load_balancer_access_logs.id}"
-policy:                                               "{\n  \"Version\": \"2018-05-11\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"s3:PutObject\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"${aws_s3_bucket.load_balancer_access_logs.arn}/AWSLogs/${data.aws_caller_identity.aws_account.account_id}/*\",\n      \"Principal\": {\n        \"AWS\": [\n          \"${lookup(local.elastic_load_balancing_account_ids, aws_s3_bucket.load_balancer_access_logs.region)}\"\n        ]\n      }\n    }\n  ]\n}\n"
+policy:                                               "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"s3:PutObject\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"${aws_s3_bucket.load_balancer_access_logs.arn}/AWSLogs/${data.aws_caller_identity.aws_account.account_id}/*\",\n      \"Principal\": {\n        \"AWS\": [\n          \"${lookup(local.elastic_load_balancing_account_ids, aws_s3_bucket.load_balancer_access_logs.region)}\"\n        ]\n      }\n    }\n  ]\n}\n"
 Plan: 38 to add, 0 to change, 0 to destroy.
 
