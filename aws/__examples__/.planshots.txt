@@ -35,7 +35,7 @@ unique_id:                                   <computed>
 
 + module.ec2.aws_instance.mod[0]
 id:                                          <computed>
-ami:                                         "ami-467ca739"
+ami:                                         "ami-14c5486b"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
@@ -73,7 +73,7 @@ vpc_security_group_ids.#:                    <computed>
 
 + module.ec2.aws_instance.mod[1]
 id:                                          <computed>
-ami:                                         "ami-467ca739"
+ami:                                         "ami-14c5486b"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>

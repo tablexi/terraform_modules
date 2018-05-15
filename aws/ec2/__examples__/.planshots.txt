@@ -153,7 +153,7 @@ vpc:                                       "true"
 
 + module.with-eip.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-467ca739"
+ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -191,7 +191,7 @@ vpc_security_group_ids.#:                  <computed>
 
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-467ca739"
+ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -276,7 +276,7 @@ type:                                      "ingress"
 
 + module.without-ami.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-467ca739"
+ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
@@ -314,7 +314,7 @@ vpc_security_group_ids.#:                  <computed>
 
 + module.without-ami.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-467ca739"
+ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 ebs_block_device.#:                        <computed>
