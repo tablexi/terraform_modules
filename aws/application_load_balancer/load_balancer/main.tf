@@ -77,7 +77,7 @@ resource "aws_s3_bucket_policy" "load_balancer_access_logs" {
           "Resource": "${aws_s3_bucket.load_balancer_access_logs.arn}/AWSLogs/${data.aws_caller_identity.aws_account.account_id}/*",
           "Principal": {
             "AWS": [
-              "${lookup(local.elastic_load_balancing_account_ids, aws_s3_bucket.load_balancer_access_logs.region)}"
+              "arn:aws:iam::${lookup(local.elastic_load_balancing_account_ids, aws_s3_bucket.load_balancer_access_logs.region)}:root"
             ]
           }
         }
