@@ -1,4 +1,6 @@
 locals {
+  access_logs_glacier_transition_days = 365
+
   http_deregistration_delay = 30
   http_health_check_matcher = "200,301"
   http_health_check_timeout = 5
@@ -14,11 +16,14 @@ locals {
   name_prefix = "${var.name}-${var.environment}"
 }
 
-resource "aws_alb" "load_balancer" {
-  name            = "${local.name_prefix}"
-  internal        = "${var.internal}"
-  security_groups = ["${aws_security_group.security_group_on_load_balancer.id}"]
-  subnets         = ["${var.subnets}"]
+module "load_balancer" {
+  source = "./load_balancer"
+
+  access_logs_enabled = "${var.access_logs_enabled}"
+  name                = "${local.name_prefix}"
+  internal            = "${var.internal}"
+  security_groups     = ["${aws_security_group.security_group_on_load_balancer.id}"]
+  subnets             = ["${var.subnets}"]
 }
 
 resource "aws_security_group" "security_group_on_load_balancer" {
@@ -55,7 +60,7 @@ resource "aws_security_group" "security_group_on_load_balancer" {
 }
 
 resource "aws_alb_listener" "http_listener" {
-  load_balancer_arn = "${aws_alb.load_balancer.arn}"
+  load_balancer_arn = "${module.load_balancer.arn}"
   port              = "${local.http_port_for_listener}"
   protocol          = "HTTP"
 
@@ -98,7 +103,7 @@ resource "aws_security_group_rule" "http_ingress_on_instances_from_load_balancer
 
 resource "aws_alb_listener" "https_listener" {
   certificate_arn   = "${var.certificate_arn}"
-  load_balancer_arn = "${aws_alb.load_balancer.arn}"
+  load_balancer_arn = "${module.load_balancer.arn}"
   port              = "${local.https_port_for_listener}"
   protocol          = "HTTPS"
   ssl_policy        = "${var.ssl_policy}"
