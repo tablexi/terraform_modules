@@ -521,7 +521,6 @@ id:                                                   <computed>
 access_logs.#:                                        "1"
 access_logs.0.bucket:                                 "${aws_s3_bucket.load_balancer_access_logs.id}"
 access_logs.0.enabled:                                "true"
-access_logs.0.prefix:                                 <computed>
 arn:                                                  <computed>
 arn_suffix:                                           <computed>
 dns_name:                                             <computed>

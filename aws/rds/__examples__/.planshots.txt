@@ -163,15 +163,6 @@ timezone:                                      <computed>
 username:                                      "rds-mysqladmin"
 vpc_security_group_ids.#:                      <computed>
 
-+ module.rds-mysql.aws_db_option_group.mod
-id:                                            <computed>
-arn:                                           <computed>
-engine_name:                                   "mysql"
-major_engine_version:                          "5.7"
-name:                                          "rds-mysql-production-mysql57"
-name_prefix:                                   <computed>
-option_group_description:                      "Managed by Terraform"
-
 + module.rds-mysql.aws_db_parameter_group.mod
 id:                                            <computed>
 arn:                                           <computed>
@@ -585,5 +576,5 @@ revoke_rules_on_delete:                        "false"
 tags.%:                                        "1"
 tags.Name:                                     "rds-sg-spec-postgres_production-pg"
 vpc_id:                                        "sg-spec-postgres"
-Plan: 26 to add, 0 to change, 0 to destroy.
+Plan: 25 to add, 0 to change, 0 to destroy.
 
