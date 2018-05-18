@@ -22,7 +22,7 @@ id:                                                   <computed>
 arn:                                                  <computed>
 certificate_arn:                                      "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012"
 default_action.#:                                     "1"
-default_action.0.target_group_arn:                    "${aws_alb_target_group.http_target_group.arn}"
+default_action.0.target_group_arn:                    "${aws_alb_target_group.https_target_group.arn}"
 default_action.0.type:                                "forward"
 load_balancer_arn:                                    "${module.load_balancer.arn}"
 port:                                                 "443"
@@ -178,7 +178,7 @@ id:                                                   <computed>
 arn:                                                  <computed>
 certificate_arn:                                      "arn:aws:acm:us-east-1:210987654321:certificate/87654321-4321-4321-4321-210987654321"
 default_action.#:                                     "1"
-default_action.0.target_group_arn:                    "${aws_alb_target_group.http_target_group.arn}"
+default_action.0.target_group_arn:                    "${aws_alb_target_group.https_target_group.arn}"
 default_action.0.type:                                "forward"
 load_balancer_arn:                                    "${module.load_balancer.arn}"
 port:                                                 "443"
@@ -334,7 +334,7 @@ id:                                                   <computed>
 arn:                                                  <computed>
 certificate_arn:                                      "arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012"
 default_action.#:                                     "1"
-default_action.0.target_group_arn:                    "${aws_alb_target_group.http_target_group.arn}"
+default_action.0.target_group_arn:                    "${aws_alb_target_group.https_target_group.arn}"
 default_action.0.type:                                "forward"
 load_balancer_arn:                                    "${module.load_balancer.arn}"
 port:                                                 "443"
@@ -521,6 +521,7 @@ id:                                                   <computed>
 access_logs.#:                                        "1"
 access_logs.0.bucket:                                 "${aws_s3_bucket.load_balancer_access_logs.id}"
 access_logs.0.enabled:                                "true"
+access_logs.0.prefix:                                 <computed>
 arn:                                                  <computed>
 arn_suffix:                                           <computed>
 dns_name:                                             <computed>
