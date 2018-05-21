@@ -269,15 +269,6 @@ timezone:                                    <computed>
 username:                                    "test-mysqladmin"
 vpc_security_group_ids.#:                    <computed>
 
-+ module.mysql.aws_db_option_group.mod
-id:                                          <computed>
-arn:                                         <computed>
-engine_name:                                 "mysql"
-major_engine_version:                        "5.7"
-name:                                        "test-mysql-production-mysql57"
-name_prefix:                                 <computed>
-option_group_description:                    "Managed by Terraform"
-
 + module.mysql.aws_db_parameter_group.mod
 id:                                          <computed>
 arn:                                         <computed>
@@ -849,5 +840,5 @@ ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
 tags.%:                                      "1"
 tags.Name:                                   "vpc"
-Plan: 62 to add, 1 to change, 0 to destroy.
+Plan: 61 to add, 1 to change, 0 to destroy.
 

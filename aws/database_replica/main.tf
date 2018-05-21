@@ -15,7 +15,6 @@ locals {
   engine_nickname = "${local.is_postgres ? "pg" : "mysql"}"
   family = "${local.engine}${local.major_engine_version}"
   is_postgres = "${local.engine == "postgres" ? true : false}"
-  option_group_name = "${local.default_option_and_parameter_group_name}"
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : local.default_option_and_parameter_group_name}"
   port = "${local.is_postgres ? 5432 : 3306}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
@@ -26,17 +25,6 @@ resource "aws_db_parameter_group" "mod" {
   name = "${local.parameter_group_name}"
   family = "${local.family}"
   description = "${local.family} parameter group for ${var.name} ${var.env}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
-resource "aws_db_option_group" "mod" {
-  count = "${local.is_postgres ? 0 : 1}"
-  name = "${local.option_group_name}"
-  engine_name = "${local.engine}"
-  major_engine_version = "${local.major_engine_version}"
 
   lifecycle {
     create_before_destroy = true
