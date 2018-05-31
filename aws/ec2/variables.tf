@@ -59,3 +59,9 @@ variable "vpc_id" {
 variable "name" {
   description = "The name of the instance. This will be appended with the count number. IE test-app01."
 }
+
+# https://www.terraform.io/docs/providers/aws/r/instance.html#disable_api_termination
+variable "disable_api_termination" {
+  description = "Enables EC2 Instance Termination Protection https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html#Using_ChangingDisableAPITermination"
+  default = false
+}

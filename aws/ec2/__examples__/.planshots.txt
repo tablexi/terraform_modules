@@ -11,6 +11,7 @@ id:                                        <computed>
 ami:                                       "with-ami"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+disable_api_termination:                   "false"
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -49,6 +50,7 @@ id:                                        <computed>
 ami:                                       "with-ami"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+disable_api_termination:                   "false"
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -156,6 +158,7 @@ id:                                        <computed>
 ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+disable_api_termination:                   "false"
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -194,6 +197,7 @@ id:                                        <computed>
 ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+disable_api_termination:                   "false"
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -279,6 +283,7 @@ id:                                        <computed>
 ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+disable_api_termination:                   "false"
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -317,6 +322,7 @@ id:                                        <computed>
 ami:                                       "ami-14c5486b"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+disable_api_termination:                   "false"
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
