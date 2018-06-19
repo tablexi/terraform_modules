@@ -47,6 +47,7 @@ name:                                                 "acme-staging-http"
 port:                                                 "80"
 protocol:                                             "HTTP"
 proxy_protocol_v2:                                    "false"
+slow_start:                                           "0"
 stickiness.#:                                         <computed>
 target_type:                                          "instance"
 vpc_id:                                               "vpc-eed63643"
@@ -69,6 +70,7 @@ name:                                                 "acme-staging-https"
 port:                                                 "443"
 protocol:                                             "HTTPS"
 proxy_protocol_v2:                                    "false"
+slow_start:                                           "0"
 stickiness.#:                                         <computed>
 target_type:                                          "instance"
 vpc_id:                                               "vpc-eed63643"
@@ -97,50 +99,22 @@ target_id:                                            "i-0354a7616ba0dc1af"
 id:                                                   <computed>
 arn:                                                  <computed>
 description:                                          "Managed by Terraform"
-egress.#:                                             "2"
-egress.1749941629.cidr_blocks.#:                      "0"
-egress.1749941629.description:                        ""
-egress.1749941629.from_port:                          "80"
-egress.1749941629.ipv6_cidr_blocks.#:                 "0"
-egress.1749941629.prefix_list_ids.#:                  "0"
-egress.1749941629.protocol:                           "tcp"
-egress.1749941629.security_groups.#:                  "1"
-egress.1749941629.security_groups.686130460:          "sg-c94a8777"
-egress.1749941629.self:                               "false"
-egress.1749941629.to_port:                            "80"
-egress.2219625915.cidr_blocks.#:                      "0"
-egress.2219625915.description:                        ""
-egress.2219625915.from_port:                          "443"
-egress.2219625915.ipv6_cidr_blocks.#:                 "0"
-egress.2219625915.prefix_list_ids.#:                  "0"
-egress.2219625915.protocol:                           "tcp"
-egress.2219625915.security_groups.#:                  "1"
-egress.2219625915.security_groups.686130460:          "sg-c94a8777"
-egress.2219625915.self:                               "false"
-egress.2219625915.to_port:                            "443"
-ingress.#:                                            "2"
-ingress.2214680975.cidr_blocks.#:                     "1"
-ingress.2214680975.cidr_blocks.0:                     "0.0.0.0/0"
-ingress.2214680975.description:                       ""
-ingress.2214680975.from_port:                         "80"
-ingress.2214680975.ipv6_cidr_blocks.#:                "0"
-ingress.2214680975.protocol:                          "tcp"
-ingress.2214680975.security_groups.#:                 "0"
-ingress.2214680975.self:                              "false"
-ingress.2214680975.to_port:                           "80"
-ingress.2617001939.cidr_blocks.#:                     "1"
-ingress.2617001939.cidr_blocks.0:                     "0.0.0.0/0"
-ingress.2617001939.description:                       ""
-ingress.2617001939.from_port:                         "443"
-ingress.2617001939.ipv6_cidr_blocks.#:                "0"
-ingress.2617001939.protocol:                          "tcp"
-ingress.2617001939.security_groups.#:                 "0"
-ingress.2617001939.self:                              "false"
-ingress.2617001939.to_port:                           "443"
+egress.#:                                             <computed>
+ingress.#:                                            <computed>
 name:                                                 "acme-staging-alb"
 owner_id:                                             <computed>
 revoke_rules_on_delete:                               "false"
 vpc_id:                                               "vpc-eed63643"
+
++ module.acme_staging_load_balancer.aws_security_group_rule.http_egress_on_load_balancer
+id:                                                   <computed>
+from_port:                                            "80"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             "sg-c94a8777"
+to_port:                                              "80"
+type:                                                 "egress"
 
 + module.acme_staging_load_balancer.aws_security_group_rule.http_ingress_on_instances_from_load_balancer
 id:                                                   <computed>
@@ -152,6 +126,28 @@ source_security_group_id:                             "${aws_security_group.secu
 to_port:                                              "80"
 type:                                                 "ingress"
 
++ module.acme_staging_load_balancer.aws_security_group_rule.http_ingress_on_load_balancer
+id:                                                   <computed>
+cidr_blocks.#:                                        "1"
+cidr_blocks.0:                                        "0.0.0.0/0"
+from_port:                                            "80"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             <computed>
+to_port:                                              "80"
+type:                                                 "ingress"
+
++ module.acme_staging_load_balancer.aws_security_group_rule.https_egress_on_load_balancer
+id:                                                   <computed>
+from_port:                                            "443"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             "sg-c94a8777"
+to_port:                                              "443"
+type:                                                 "egress"
+
 + module.acme_staging_load_balancer.aws_security_group_rule.https_ingress_on_instances_from_load_balancer
 id:                                                   <computed>
 from_port:                                            "443"
@@ -159,6 +155,18 @@ protocol:                                             "tcp"
 security_group_id:                                    "sg-c94a8777"
 self:                                                 "false"
 source_security_group_id:                             "${aws_security_group.security_group_on_load_balancer.id}"
+to_port:                                              "443"
+type:                                                 "ingress"
+
++ module.acme_staging_load_balancer.aws_security_group_rule.https_ingress_on_load_balancer
+id:                                                   <computed>
+cidr_blocks.#:                                        "1"
+cidr_blocks.0:                                        "0.0.0.0/0"
+from_port:                                            "443"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             <computed>
 to_port:                                              "443"
 type:                                                 "ingress"
 
@@ -203,6 +211,7 @@ name:                                                 "globex-production-http"
 port:                                                 "80"
 protocol:                                             "HTTP"
 proxy_protocol_v2:                                    "false"
+slow_start:                                           "0"
 stickiness.#:                                         <computed>
 target_type:                                          "instance"
 vpc_id:                                               "vpc-e365d769"
@@ -225,6 +234,7 @@ name:                                                 "globex-production-https"
 port:                                                 "443"
 protocol:                                             "HTTPS"
 proxy_protocol_v2:                                    "false"
+slow_start:                                           "0"
 stickiness.#:                                         <computed>
 target_type:                                          "instance"
 vpc_id:                                               "vpc-e365d769"
@@ -253,50 +263,22 @@ target_id:                                            "i-04711668341adedf1"
 id:                                                   <computed>
 arn:                                                  <computed>
 description:                                          "Managed by Terraform"
-egress.#:                                             "2"
-egress.337077692.cidr_blocks.#:                       "0"
-egress.337077692.description:                         ""
-egress.337077692.from_port:                           "443"
-egress.337077692.ipv6_cidr_blocks.#:                  "0"
-egress.337077692.prefix_list_ids.#:                   "0"
-egress.337077692.protocol:                            "tcp"
-egress.337077692.security_groups.#:                   "1"
-egress.337077692.security_groups.3427799827:          "sg-264269ad"
-egress.337077692.self:                                "false"
-egress.337077692.to_port:                             "443"
-egress.4162213242.cidr_blocks.#:                      "0"
-egress.4162213242.description:                        ""
-egress.4162213242.from_port:                          "80"
-egress.4162213242.ipv6_cidr_blocks.#:                 "0"
-egress.4162213242.prefix_list_ids.#:                  "0"
-egress.4162213242.protocol:                           "tcp"
-egress.4162213242.security_groups.#:                  "1"
-egress.4162213242.security_groups.3427799827:         "sg-264269ad"
-egress.4162213242.self:                               "false"
-egress.4162213242.to_port:                            "80"
-ingress.#:                                            "2"
-ingress.2214680975.cidr_blocks.#:                     "1"
-ingress.2214680975.cidr_blocks.0:                     "0.0.0.0/0"
-ingress.2214680975.description:                       ""
-ingress.2214680975.from_port:                         "80"
-ingress.2214680975.ipv6_cidr_blocks.#:                "0"
-ingress.2214680975.protocol:                          "tcp"
-ingress.2214680975.security_groups.#:                 "0"
-ingress.2214680975.self:                              "false"
-ingress.2214680975.to_port:                           "80"
-ingress.2617001939.cidr_blocks.#:                     "1"
-ingress.2617001939.cidr_blocks.0:                     "0.0.0.0/0"
-ingress.2617001939.description:                       ""
-ingress.2617001939.from_port:                         "443"
-ingress.2617001939.ipv6_cidr_blocks.#:                "0"
-ingress.2617001939.protocol:                          "tcp"
-ingress.2617001939.security_groups.#:                 "0"
-ingress.2617001939.self:                              "false"
-ingress.2617001939.to_port:                           "443"
+egress.#:                                             <computed>
+ingress.#:                                            <computed>
 name:                                                 "globex-production-alb"
 owner_id:                                             <computed>
 revoke_rules_on_delete:                               "false"
 vpc_id:                                               "vpc-e365d769"
+
++ module.globex_production_load_balancer.aws_security_group_rule.http_egress_on_load_balancer
+id:                                                   <computed>
+from_port:                                            "80"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             "sg-264269ad"
+to_port:                                              "80"
+type:                                                 "egress"
 
 + module.globex_production_load_balancer.aws_security_group_rule.http_ingress_on_instances_from_load_balancer
 id:                                                   <computed>
@@ -308,6 +290,28 @@ source_security_group_id:                             "${aws_security_group.secu
 to_port:                                              "80"
 type:                                                 "ingress"
 
++ module.globex_production_load_balancer.aws_security_group_rule.http_ingress_on_load_balancer
+id:                                                   <computed>
+cidr_blocks.#:                                        "1"
+cidr_blocks.0:                                        "0.0.0.0/0"
+from_port:                                            "80"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             <computed>
+to_port:                                              "80"
+type:                                                 "ingress"
+
++ module.globex_production_load_balancer.aws_security_group_rule.https_egress_on_load_balancer
+id:                                                   <computed>
+from_port:                                            "443"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             "sg-264269ad"
+to_port:                                              "443"
+type:                                                 "egress"
+
 + module.globex_production_load_balancer.aws_security_group_rule.https_ingress_on_instances_from_load_balancer
 id:                                                   <computed>
 from_port:                                            "443"
@@ -315,6 +319,18 @@ protocol:                                             "tcp"
 security_group_id:                                    "sg-264269ad"
 self:                                                 "false"
 source_security_group_id:                             "${aws_security_group.security_group_on_load_balancer.id}"
+to_port:                                              "443"
+type:                                                 "ingress"
+
++ module.globex_production_load_balancer.aws_security_group_rule.https_ingress_on_load_balancer
+id:                                                   <computed>
+cidr_blocks.#:                                        "1"
+cidr_blocks.0:                                        "0.0.0.0/0"
+from_port:                                            "443"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             <computed>
 to_port:                                              "443"
 type:                                                 "ingress"
 
@@ -359,6 +375,7 @@ name:                                                 "initech-production-http"
 port:                                                 "80"
 protocol:                                             "HTTP"
 proxy_protocol_v2:                                    "false"
+slow_start:                                           "0"
 stickiness.#:                                         <computed>
 target_type:                                          "instance"
 vpc_id:                                               "vpc-eed63643"
@@ -381,6 +398,7 @@ name:                                                 "initech-production-https"
 port:                                                 "443"
 protocol:                                             "HTTPS"
 proxy_protocol_v2:                                    "false"
+slow_start:                                           "0"
 stickiness.#:                                         <computed>
 target_type:                                          "instance"
 vpc_id:                                               "vpc-eed63643"
@@ -409,50 +427,22 @@ target_id:                                            "i-0354a7616ba0dc1af"
 id:                                                   <computed>
 arn:                                                  <computed>
 description:                                          "Managed by Terraform"
-egress.#:                                             "2"
-egress.1749941629.cidr_blocks.#:                      "0"
-egress.1749941629.description:                        ""
-egress.1749941629.from_port:                          "80"
-egress.1749941629.ipv6_cidr_blocks.#:                 "0"
-egress.1749941629.prefix_list_ids.#:                  "0"
-egress.1749941629.protocol:                           "tcp"
-egress.1749941629.security_groups.#:                  "1"
-egress.1749941629.security_groups.686130460:          "sg-c94a8777"
-egress.1749941629.self:                               "false"
-egress.1749941629.to_port:                            "80"
-egress.2219625915.cidr_blocks.#:                      "0"
-egress.2219625915.description:                        ""
-egress.2219625915.from_port:                          "443"
-egress.2219625915.ipv6_cidr_blocks.#:                 "0"
-egress.2219625915.prefix_list_ids.#:                  "0"
-egress.2219625915.protocol:                           "tcp"
-egress.2219625915.security_groups.#:                  "1"
-egress.2219625915.security_groups.686130460:          "sg-c94a8777"
-egress.2219625915.self:                               "false"
-egress.2219625915.to_port:                            "443"
-ingress.#:                                            "2"
-ingress.2214680975.cidr_blocks.#:                     "1"
-ingress.2214680975.cidr_blocks.0:                     "0.0.0.0/0"
-ingress.2214680975.description:                       ""
-ingress.2214680975.from_port:                         "80"
-ingress.2214680975.ipv6_cidr_blocks.#:                "0"
-ingress.2214680975.protocol:                          "tcp"
-ingress.2214680975.security_groups.#:                 "0"
-ingress.2214680975.self:                              "false"
-ingress.2214680975.to_port:                           "80"
-ingress.2617001939.cidr_blocks.#:                     "1"
-ingress.2617001939.cidr_blocks.0:                     "0.0.0.0/0"
-ingress.2617001939.description:                       ""
-ingress.2617001939.from_port:                         "443"
-ingress.2617001939.ipv6_cidr_blocks.#:                "0"
-ingress.2617001939.protocol:                          "tcp"
-ingress.2617001939.security_groups.#:                 "0"
-ingress.2617001939.self:                              "false"
-ingress.2617001939.to_port:                           "443"
+egress.#:                                             <computed>
+ingress.#:                                            <computed>
 name:                                                 "initech-production-alb"
 owner_id:                                             <computed>
 revoke_rules_on_delete:                               "false"
 vpc_id:                                               "vpc-eed63643"
+
++ module.initech_production_load_balancer.aws_security_group_rule.http_egress_on_load_balancer
+id:                                                   <computed>
+from_port:                                            "80"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             "sg-c94a8777"
+to_port:                                              "80"
+type:                                                 "egress"
 
 + module.initech_production_load_balancer.aws_security_group_rule.http_ingress_on_instances_from_load_balancer
 id:                                                   <computed>
@@ -464,6 +454,28 @@ source_security_group_id:                             "${aws_security_group.secu
 to_port:                                              "80"
 type:                                                 "ingress"
 
++ module.initech_production_load_balancer.aws_security_group_rule.http_ingress_on_load_balancer
+id:                                                   <computed>
+cidr_blocks.#:                                        "1"
+cidr_blocks.0:                                        "0.0.0.0/0"
+from_port:                                            "80"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             <computed>
+to_port:                                              "80"
+type:                                                 "ingress"
+
++ module.initech_production_load_balancer.aws_security_group_rule.https_egress_on_load_balancer
+id:                                                   <computed>
+from_port:                                            "443"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             "sg-c94a8777"
+to_port:                                              "443"
+type:                                                 "egress"
+
 + module.initech_production_load_balancer.aws_security_group_rule.https_ingress_on_instances_from_load_balancer
 id:                                                   <computed>
 from_port:                                            "443"
@@ -471,6 +483,18 @@ protocol:                                             "tcp"
 security_group_id:                                    "sg-c94a8777"
 self:                                                 "false"
 source_security_group_id:                             "${aws_security_group.security_group_on_load_balancer.id}"
+to_port:                                              "443"
+type:                                                 "ingress"
+
++ module.initech_production_load_balancer.aws_security_group_rule.https_ingress_on_load_balancer
+id:                                                   <computed>
+cidr_blocks.#:                                        "1"
+cidr_blocks.0:                                        "0.0.0.0/0"
+from_port:                                            "443"
+protocol:                                             "tcp"
+security_group_id:                                    "${aws_security_group.security_group_on_load_balancer.id}"
+self:                                                 "false"
+source_security_group_id:                             <computed>
 to_port:                                              "443"
 type:                                                 "ingress"
 
@@ -546,6 +570,7 @@ acl:                                                  "private"
 arn:                                                  <computed>
 bucket:                                               "initech-production-logs"
 bucket_domain_name:                                   <computed>
+bucket_regional_domain_name:                          <computed>
 force_destroy:                                        "false"
 hosted_zone_id:                                       <computed>
 lifecycle_rule.#:                                     "1"
@@ -565,5 +590,5 @@ website_endpoint:                                     <computed>
 id:                                                   <computed>
 bucket:                                               "${aws_s3_bucket.load_balancer_access_logs.id}"
 policy:                                               "{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Action\": [\n        \"s3:PutObject\"\n      ],\n      \"Effect\": \"Allow\",\n      \"Resource\": \"${aws_s3_bucket.load_balancer_access_logs.arn}/AWSLogs/${data.aws_caller_identity.aws_account.account_id}/*\",\n      \"Principal\": {\n        \"AWS\": [\n          \"arn:aws:iam::${lookup(local.elastic_load_balancing_account_ids, aws_s3_bucket.load_balancer_access_logs.region)}:root\"\n        ]\n      }\n    }\n  ]\n}\n"
-Plan: 38 to add, 0 to change, 0 to destroy.
+Plan: 50 to add, 0 to change, 0 to destroy.
 
