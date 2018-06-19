@@ -29,34 +29,42 @@ module "load_balancer" {
 resource "aws_security_group" "security_group_on_load_balancer" {
   name   = "${local.name_prefix}-alb"
   vpc_id = "${var.vpc_id}"
+}
 
-  egress {
-    from_port       = "${local.http_port_for_instances}"
-    protocol        = "tcp"
-    security_groups = ["${var.security_group_for_instances}"]
-    to_port         = "${local.http_port_for_instances}"
-  }
+resource "aws_security_group_rule" "http_egress_on_load_balancer" {
+  from_port                = "${local.http_port_for_instances}"
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.security_group_on_load_balancer.id}"
+  source_security_group_id = "${var.security_group_for_instances}"
+  to_port                  = "${local.http_port_for_instances}"
+  type                     = "egress"
+}
 
-  egress {
-    from_port       = "${local.https_port_for_instances}"
-    protocol        = "tcp"
-    security_groups = ["${var.security_group_for_instances}"]
-    to_port         = "${local.https_port_for_instances}"
-  }
+resource "aws_security_group_rule" "https_egress_on_load_balancer" {
+  from_port                = "${local.https_port_for_instances}"
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.security_group_on_load_balancer.id}"
+  source_security_group_id = "${var.security_group_for_instances}"
+  to_port                  = "${local.https_port_for_instances}"
+  type                     = "egress"
+}
 
-  ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "${local.http_port_for_listener}"
-    protocol    = "tcp"
-    to_port     = "${local.http_port_for_listener}"
-  }
+resource "aws_security_group_rule" "http_ingress_on_load_balancer" {
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = "${local.http_port_for_listener}"
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.security_group_on_load_balancer.id}"
+  to_port           = "${local.http_port_for_listener}"
+  type              = "ingress"
+}
 
-  ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "${local.https_port_for_listener}"
-    protocol    = "tcp"
-    to_port     = "${local.https_port_for_listener}"
-  }
+resource "aws_security_group_rule" "https_ingress_on_load_balancer" {
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = "${local.https_port_for_listener}"
+  protocol          = "tcp"
+  security_group_id = "${aws_security_group.security_group_on_load_balancer.id}"
+  to_port           = "${local.https_port_for_listener}"
+  type              = "ingress"
 }
 
 resource "aws_alb_listener" "http_listener" {
