@@ -6,7 +6,7 @@ TERRAFORM_CACHED_VERSION='0'
 TERRAFORM_DIR="$HOME/terraform"
 
 # Get current state version
-TERRAFORM_VERSION='0.10.8'
+TERRAFORM_VERSION='0.11.7'
 
 # Check cached terraform version
 if [ -f "$TERRAFORM_DIR/VERSION" ]; then
