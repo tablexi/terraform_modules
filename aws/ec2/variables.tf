@@ -59,3 +59,8 @@ variable "vpc_id" {
 variable "name" {
   description = "The name of the instance. This will be appended with the count number. IE test-app01."
 }
+
+variable "iam_instance_profile" {
+  default = ""
+  description = "The IAM instance profile to associate with the instance."
+}
