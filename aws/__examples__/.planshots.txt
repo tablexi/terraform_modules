@@ -35,7 +35,7 @@ unique_id:                                   <computed>
 
 + module.ec2.aws_instance.mod[0]
 id:                                          <computed>
-ami:                                         "ami-14c5486b"
+ami:                                         "ami-cfe4b2b0"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
@@ -73,7 +73,7 @@ vpc_security_group_ids.#:                    <computed>
 
 + module.ec2.aws_instance.mod[1]
 id:                                          <computed>
-ami:                                         "ami-14c5486b"
+ami:                                         "ami-cfe4b2b0"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
 ebs_block_device.#:                          <computed>
@@ -520,6 +520,7 @@ vpc_id:                                      "${var.vpc_id}"
 ~ module.subnets.data.aws_vpc.current
 id:                                          "" => "${var.vpc_id}"
 cidr_block:                                  "" => <computed>
+cidr_block_associations.#:                   "" => <computed>
 default:                                     "" => <computed>
 dhcp_options_id:                             "" => <computed>
 enable_dns_hostnames:                        "" => <computed>
@@ -834,7 +835,7 @@ enable_classiclink:                          <computed>
 enable_classiclink_dns_support:              <computed>
 enable_dns_hostnames:                        "true"
 enable_dns_support:                          "true"
-instance_tenancy:                            <computed>
+instance_tenancy:                            "default"
 ipv6_association_id:                         <computed>
 ipv6_cidr_block:                             <computed>
 main_route_table_id:                         <computed>
