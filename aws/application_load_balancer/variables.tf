@@ -48,6 +48,16 @@ variable "health_check_path" {
   default     = "/healthz"
 }
 
+variable "http_health_check_matcher" {
+  description = "(Optional) Health check matcher for the HTTP target group. Default '200,301'."
+  default     = "200,301"
+}
+
+variable "https_health_check_matcher" {
+  description = "(Optional) Health check matcher for the HTTPS target group. Default '200'."
+  default     = "200"
+}
+
 variable "internal" {
   description = "(Optional) If true, the LB will be internal. Default false."
   default     = false

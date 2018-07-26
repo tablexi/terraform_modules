@@ -2,13 +2,11 @@ locals {
   access_logs_glacier_transition_days = 365
 
   http_deregistration_delay = 30
-  http_health_check_matcher = "200,301"
   http_health_check_timeout = 5
   http_port_for_instances   = 80
   http_port_for_listener    = 80
 
   https_deregistration_delay = 30
-  https_health_check_matcher = "200"
   https_health_check_timeout = 5
   https_port_for_instances   = 443
   https_port_for_listener    = 443
@@ -78,7 +76,7 @@ resource "aws_alb_target_group" "http_target_group" {
   vpc_id               = "${var.vpc_id}"
 
   health_check {
-    matcher  = "${local.http_health_check_matcher}"
+    matcher  = "${var.http_health_check_matcher}"
     path     = "${var.health_check_path}"
     port     = "${local.http_port_for_instances}"
     protocol = "HTTP"
@@ -122,7 +120,7 @@ resource "aws_alb_target_group" "https_target_group" {
   vpc_id               = "${var.vpc_id}"
 
   health_check {
-    matcher  = "${local.https_health_check_matcher}"
+    matcher  = "${var.https_health_check_matcher}"
     path     = "${var.health_check_path}"
     port     = "${local.https_port_for_instances}"
     protocol = "HTTPS"
