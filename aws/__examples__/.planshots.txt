@@ -38,6 +38,8 @@ id:                                          <computed>
 ami:                                         "ami-cfe4b2b0"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
+cpu_core_count:                              <computed>
+cpu_threads_per_core:                        <computed>
 ebs_block_device.#:                          <computed>
 ebs_optimized:                               "false"
 ephemeral_block_device.#:                    <computed>
@@ -76,6 +78,8 @@ id:                                          <computed>
 ami:                                         "ami-cfe4b2b0"
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
+cpu_core_count:                              <computed>
+cpu_threads_per_core:                        <computed>
 ebs_block_device.#:                          <computed>
 ebs_optimized:                               "false"
 ephemeral_block_device.#:                    <computed>
@@ -519,6 +523,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 ~ module.subnets.data.aws_vpc.current
 id:                                          "" => "${var.vpc_id}"
+arn:                                         "" => <computed>
 cidr_block:                                  "" => <computed>
 cidr_block_associations.#:                   "" => <computed>
 default:                                     "" => <computed>
@@ -825,6 +830,7 @@ vpc_id:                                      "${aws_vpc.mod.id}"
 
 + module.vpc.aws_vpc.mod
 id:                                          <computed>
+arn:                                         <computed>
 assign_generated_ipv6_cidr_block:            "false"
 cidr_block:                                  "10.0.0.0/16"
 default_network_acl_id:                      <computed>
