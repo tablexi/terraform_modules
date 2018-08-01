@@ -21,6 +21,8 @@ id:                                        <computed>
 ami:                                       "with-ami"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -59,6 +61,8 @@ id:                                        <computed>
 ami:                                       "with-ami"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -166,6 +170,8 @@ id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -204,6 +210,8 @@ id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -289,6 +297,8 @@ id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -328,6 +338,8 @@ id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -414,6 +426,8 @@ id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
@@ -452,6 +466,8 @@ id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
+cpu_core_count:                            <computed>
+cpu_threads_per_core:                      <computed>
 ebs_block_device.#:                        <computed>
 ebs_optimized:                             "false"
 ephemeral_block_device.#:                  <computed>
