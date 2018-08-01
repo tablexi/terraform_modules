@@ -40,7 +40,7 @@ resource "aws_security_group" "security_group_on_load_balancer" {
     from_port       = 0
     protocol        = "tcp"
     security_groups = ["${var.security_group_for_instances}"]
-    to_port         = 0
+    to_port         = 65535
   }
 }
 
@@ -94,12 +94,13 @@ resource "aws_alb_listener" "https_listener" {
   ssl_policy        = "${var.ssl_policy}"
 
   default_action {
-    target_group_arn = "${aws_alb_target_group.https_target_group.arn}"
+    target_group_arn = "${var.https_target_group ? aws_alb_target_group.https_target_group.arn : aws_alb_target_group.http_target_group.arn }"
     type             = "forward"
   }
 }
 
 resource "aws_alb_target_group" "https_target_group" {
+  count                = "${var.https_target_group ? 1 : 0}"
   deregistration_delay = 30
   name                 = "${local.prefix}-https"
   port                 = "${local.https_target_group_port}"
@@ -116,12 +117,13 @@ resource "aws_alb_target_group" "https_target_group" {
 }
 
 resource "aws_alb_target_group_attachment" "https_target_group_attachments" {
-  count            = "${var.instances_count}"
+  count            = "${var.https_target_group ? var.instances_count : 0}"
   target_group_arn = "${aws_alb_target_group.https_target_group.arn}"
   target_id        = "${element(var.instances, count.index)}"
 }
 
 resource "aws_security_group_rule" "https_ingress_on_instances_from_load_balancer" {
+  count                    = "${var.https_target_group ? 1 : 0}"
   from_port                = "${local.https_target_group_port}"
   protocol                 = "tcp"
   security_group_id        = "${var.security_group_for_instances}"
