@@ -58,6 +58,11 @@ variable "https_health_check_matcher" {
   default     = "200"
 }
 
+variable "https_target_group" {
+  description = "(Optional) If true, the HTTPS listener will forward to a HTTPS target group. If false, the HTTPS listener will forward to a HTTP target group. Default true."
+  default     = true
+}
+
 variable "internal" {
   description = "(Optional) If true, the LB will be internal. Default false."
   default     = false
