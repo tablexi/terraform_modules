@@ -9,6 +9,7 @@ Terraform will perform the following actions:
 
 ~ module.subnets_test1.data.aws_vpc.current
 id:                                          "" => "${var.vpc_id}"
+arn:                                         "" => <computed>
 cidr_block:                                  "" => <computed>
 cidr_block_associations.#:                   "" => <computed>
 default:                                     "" => <computed>
@@ -257,6 +258,7 @@ vpc_id:                                      "${aws_vpc.mod.id}"
 
 + module.vpc_test1.aws_vpc.mod
 id:                                          <computed>
+arn:                                         <computed>
 assign_generated_ipv6_cidr_block:            "false"
 cidr_block:                                  "10.0.0.0/16"
 default_network_acl_id:                      <computed>
