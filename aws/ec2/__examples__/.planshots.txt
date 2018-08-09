@@ -19,6 +19,7 @@ unique_id:                                 <computed>
 + module.with-ami.aws_instance.mod[0]
 id:                                        <computed>
 ami:                                       "with-ami"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -59,6 +60,7 @@ vpc_security_group_ids.#:                  <computed>
 + module.with-ami.aws_instance.mod[1]
 id:                                        <computed>
 ami:                                       "with-ami"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -168,6 +170,7 @@ vpc:                                       "true"
 + module.with-eip.aws_instance.mod[0]
 id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -208,6 +211,7 @@ vpc_security_group_ids.#:                  <computed>
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -295,6 +299,7 @@ type:                                      "ingress"
 + module.with-iam-instance-profile.aws_instance.mod[0]
 id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -336,6 +341,7 @@ vpc_security_group_ids.#:                  <computed>
 + module.with-iam-instance-profile.aws_instance.mod[1]
 id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -424,6 +430,7 @@ type:                                      "ingress"
 + module.without-ami.aws_instance.mod[0]
 id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
@@ -464,6 +471,7 @@ vpc_security_group_ids.#:                  <computed>
 + module.without-ami.aws_instance.mod[1]
 id:                                        <computed>
 ami:                                       "ami-cfe4b2b0"
+arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
 cpu_core_count:                            <computed>
