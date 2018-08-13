@@ -63,6 +63,16 @@ variable "https_target_group" {
   default     = true
 }
 
+variable "ingress_cidr_blocks" {
+  description = "(Optional) List of CIDR blocks that can access the load balancer."
+  default     = ["0.0.0.0/0"]
+}
+
+variable "ingress_security_groups" {
+  description = "(Optional) List of security group IDs that can access the load balancer."
+  default     = []
+}
+
 variable "internal" {
   description = "(Optional) If true, the LB will be internal. Default false."
   default     = false
