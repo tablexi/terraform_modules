@@ -23,17 +23,19 @@ resource "aws_security_group" "security_group_on_load_balancer" {
   vpc_id = "${var.vpc_id}"
 
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "${local.http_listener_port}"
-    protocol    = "tcp"
-    to_port     = "${local.http_listener_port}"
+    cidr_blocks     = ["${var.ingress_cidr_blocks}"]
+    from_port       = "${local.http_listener_port}"
+    protocol        = "tcp"
+    security_groups = ["${var.ingress_security_groups}"]
+    to_port         = "${local.http_listener_port}"
   }
 
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    from_port   = "${local.https_listener_port}"
-    protocol    = "tcp"
-    to_port     = "${local.https_listener_port}"
+    cidr_blocks     = ["${var.ingress_cidr_blocks}"]
+    from_port       = "${local.https_listener_port}"
+    protocol        = "tcp"
+    security_groups = ["${var.ingress_security_groups}"]
+    to_port         = "${local.https_listener_port}"
   }
 
   egress {
