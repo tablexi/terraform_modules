@@ -1,5 +1,16 @@
+provider "aws" {
+  alias = "source_region"
+  region = "${var.source_db_region}"
+}
+
+provider "aws" {
+  region = "${var.replica_db_region}"
+}
+
 data "aws_db_instance" "source_database" {
   db_instance_identifier = "${var.source_db}"
+
+  provider = "aws.source_region"
 }
 
 locals {
