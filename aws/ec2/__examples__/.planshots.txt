@@ -169,7 +169,7 @@ vpc:                                       "true"
 
 + module.with-eip.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-cfe4b2b0"
+ami:                                       "ami-0ff8a91507f77f867"
 arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
@@ -210,7 +210,7 @@ vpc_security_group_ids.#:                  <computed>
 
 + module.with-eip.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-cfe4b2b0"
+ami:                                       "ami-0ff8a91507f77f867"
 arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
@@ -298,7 +298,7 @@ type:                                      "ingress"
 
 + module.with-iam-instance-profile.aws_instance.mod[0]
 id:                                        <computed>
-ami:                                       "ami-cfe4b2b0"
+ami:                                       "ami-0ff8a91507f77f867"
 arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
@@ -340,7 +340,7 @@ vpc_security_group_ids.#:                  <computed>
 
 + module.with-iam-instance-profile.aws_instance.mod[1]
 id:                                        <computed>
-ami:                                       "ami-cfe4b2b0"
+ami:                                       "ami-0ff8a91507f77f867"
 arn:                                       <computed>
 associate_public_ip_address:               "true"
 availability_zone:                         <computed>
@@ -426,134 +426,5 @@ self:                                      "false"
 source_security_group_id:                  <computed>
 to_port:                                   "22"
 type:                                      "ingress"
-
-+ module.without-ami.aws_instance.mod[0]
-id:                                        <computed>
-ami:                                       "ami-cfe4b2b0"
-arn:                                       <computed>
-associate_public_ip_address:               "true"
-availability_zone:                         <computed>
-cpu_core_count:                            <computed>
-cpu_threads_per_core:                      <computed>
-ebs_block_device.#:                        <computed>
-ebs_optimized:                             "false"
-ephemeral_block_device.#:                  <computed>
-get_password_data:                         "false"
-instance_state:                            <computed>
-instance_type:                             "t2.small"
-ipv6_address_count:                        <computed>
-ipv6_addresses.#:                          <computed>
-key_name:                                  "without-ami"
-network_interface.#:                       <computed>
-network_interface_id:                      <computed>
-password_data:                             <computed>
-placement_group:                           <computed>
-primary_network_interface_id:              <computed>
-private_dns:                               <computed>
-private_ip:                                <computed>
-public_dns:                                <computed>
-public_ip:                                 <computed>
-root_block_device.#:                       "1"
-root_block_device.0.delete_on_termination: "true"
-root_block_device.0.volume_id:             <computed>
-root_block_device.0.volume_size:           "16"
-root_block_device.0.volume_type:           "gp2"
-security_groups.#:                         <computed>
-source_dest_check:                         "true"
-subnet_id:                                 "without-ami"
-tags.%:                                    "2"
-tags.Environment:                          "production"
-tags.Name:                                 "without-ami01"
-tenancy:                                   <computed>
-volume_tags.%:                             <computed>
-vpc_security_group_ids.#:                  <computed>
-
-+ module.without-ami.aws_instance.mod[1]
-id:                                        <computed>
-ami:                                       "ami-cfe4b2b0"
-arn:                                       <computed>
-associate_public_ip_address:               "true"
-availability_zone:                         <computed>
-cpu_core_count:                            <computed>
-cpu_threads_per_core:                      <computed>
-ebs_block_device.#:                        <computed>
-ebs_optimized:                             "false"
-ephemeral_block_device.#:                  <computed>
-get_password_data:                         "false"
-instance_state:                            <computed>
-instance_type:                             "t2.small"
-ipv6_address_count:                        <computed>
-ipv6_addresses.#:                          <computed>
-key_name:                                  "without-ami"
-network_interface.#:                       <computed>
-network_interface_id:                      <computed>
-password_data:                             <computed>
-placement_group:                           <computed>
-primary_network_interface_id:              <computed>
-private_dns:                               <computed>
-private_ip:                                <computed>
-public_dns:                                <computed>
-public_ip:                                 <computed>
-root_block_device.#:                       "1"
-root_block_device.0.delete_on_termination: "true"
-root_block_device.0.volume_id:             <computed>
-root_block_device.0.volume_size:           "16"
-root_block_device.0.volume_type:           "gp2"
-security_groups.#:                         <computed>
-source_dest_check:                         "true"
-subnet_id:                                 "without-ami"
-tags.%:                                    "2"
-tags.Environment:                          "production"
-tags.Name:                                 "without-ami02"
-tenancy:                                   <computed>
-volume_tags.%:                             <computed>
-vpc_security_group_ids.#:                  <computed>
-
-+ module.without-ami.aws_security_group.security_group_on_instances
-id:                                        <computed>
-arn:                                       <computed>
-description:                               "Managed by Terraform"
-egress.#:                                  <computed>
-ingress.#:                                 <computed>
-name:                                      "without-ami-ec2-instances"
-owner_id:                                  <computed>
-revoke_rules_on_delete:                    "false"
-tags.%:                                    "1"
-tags.Name:                                 "without-ami-ec2-instances"
-vpc_id:                                    "vpc_abc123"
-
-+ module.without-ami.aws_security_group_rule.all_egress_on_instances_to_anywhere
-id:                                        <computed>
-cidr_blocks.#:                             "1"
-cidr_blocks.0:                             "0.0.0.0/0"
-from_port:                                 "0"
-protocol:                                  "-1"
-security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
-self:                                      "false"
-source_security_group_id:                  <computed>
-to_port:                                   "0"
-type:                                      "egress"
-
-+ module.without-ami.aws_security_group_rule.all_ingress_on_instances_from_self
-id:                                        <computed>
-from_port:                                 "0"
-protocol:                                  "-1"
-security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
-self:                                      "true"
-source_security_group_id:                  <computed>
-to_port:                                   "0"
-type:                                      "ingress"
-
-+ module.without-ami.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
-id:                                        <computed>
-cidr_blocks.#:                             "1"
-cidr_blocks.0:                             "0.0.0.0/0"
-from_port:                                 "22"
-protocol:                                  "tcp"
-security_group_id:                         "${aws_security_group.security_group_on_instances.id}"
-self:                                      "false"
-source_security_group_id:                  <computed>
-to_port:                                   "22"
-type:                                      "ingress"
-Plan: 27 to add, 0 to change, 0 to destroy.
+Plan: 21 to add, 0 to change, 0 to destroy.
 
