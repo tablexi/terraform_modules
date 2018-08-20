@@ -29,6 +29,7 @@ locals {
   parameter_group_name = "${var.parameter_group_name != "" ? var.parameter_group_name : local.default_option_and_parameter_group_name}"
   port = "${local.is_postgres ? 5432 : 3306}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
+  source_db = "${var.replica_db_region == var.source_db_region ? data.aws_db_instance.source_database.id : data.aws_db_instance.source_database.db_instance_arn}"
 }
 
 resource "aws_db_parameter_group" "mod" {
@@ -44,7 +45,7 @@ resource "aws_db_parameter_group" "mod" {
 
 resource "aws_db_instance" "mod" {
   identifier = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${local.engine}"}"
-  replicate_source_db = "${data.aws_db_instance.source_database.id}"
+  replicate_source_db = "${local.source_db}"
   engine = "${local.engine}"
   engine_version = "${local.engine_version}"
   instance_class = "${var.node_type}"
