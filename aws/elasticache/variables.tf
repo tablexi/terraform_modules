@@ -2,6 +2,11 @@ variable "at_rest_encryption_enabled" {
   default = false
 }
 
+variable "automatic_failover_enabled" {
+  default = false
+  description = "(Optional) Specifies whether a read-only replica will be automatically promoted to read/write primary if the existing primary fails. If true, Multi-AZ is enabled for this replication group. If false, Multi-AZ is disabled for this replication group. Must be enabled for Redis (cluster mode enabled) replication groups. Defaults to false."
+}
+
 variable "create_parameter_group" {
   default = true
   description = "Create a parameter group in this module"

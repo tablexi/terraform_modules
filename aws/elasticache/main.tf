@@ -30,6 +30,7 @@ resource "aws_elasticache_cluster" "mod" {
 resource "aws_elasticache_replication_group" "mod" {
   at_rest_encryption_enabled = "${var.at_rest_encryption_enabled}"
   auto_minor_version_upgrade = true
+  automatic_failover_enabled = "${var.automatic_failover_enabled}"
   count = "${local.elasticache_replication_group ? 1 : 0}"
   engine_version = "${var.engine_version}"
   node_type = "${var.node_type}"
