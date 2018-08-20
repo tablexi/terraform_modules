@@ -35,7 +35,7 @@ unique_id:                                   <computed>
 
 + module.ec2.aws_instance.mod[0]
 id:                                          <computed>
-ami:                                         "ami-cfe4b2b0"
+ami:                                         "ami-0ff8a91507f77f867"
 arn:                                         <computed>
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
@@ -76,7 +76,7 @@ vpc_security_group_ids.#:                    <computed>
 
 + module.ec2.aws_instance.mod[1]
 id:                                          <computed>
-ami:                                         "ami-cfe4b2b0"
+ami:                                         "ami-0ff8a91507f77f867"
 arn:                                         <computed>
 associate_public_ip_address:                 "true"
 availability_zone:                           <computed>
@@ -624,6 +624,7 @@ subnet_id:                                   "${element(aws_subnet.mod_public.*.
 
 + module.subnets.aws_subnet.mod_private[0]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1a"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -636,6 +637,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_private[1]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1b"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -648,6 +650,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_private[2]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1c"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -660,6 +663,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_private[3]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1d"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -672,6 +676,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_private[4]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1e"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -684,6 +689,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_private[5]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1f"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -696,6 +702,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_public[0]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1a"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -708,6 +715,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_public[1]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1b"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -720,6 +728,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_public[2]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1c"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -732,6 +741,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_public[3]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1d"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -744,6 +754,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_public[4]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1e"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
@@ -756,6 +767,7 @@ vpc_id:                                      "${var.vpc_id}"
 
 + module.subnets.aws_subnet.mod_public[5]
 id:                                          <computed>
+arn:                                         <computed>
 assign_ipv6_address_on_creation:             "false"
 availability_zone:                           "us-east-1f"
 cidr_block:                                  "${cidrsubnet(data.aws_vpc.current.cidr_block, var.public_newbits, var.public_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"

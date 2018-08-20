@@ -3,7 +3,7 @@ variable "associate_public_ip_address" {
 }
 
 variable "ami" {
-  default = ""
+  description = "(Required) The AMI to use for the instance."
 }
 
 variable "count" {

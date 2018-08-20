@@ -95,6 +95,7 @@ module "ssh" {
 module "ec2" {
   source = "../ec2"
 
+  ami = "ami-0ff8a91507f77f867"
   key_name = "ec2-key"
   name = "app"
   subnets = "${module.subnets.public_subnets}"

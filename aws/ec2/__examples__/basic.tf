@@ -1,12 +1,3 @@
-module "without-ami" {
-  source = "../"
-
-  key_name = "without-ami"
-  name = "without-ami"
-  subnets = ["without-ami"]
-  vpc_id = "vpc_abc123"
-}
-
 module "with-ami" {
   source = "../"
 
