@@ -28,19 +28,19 @@ resource "aws_elasticache_cluster" "mod" {
 }
 
 resource "aws_elasticache_replication_group" "mod" {
-  count = "${local.elasticache_replication_group ? 1 : 0}"
-  replication_group_id = "${local.cluster_name}"
-  replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
-  number_cache_clusters = "${var.num_nodes}"
-  engine_version = "${var.engine_version}"
+  at_rest_encryption_enabled = "${var.at_rest_encryption_enabled}"
   auto_minor_version_upgrade = true
+  automatic_failover_enabled = "${var.automatic_failover_enabled}"
+  count = "${local.elasticache_replication_group ? 1 : 0}"
+  engine_version = "${var.engine_version}"
   node_type = "${var.node_type}"
-  port = "${local.port}"
+  number_cache_clusters = "${var.num_nodes}"
   parameter_group_name = "${aws_elasticache_parameter_group.mod.id}"
+  port = "${local.port}"
+  replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
+  replication_group_id = "${local.cluster_name}"
   security_group_ids = ["${aws_security_group.sg_on_elasticache_instance.id}"]
   subnet_group_name = "${aws_elasticache_subnet_group.mod.name}"
-
-  at_rest_encryption_enabled = "${var.at_rest_encryption_enabled}"
   transit_encryption_enabled = "${var.transit_encryption_enabled}"
 
   tags = {
