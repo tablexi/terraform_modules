@@ -35,6 +35,10 @@ resource "aws_security_group" "security_group_on_instances" {
   name   = "${var.name}-ec2-instances"
   vpc_id = "${var.vpc_id}"
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags {
     "Name" = "${var.name}-ec2-instances"
   }
