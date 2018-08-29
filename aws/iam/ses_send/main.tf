@@ -1,5 +1,5 @@
 resource "aws_iam_group" "mod" {
-  name = "app_servers"
+  name = "ses_senders"
 }
 
 resource "aws_iam_group_policy" "mod" {
