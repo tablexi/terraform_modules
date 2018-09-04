@@ -55,7 +55,7 @@ variable "http_health_check_matcher" {
 
 variable "https_health_check_matcher" {
   description = "(Optional) Health check matcher for the HTTPS target group. Default '200'."
-  default     = "200"
+  default     = "200,301"
 }
 
 variable "https_target_group" {
