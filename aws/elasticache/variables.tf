@@ -26,6 +26,11 @@ variable "force_replication_group" {
   default = false
 }
 
+variable "maintenance_window" {
+  default = ""
+  description = "Set the weekly maintenance window for the cluster. The format is ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC)"
+}
+
 variable "name" {}
 
 variable "node_type" {
