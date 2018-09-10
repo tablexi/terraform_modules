@@ -11,12 +11,12 @@ variable "count" {
 }
 
 variable "ebs_optimized" {
-  default = false
+  default     = false
   description = "An Amazon EBS–optimized instance uses an optimized configuration stack and provides additional, dedicated capacity for Amazon EBS I/O. It is only available for certain instance types. http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSOptimized.html"
 }
 
 variable "enable_eip" {
-  default = false
+  default     = false
   description = "Enable EIP for instances"
 }
 
@@ -27,7 +27,7 @@ variable "env" {
 variable "key_name" {}
 
 variable "name_tag_starting_count" {
-  default = 1
+  default     = 1
   description = "If you need to offset the name of the instance.  IE start with app02"
 }
 
@@ -48,7 +48,7 @@ variable "type" {
 }
 
 variable "vpc_security_group_ids" {
-  type = "list"
+  type    = "list"
   default = []
 }
 
@@ -61,6 +61,6 @@ variable "name" {
 }
 
 variable "iam_instance_profile" {
-  default = ""
+  default     = ""
   description = "The IAM instance profile to associate with the instance."
 }

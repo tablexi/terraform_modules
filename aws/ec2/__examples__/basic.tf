@@ -1,9 +1,9 @@
 module "with-ami" {
   source = "../"
 
-  ami = "with-ami"
+  ami      = "with-ami"
   key_name = "with-ami"
-  name = "with-ami"
-  subnets = ["with-ami"]
-  vpc_id = "vpc_abc123"
+  name     = "with-ami"
+  subnets  = ["with-ami"]
+  vpc_id   = "vpc_abc123"
 }

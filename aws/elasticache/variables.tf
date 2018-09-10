@@ -3,12 +3,12 @@ variable "at_rest_encryption_enabled" {
 }
 
 variable "automatic_failover_enabled" {
-  default = false
+  default     = false
   description = "(Optional) Specifies whether a read-only replica will be automatically promoted to read/write primary if the existing primary fails. If true, Multi-AZ is enabled for this replication group. If false, Multi-AZ is disabled for this replication group. Must be enabled for Redis (cluster mode enabled) replication groups. Defaults to false."
 }
 
 variable "create_parameter_group" {
-  default = true
+  default     = true
   description = "Create a parameter group in this module"
 }
 
@@ -27,7 +27,7 @@ variable "force_replication_group" {
 }
 
 variable "maintenance_window" {
-  default = ""
+  default     = ""
   description = "Set the weekly maintenance window for the cluster. The format is ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC)"
 }
 
@@ -43,7 +43,7 @@ variable "num_nodes" {
 
 variable "parameter_group_name" {
   description = "Name of a parameter group to use with the Elasticache instance."
-  default = ""
+  default     = ""
 }
 
 variable "port" {
@@ -52,7 +52,7 @@ variable "port" {
 
 variable "security_groups_for_ingress" {
   description = "Security groups which should be allowed ingress on the ElastiCache instance."
-  default = []
+  default     = []
 }
 
 variable "subnets" {
