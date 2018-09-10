@@ -3,6 +3,6 @@ variable "name" {
 }
 
 variable "cidr" {
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
   description = "The IPv4 network range for the VPC, in CIDR notation."
 }

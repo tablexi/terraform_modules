@@ -7,7 +7,7 @@ variable "trustee_account_arn" {
 }
 
 variable "assume_role_policy" {
-  default = ""
+  default     = ""
   description = "The policy that grants an entity permission to assume the role"
 }
 
@@ -34,5 +34,6 @@ variable "access_policy" {
   ]
 }
 JSON
+
   description = "Default policy of cross account role"
 }

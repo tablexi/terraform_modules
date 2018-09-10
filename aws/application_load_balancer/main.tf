@@ -1,9 +1,9 @@
 locals {
-  http_listener_port         = 80
-  http_target_group_port     = 80
+  http_listener_port     = 80
+  http_target_group_port = 80
 
-  https_listener_port         = 443
-  https_target_group_port     = 443
+  https_listener_port     = 443
+  https_target_group_port = 443
 
   prefix = "${var.name}-${var.environment}"
 }

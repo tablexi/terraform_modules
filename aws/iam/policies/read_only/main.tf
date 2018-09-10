@@ -264,7 +264,8 @@ data "aws_iam_policy_document" "mod" {
       "xray:BatchGet*",
       "xray:Get*",
     ]
-    effect = "Allow"
+
+    effect    = "Allow"
     resources = ["*"]
   }
 }

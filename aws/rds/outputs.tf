@@ -25,4 +25,3 @@ output "rds_id" {
 output "sg_on_rds_instance_id" {
   value = "${aws_security_group.sg_on_rds_instance.id}"
 }
-
