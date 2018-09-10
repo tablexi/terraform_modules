@@ -16,6 +16,7 @@ resource "aws_elasticache_cluster" "mod" {
   num_cache_nodes = 1
   engine = "${var.engine}"
   engine_version = "${var.engine_version}"
+  maintenance_window = "${var.maintenance_window}"
   node_type = "${var.node_type}"
   port = "${local.port}"
   parameter_group_name = "${local.parameter_group_name}"
@@ -33,6 +34,7 @@ resource "aws_elasticache_replication_group" "mod" {
   automatic_failover_enabled = "${var.automatic_failover_enabled}"
   count = "${local.elasticache_replication_group ? 1 : 0}"
   engine_version = "${var.engine_version}"
+  maintenance_window = "${var.maintenance_window}"
   node_type = "${var.node_type}"
   number_cache_clusters = "${var.num_nodes}"
   parameter_group_name = "${aws_elasticache_parameter_group.mod.id}"
