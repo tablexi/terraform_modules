@@ -1,7 +1,7 @@
 provider "aws" {}
 
 resource "aws_s3_bucket" "mod" {
-  bucket = "${var.name}_tf"
+  bucket = "${var.name}-tf"
 
   tags {
     Name = "${var.name} terraform configutation"
