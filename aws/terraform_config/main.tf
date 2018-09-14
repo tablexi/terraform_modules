@@ -1,7 +1,7 @@
 provider "aws" {}
 
 resource "aws_s3_bucket" "mod" {
-  bucket = "${var.name}-tf"
+  bucket = "${var.name}${var.splitter}tf"
 
   tags {
     Name = "${var.name} terraform configutation"
@@ -14,7 +14,7 @@ resource "aws_s3_bucket" "mod" {
 
 resource "aws_dynamodb_table" "tf_state_locking" {
   hash_key       = "LockID"
-  name           = "${var.name}_tf"
+  name           = "${var.name}${var.splitter}tf"
   read_capacity  = 20
   write_capacity = 20
 
