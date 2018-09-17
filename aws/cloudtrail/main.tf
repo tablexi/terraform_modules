@@ -5,38 +5,38 @@ resource "aws_cloudtrail" "mod" {
   enable_logging                = true
 }
 
-reource "aws_s3_bucket" "mod" {
+resource "aws_s3_bucket" "mod" {
   bucket     = "${var.name}-cloudtrail"
-  acl_policy = "private"
+  acl = "private"
 
   policy = <<-JSON
-	{
-			"Version": "2012-10-17",
-			"Statement": [
-					{
-							"Sid": "AWSCloudTrailAclCheck",
-							"Effect": "Allow",
-							"Principal": {
-								"Service": "cloudtrail.amazonaws.com"
-							},
-							"Action": "s3:GetBucketAcl",
-							"Resource": "arn:aws:s3:::${var.name}-cloudtrail"
-					},
-					{
-							"Sid": "AWSCloudTrailWrite",
-							"Effect": "Allow",
-							"Principal": {
-								"Service": "cloudtrail.amazonaws.com"
-							},
-							"Action": "s3:PutObject",
-							"Resource": "arn:aws:s3:::${var.name}-cloudtrail/*",
-							"Condition": {
-									"StringEquals": {
-											"s3:x-amz-acl": "bucket-owner-full-control"
-									}
-							}
-					}
-			]
-	}
-	JSON
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "AWSCloudTrailAclCheck",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "cloudtrail.amazonaws.com"
+        },
+        "Action": "s3:GetBucketAcl",
+        "Resource": "arn:aws:s3:::${var.name}-cloudtrail"
+      },
+      {
+        "Sid": "AWSCloudTrailWrite",
+        "Effect": "Allow",
+        "Principal": {
+          "Service": "cloudtrail.amazonaws.com"
+        },
+        "Action": "s3:PutObject",
+        "Resource": "arn:aws:s3:::${var.name}-cloudtrail/*",
+        "Condition": {
+          "StringEquals": {
+            "s3:x-amz-acl": "bucket-owner-full-control"
+          }
+        }
+      }
+    ]
+  }
+  JSON
 }
