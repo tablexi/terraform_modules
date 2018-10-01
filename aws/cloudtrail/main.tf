@@ -6,8 +6,8 @@ resource "aws_cloudtrail" "mod" {
 }
 
 resource "aws_s3_bucket" "mod" {
-  bucket     = "${var.name}-cloudtrail"
-  acl = "private"
+  bucket = "${var.name}-cloudtrail"
+  acl    = "private"
 
   policy = <<-JSON
   {
