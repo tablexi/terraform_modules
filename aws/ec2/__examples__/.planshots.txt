@@ -133,7 +133,7 @@ source_security_group_id:                  <computed>
 to_port:                                   "0"
 type:                                      "ingress"
 
-+ module.with-ami.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
++ module.with-ami.aws_security_group_rule.ssh_ingress_on_instances_cidr_blocks
 id:                                        <computed>
 cidr_blocks.#:                             "1"
 cidr_blocks.0:                             "0.0.0.0/0"
@@ -284,7 +284,7 @@ source_security_group_id:                  <computed>
 to_port:                                   "0"
 type:                                      "ingress"
 
-+ module.with-eip.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
++ module.with-eip.aws_security_group_rule.ssh_ingress_on_instances_cidr_blocks
 id:                                        <computed>
 cidr_blocks.#:                             "1"
 cidr_blocks.0:                             "0.0.0.0/0"
@@ -415,7 +415,7 @@ source_security_group_id:                  <computed>
 to_port:                                   "0"
 type:                                      "ingress"
 
-+ module.with-iam-instance-profile.aws_security_group_rule.ssh_ingress_on_instances_from_anywhere
++ module.with-iam-instance-profile.aws_security_group_rule.ssh_ingress_on_instances_cidr_blocks
 id:                                        <computed>
 cidr_blocks.#:                             "1"
 cidr_blocks.0:                             "0.0.0.0/0"
