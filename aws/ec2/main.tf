@@ -62,11 +62,22 @@ resource "aws_security_group_rule" "all_ingress_on_instances_from_self" {
   type              = "ingress"
 }
 
-resource "aws_security_group_rule" "ssh_ingress_on_instances_from_anywhere" {
-  cidr_blocks       = ["0.0.0.0/0"]
+resource "aws_security_group_rule" "ssh_ingress_on_instances_cidr_blocks" {
+  count             = "${var.ssh_ingress_cidr_blocks_enable}"
+  cidr_blocks       = ["${var.ssh_ingress_cidr_blocks}"]
   from_port         = 22
   protocol          = "tcp"
   security_group_id = "${aws_security_group.security_group_on_instances.id}"
   to_port           = 22
   type              = "ingress"
+}
+
+resource "aws_security_group_rule" "ssh_ingress_on_instances_sgs" {
+  count                    = "${var.ssh_ingress_sgs_count}"
+  source_security_group_id = "${element(var.ssh_ingress_sgs, count.index)}"
+  from_port                = 22
+  protocol                 = "tcp"
+  security_group_id        = "${aws_security_group.security_group_on_instances.id}"
+  to_port                  = 22
+  type                     = "ingress"
 }
