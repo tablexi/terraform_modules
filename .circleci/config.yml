@@ -14,8 +14,5 @@ jobs:
           paths:
               - ~/terraform
       - run:
-          name: Planshots
-          command: bash bin/planshots
-      - run:
           name: Check fmt
           command: terraform fmt -diff=false -write=false -check=true
