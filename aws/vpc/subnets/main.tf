@@ -29,14 +29,15 @@ data "template_file" "az_to_netnum" {
 resource "aws_route_table" "mod_public" {
   vpc_id = "${var.vpc_id}"
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${var.internet_gateway_id}"
-  }
-
   tags {
     Name = "${var.name}-public"
   }
+}
+
+resource "aws_route" "mod_public" {
+  route_table_id         = "${aws_route_table.mod_public.id}"
+  gateway_id             = "${var.internet_gateway_id}"
+  destination_cidr_block = "0.0.0.0/0"
 }
 
 # Sets up the private subnet's route table
