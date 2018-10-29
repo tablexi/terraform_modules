@@ -80,3 +80,8 @@ variable "iam_instance_profile" {
   default     = ""
   description = "The IAM instance profile to associate with the instance."
 }
+
+variable "source_dest_check" {
+  default     = true
+  description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
+}
