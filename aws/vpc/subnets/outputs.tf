@@ -7,9 +7,9 @@ output "public_subnets" {
 }
 
 output "private_route_table_id" {
-  value = "${aws_route_table.mod_private.id}"
+  value = "${aws_route_table.mod_private.*.id}"
 }
 
 output "public_route_table_id" {
-  value = "${aws_route_table.mod_public.id}"
+  value = "${aws_route_table.mod_public.*.id}"
 }
