@@ -10,6 +10,11 @@ variable "internet_gateway_id" {
   description = "The unique ID of the Internet gateway."
 }
 
+variable "private_subnets" {
+  default     = false
+  description = "Create private subnets"
+}
+
 variable "private_newbits" {
   default     = 8
   description = "The private subnets modifier of a routing mask or decrease the scope of the cidr_block by the given bits."

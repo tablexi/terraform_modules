@@ -43,6 +43,7 @@ resource "aws_route" "mod_public" {
 # Sets up the private subnet's route table
 # Send all traffic over the nat gateway
 resource "aws_route_table" "mod_private" {
+  count  = "${var.private_subnets ? 1 : 0}"
   vpc_id = "${var.vpc_id}"
 
   tags {
@@ -55,7 +56,7 @@ resource "aws_subnet" "mod_private" {
   vpc_id            = "${var.vpc_id}"
   cidr_block        = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.private_newbits, var.private_netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
-  count             = "${length(data.aws_availability_zones.available.names)}"
+  count             = "${var.private_subnets ? length(data.aws_availability_zones.available.names) : 0}"
 
   tags {
     Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}-private"
@@ -78,7 +79,7 @@ resource "aws_subnet" "mod_public" {
 
 # Sets up as association between the private subnet and private route table
 resource "aws_route_table_association" "mod_private" {
-  count          = "${length(data.aws_availability_zones.available.names)}"
+  count          = "${var.private_subnets ? length(data.aws_availability_zones.available.names) : 0}"
   subnet_id      = "${element(aws_subnet.mod_private.*.id, count.index)}"
   route_table_id = "${aws_route_table.mod_private.id}"
 }
