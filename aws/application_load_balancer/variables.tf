@@ -53,6 +53,11 @@ variable "http_health_check_matcher" {
   default     = "200,301"
 }
 
+variable "http_target_group_port" {
+  description = "(Optional) Port for the targets in the HTTP target group. Default '80'."
+  default     = "80"
+}
+
 variable "https_health_check_matcher" {
   description = "(Optional) Health check matcher for the HTTPS target group. Default '200'."
   default     = "200,301"
@@ -61,6 +66,11 @@ variable "https_health_check_matcher" {
 variable "https_target_group" {
   description = "(Optional) If true, the HTTPS listener will forward to a HTTPS target group. If false, the HTTPS listener will forward to a HTTP target group. Default true."
   default     = true
+}
+
+variable "https_target_group_port" {
+  description = "(Optional) Port for the targets in the HTTPS target group. Default '443'."
+  default     = "443"
 }
 
 variable "ingress_cidr_blocks" {
