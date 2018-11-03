@@ -1,9 +1,6 @@
 locals {
-  http_listener_port     = 80
-  http_target_group_port = 80
-
-  https_listener_port     = 443
-  https_target_group_port = 443
+  http_listener_port  = 80
+  https_listener_port = 443
 
   prefix = "${var.name}-${var.environment}"
 }
@@ -60,14 +57,14 @@ resource "aws_alb_listener" "http_listener" {
 resource "aws_alb_target_group" "http_target_group" {
   deregistration_delay = 30
   name                 = "${local.prefix}-http"
-  port                 = "${local.http_target_group_port}"
+  port                 = "${var.http_target_group_port}"
   protocol             = "HTTP"
   vpc_id               = "${var.vpc_id}"
 
   health_check {
     matcher  = "${var.http_health_check_matcher}"
     path     = "${var.health_check_path}"
-    port     = "${local.http_target_group_port}"
+    port     = "${var.http_target_group_port}"
     protocol = "HTTP"
     timeout  = 5
   }
@@ -80,11 +77,11 @@ resource "aws_alb_target_group_attachment" "http_target_group_attachments" {
 }
 
 resource "aws_security_group_rule" "http_ingress_on_instances_from_load_balancer" {
-  from_port                = "${local.http_target_group_port}"
+  from_port                = "${var.http_target_group_port}"
   protocol                 = "tcp"
   security_group_id        = "${var.security_group_for_instances}"
   source_security_group_id = "${aws_security_group.security_group_on_load_balancer.id}"
-  to_port                  = "${local.http_target_group_port}"
+  to_port                  = "${var.http_target_group_port}"
   type                     = "ingress"
 }
 
@@ -105,14 +102,14 @@ resource "aws_alb_target_group" "https_target_group" {
   count                = "${var.https_target_group ? 1 : 0}"
   deregistration_delay = 30
   name                 = "${local.prefix}-https"
-  port                 = "${local.https_target_group_port}"
+  port                 = "${var.https_target_group_port}"
   protocol             = "HTTPS"
   vpc_id               = "${var.vpc_id}"
 
   health_check {
     matcher  = "${var.https_health_check_matcher}"
     path     = "${var.health_check_path}"
-    port     = "${local.https_target_group_port}"
+    port     = "${var.https_target_group_port}"
     protocol = "HTTPS"
     timeout  = 5
   }
@@ -126,10 +123,10 @@ resource "aws_alb_target_group_attachment" "https_target_group_attachments" {
 
 resource "aws_security_group_rule" "https_ingress_on_instances_from_load_balancer" {
   count                    = "${var.https_target_group ? 1 : 0}"
-  from_port                = "${local.https_target_group_port}"
+  from_port                = "${var.https_target_group_port}"
   protocol                 = "tcp"
   security_group_id        = "${var.security_group_for_instances}"
   source_security_group_id = "${aws_security_group.security_group_on_load_balancer.id}"
-  to_port                  = "${local.https_target_group_port}"
+  to_port                  = "${var.https_target_group_port}"
   type                     = "ingress"
 }
