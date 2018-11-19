@@ -35,6 +35,11 @@ variable "identifier" {
   default     = ""
 }
 
+variable "kms_key_id" {
+  description = "If you are using volume encryption, you can use this variable to set the specific key arn."
+  default = ""
+}
+
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
   default     = true
