@@ -18,8 +18,9 @@ resource "aws_instance" "mod" {
   ebs_optimized = "${var.ebs_optimized}"
 
   root_block_device {
-    volume_type = "${var.root_block_type}"
-    volume_size = "${var.root_block_size}"
+    volume_type           = "${var.root_block_type}"
+    volume_size           = "${var.root_block_size}"
+    delete_on_termination = false
   }
 
   lifecycle {
