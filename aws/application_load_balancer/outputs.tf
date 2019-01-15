@@ -9,3 +9,7 @@ output "target_group_arns" {
 output "zone_id" {
   value = "${module.load_balancer.zone_id}"
 }
+
+output "https_listener_arn" {
+  value = "${aws_alb_listener.https_listener.arn}"
+}
