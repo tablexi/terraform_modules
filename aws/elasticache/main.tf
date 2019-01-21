@@ -11,6 +11,7 @@ locals {
 }
 
 resource "aws_elasticache_cluster" "mod" {
+  apply_immediately    = true
   count                = "${local.elasticache_replication_group ? 0 : 1}"
   cluster_id           = "${local.cluster_name}"
   num_cache_nodes      = 1
