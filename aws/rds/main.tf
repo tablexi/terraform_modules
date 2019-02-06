@@ -2,7 +2,8 @@ locals {
   engine_nickname         = "${local.is_postgres ? "pg" : "mysql"}"
   family                  = "${var.engine}${var.engine_version}"
   is_postgres             = "${var.engine == "postgres" ? true : false}"
-  parameter_group_name    = "${var.parameter_group_name != "" ? var.parameter_group_name : "${var.name}-${var.env}-${local.engine_nickname}${replace(var.engine_version, ".", "")}"}"
+  major_engine_version    = "${join(".", slice(split(".", var.engine_version), 0, 2))}"
+  parameter_group_name    = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"}"
   port                    = "${local.is_postgres ? 5432 : 3306}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   subnet_group_name       = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
@@ -21,17 +22,6 @@ resource "aws_db_subnet_group" "mod" {
     # though the AWS documentation says otherwise.
     # http://serverfault.com/a/817598
     ignore_changes = ["name"]
-  }
-}
-
-resource "aws_db_parameter_group" "mod" {
-  count       = "${var.parameter_group_provided ? 0 : 1}"
-  name        = "${local.parameter_group_name}"
-  family      = "${local.family}"
-  description = "${local.family} parameter group for ${var.name} ${var.env}"
-
-  lifecycle {
-    create_before_destroy = true
   }
 }
 

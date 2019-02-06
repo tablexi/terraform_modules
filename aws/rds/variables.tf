@@ -50,13 +50,8 @@ variable "node_type" {
 }
 
 variable "parameter_group_name" {
-  description = "Name of a parameter group to use with the RDS instance."
+  description = "Name of a parameter group to use with the RDS instance instead of the default."
   default     = ""
-}
-
-variable "parameter_group_provided" {
-  description = "If the parameter_group_name is provided, must be set to true."
-  default     = false
 }
 
 variable "publicly_accessible" {
