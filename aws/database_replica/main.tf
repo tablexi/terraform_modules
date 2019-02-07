@@ -14,33 +14,19 @@ data "aws_db_instance" "source_database" {
 }
 
 locals {
-  allocated_storage = "${data.aws_db_instance.source_database.allocated_storage}"
-  engine            = "${data.aws_db_instance.source_database.engine}"
-  engine_version    = "${var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_database.engine_version}"
-  storage_encrypted = "${data.aws_db_instance.source_database.storage_encrypted}"
-  storage_type      = "${data.aws_db_instance.source_database.storage_type}"
-
-  major_engine_version                    = "${join(".", slice(split(".", local.engine_version), 0, 2))}"
-  default_option_and_parameter_group_name = "${var.name}-${var.env}-${local.engine_nickname}${replace(local.major_engine_version, ".", "")}"
-
+  allocated_storage       = "${data.aws_db_instance.source_database.allocated_storage}"
+  engine                  = "${data.aws_db_instance.source_database.engine}"
   engine_nickname         = "${local.is_postgres ? "pg" : "mysql"}"
+  engine_version          = "${var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_database.engine_version}"
   family                  = "${local.engine}${local.major_engine_version}"
   is_postgres             = "${local.engine == "postgres" ? true : false}"
-  parameter_group_name    = "${var.parameter_group_name != "" ? var.parameter_group_name : local.default_option_and_parameter_group_name}"
+  major_engine_version    = "${join(".", slice(split(".", local.engine_version), 0, 2))}"
+  parameter_group_name    = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${local.engine}${local.major_engine_version}"}"
   port                    = "${local.is_postgres ? 5432 : 3306}"
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   source_db               = "${var.replica_db_region == var.source_db_region ? data.aws_db_instance.source_database.id : data.aws_db_instance.source_database.db_instance_arn}"
-}
-
-resource "aws_db_parameter_group" "mod" {
-  count       = "${var.parameter_group_provided ? 0 : 1}"
-  name        = "${local.parameter_group_name}"
-  family      = "${local.family}"
-  description = "${local.family} parameter group for ${var.name} ${var.env}"
-
-  lifecycle {
-    create_before_destroy = true
-  }
+  storage_encrypted       = "${data.aws_db_instance.source_database.storage_encrypted}"
+  storage_type            = "${data.aws_db_instance.source_database.storage_type}"
 }
 
 resource "aws_db_instance" "mod" {
