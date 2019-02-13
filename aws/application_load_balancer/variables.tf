@@ -88,6 +88,16 @@ variable "internal" {
   default     = false
 }
 
+variable "redirect_http_to_https" {
+  description = "(Optional) If true, the HTTP listener will redirect to HTTPS. Default false."
+  default     = false
+}
+
+variable "redirect_http_to_https_status_code" {
+  description = "(Optional) If redirect_http_to_https is true, the HTTP status code that will be used for the redirect. Default HTTP_301."
+  default     = "HTTP_301"
+}
+
 variable "ssl_policy" {
   description = "(Optional) The name of the SSL Policy for the HTTPS listener. Default ELBSecurityPolicy-TLS-1-2-2017-01."
   default     = "ELBSecurityPolicy-TLS-1-2-2017-01"
