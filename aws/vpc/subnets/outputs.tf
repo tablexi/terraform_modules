@@ -13,3 +13,7 @@ output "private_route_table_id" {
 output "public_route_table_id" {
   value = "${aws_route_table.mod_public.*.id}"
 }
+
+output "public_subnets_by_az" {
+  value = "${zipmap(data.aws_availability_zones.available.names, aws_subnet.prod_public.*.id)}"
+}
