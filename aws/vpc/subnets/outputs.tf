@@ -15,5 +15,5 @@ output "public_route_table_id" {
 }
 
 output "public_subnets_by_az" {
-  value = "${zipmap(data.aws_availability_zones.available.names, aws_subnet.prod_public.*.id)}"
+  value = "${zipmap(data.aws_availability_zones.available.names, aws_subnet.mod_public.*.id)}"
 }
