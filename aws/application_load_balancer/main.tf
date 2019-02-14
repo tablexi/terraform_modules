@@ -93,7 +93,7 @@ resource "aws_alb_listener" "https_listener" {
   ssl_policy        = "${var.ssl_policy}"
 
   default_action {
-    target_group_arn = "${var.https_target_group ? element(concat(aws_alb_target_group.https_target_group.*.arn, list("")), 0) : aws_alb_target_group.http_target_group.arn}"
+    target_group_arn = "${aws_alb_target_group.http_target_group.arn}"
     type             = "forward"
   }
 }
