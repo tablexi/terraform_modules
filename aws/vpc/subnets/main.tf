@@ -35,7 +35,6 @@ resource "aws_route" "mod" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${var.internet_gateway_id}"
   route_table_id         = "${aws_route_table.mod.id}"
-  tags                   = "${var.tags}"
 }
 
 resource "aws_subnet" "mod" {
@@ -51,5 +50,4 @@ resource "aws_route_table_association" "mod" {
   count          = "${length(data.aws_availability_zones.available.names)}"
   route_table_id = "${aws_route_table.mod.id}"
   subnet_id      = "${element(aws_subnet.mod.*.id, count.index)}"
-  tags           = "${var.tags}"
 }
