@@ -21,14 +21,6 @@ variable "netnum_offset" {
   description = "Offset the subnets netnum by a specific amount."
 }
 
-variable "name" {
-  description = "Adds Name tag where appropriate"
-}
-
-variable "client" {
-  description = "Adds txi:client tag where appropriate"
-}
-
-variable "environment" {
-  description = "Adds txi:environment tag where appropriate"
+variable "tags" {
+  description = "(Optional) A mapping of tags to assign to the resources"
 }

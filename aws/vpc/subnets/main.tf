@@ -26,51 +26,30 @@ data "template_file" "az_to_netnum" {
 }
 
 resource "aws_route_table" "mod" {
+  tags   = "${var.tags}"
   vpc_id = "${var.vpc_id}"
-
-  tags = {
-    Name              = "${var.name}"
-    "txi:client"      = "${var.client}"
-    "txi:environment" = "${var.environment}"
-  }
 }
 
 resource "aws_route" "mod" {
   count                  = "${var.public ? 1 : 0}"
-  route_table_id         = "${aws_route_table.mod.id}"
-  gateway_id             = "${var.internet_gateway_id}"
   destination_cidr_block = "0.0.0.0/0"
-
-  tags = {
-    Name              = "${var.name}"
-    "txi:client"      = "${var.client}"
-    "txi:environment" = "${var.environment}"
-  }
+  gateway_id             = "${var.internet_gateway_id}"
+  route_table_id         = "${aws_route_table.mod.id}"
+  tags                   = "${var.tags}"
 }
 
 resource "aws_subnet" "mod" {
-  count             = "${length(data.aws_availability_zones.available.names)}"
-  availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
-  cidr_block        = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.newbits, var.netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
-  vpc_id            = "${var.vpc_id}"
-
-  tags = {
-    Name              = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}"
-    "txi:client"      = "${var.client}"
-    "txi:environment" = "${var.environment}"
-  }
-
+  count                   = "${length(data.aws_availability_zones.available.names)}"
+  availability_zone       = "${element(data.aws_availability_zones.available.names, count.index)}"
+  cidr_block              = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.newbits, var.netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   map_public_ip_on_launch = "${var.public}"
+  tags                    = "${var.tags}"
+  vpc_id                  = "${var.vpc_id}"
 }
 
 resource "aws_route_table_association" "mod" {
   count          = "${length(data.aws_availability_zones.available.names)}"
-  subnet_id      = "${element(aws_subnet.mod.*.id, count.index)}"
   route_table_id = "${aws_route_table.mod.id}"
-
-  tags = {
-    Name              = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}"
-    "txi:client"      = "${var.client}"
-    "txi:environment" = "${var.environment}"
-  }
+  subnet_id      = "${element(aws_subnet.mod.*.id, count.index)}"
+  tags           = "${var.tags}"
 }
