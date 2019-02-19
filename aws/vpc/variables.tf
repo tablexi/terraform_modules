@@ -7,8 +7,8 @@ variable "client" {
   description = "Adds txi:client tag where appropriate"
 }
 
-variable "infra_environment" {
-  description = "Adds txi:infra_environment tag where appropriate"
+variable "environment" {
+  description = "Adds txi:environment tag where appropriate"
 }
 
 variable "name" {
