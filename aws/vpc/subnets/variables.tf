@@ -23,4 +23,5 @@ variable "netnum_offset" {
 
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
+  type        = "map"
 }
