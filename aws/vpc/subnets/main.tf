@@ -26,35 +26,30 @@ data "template_file" "az_to_netnum" {
 }
 
 resource "aws_route_table" "mod" {
+  tags   = "${var.tags}"
   vpc_id = "${var.vpc_id}"
-
-  tags {
-    Name = "${var.name}"
-  }
 }
 
 resource "aws_route" "mod" {
   count                  = "${var.public ? 1 : 0}"
-  route_table_id         = "${aws_route_table.mod.id}"
-  gateway_id             = "${var.internet_gateway_id}"
   destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = "${var.internet_gateway_id}"
+  route_table_id         = "${aws_route_table.mod.id}"
+  tags                   = "${var.tags}"
 }
 
 resource "aws_subnet" "mod" {
-  vpc_id            = "${var.vpc_id}"
-  cidr_block        = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.newbits, var.netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
-  availability_zone = "${element(data.aws_availability_zones.available.names, count.index)}"
-  count             = "${length(data.aws_availability_zones.available.names)}"
-
-  tags {
-    Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}"
-  }
-
+  count                   = "${length(data.aws_availability_zones.available.names)}"
+  availability_zone       = "${element(data.aws_availability_zones.available.names, count.index)}"
+  cidr_block              = "${cidrsubnet(data.aws_vpc.current.cidr_block, var.newbits, var.netnum_offset + element(data.template_file.az_to_netnum.*.rendered, count.index))}"
   map_public_ip_on_launch = "${var.public}"
+  tags                    = "${var.tags}"
+  vpc_id                  = "${var.vpc_id}"
 }
 
 resource "aws_route_table_association" "mod" {
   count          = "${length(data.aws_availability_zones.available.names)}"
-  subnet_id      = "${element(aws_subnet.mod.*.id, count.index)}"
   route_table_id = "${aws_route_table.mod.id}"
+  subnet_id      = "${element(aws_subnet.mod.*.id, count.index)}"
+  tags           = "${var.tags}"
 }

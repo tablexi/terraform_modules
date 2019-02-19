@@ -1,7 +1,3 @@
-variable "name" {
-  description = "The name of the subnet group."
-}
-
 variable "vpc_id" {
   description = "The unique ID of the VPC."
 }
@@ -23,4 +19,8 @@ variable "newbits" {
 variable "netnum_offset" {
   default     = 0
   description = "Offset the subnets netnum by a specific amount."
+}
+
+variable "tags" {
+  description = "(Optional) A mapping of tags to assign to the resources"
 }
