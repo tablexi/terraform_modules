@@ -47,7 +47,7 @@ resource "aws_subnet" "mod" {
   count             = "${length(data.aws_availability_zones.available.names)}"
 
   tags {
-    Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}-${var.public ? "public" : "private"}"
+    Name = "${var.name}-${element(data.aws_availability_zones.available.names, count.index)}"
   }
 
   map_public_ip_on_launch = "${var.public}"
