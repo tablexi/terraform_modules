@@ -1,7 +1,3 @@
-variable "name" {
-  description = "The name of the subnet group."
-}
-
 variable "vpc_id" {
   description = "The unique ID of the VPC."
 }
@@ -23,4 +19,20 @@ variable "newbits" {
 variable "netnum_offset" {
   default     = 0
   description = "Offset the subnets netnum by a specific amount."
+}
+
+variable "name" {
+  description = "Adds Name tag where appropriate"
+}
+
+variable "client" {
+  description = "Adds txi:client tag where appropriate"
+}
+
+variable "infra_environment" {
+  description = "Adds txi:infra_environment tag where appropriate"
+}
+
+variable "application_environment" {
+  description = "Adds txi:application_environment tag where appropriate"
 }
