@@ -18,7 +18,7 @@ variable "vpc_id" {
 
 variable "master_security_group_id" {
   description = "Security group id from the master control plane"
-  type        = "map"
+  type        = "string"
 }
 
 variable "capacity_min" {
