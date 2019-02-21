@@ -9,12 +9,12 @@ locals {
 }
 
 module "eks-vpc" {
-  source = "../vpc"
+  source = "../../vpc"
   tags   = "${local.tags}"
 }
 
 module "eks-subnets" {
-  source = "../vpc/subnets"
+  source = "../../vpc/subnets"
 
   internet_gateway_id = "${module.eks-vpc.internet_gateway_id}"
   tags                = "${local.tags}"
@@ -87,28 +87,4 @@ resource "aws_eks_cluster" "master" {
     "aws_iam_role_policy_attachment.eks_service_role_cluster_policy",
     "aws_iam_role_policy_attachment.eks_service_role_service_policy",
   ]
-}
-
-# Worker Nodes
-
-resource "aws_cloudformation_stack" "nodes" {
-  capabilities = ["CAPABILITY_IAM"]
-  name         = "${var.name}"
-  template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-01-09/amazon-eks-nodegroup.yaml"
-
-  parameters {
-    ClusterControlPlaneSecurityGroup    = "${aws_security_group.master.id}"
-    ClusterName                         = "${var.name}"
-    KeyName                             = "${var.key_name}"
-    NodeAutoScalingGroupDesiredCapacity = 3
-    NodeAutoScalingGroupMaxSize         = 6
-    NodeAutoScalingGroupMinSize         = 3
-    NodeGroupName                       = "${var.name}"
-    NodeImageId                         = "ami-0c5b63ec54dd3fc38"
-    NodeInstanceType                    = "t2.medium"
-    Subnets                             = "${join(",", module.eks-subnets.subnets)}"
-    VpcId                               = "${module.eks-vpc.vpc_id}"
-  }
-
-  tags = "${local.tags}"
 }
