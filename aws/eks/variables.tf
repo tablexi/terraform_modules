@@ -1,3 +1,5 @@
+variable "key_name" {}
+
 variable "name" {
   description = "Name of the cluster"
 }

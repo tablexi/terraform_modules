@@ -99,7 +99,7 @@ resource "aws_cloudformation_stack" "nodes" {
   parameters {
     ClusterControlPlaneSecurityGroup    = "${aws_security_group.master.id}"
     ClusterName                         = "${var.name}"
-    KeyName                             = "${module.key.key_name}"
+    KeyName                             = "${var.key_name}"
     NodeAutoScalingGroupDesiredCapacity = 3
     NodeAutoScalingGroupMaxSize         = 6
     NodeAutoScalingGroupMinSize         = 3
