@@ -9,12 +9,12 @@ locals {
 }
 
 module "eks-vpc" {
-  source = "../vpc"
+  source = "../../vpc"
   tags   = "${local.tags}"
 }
 
 module "eks-subnets" {
-  source = "../vpc/subnets"
+  source = "../../vpc/subnets"
 
   internet_gateway_id = "${module.eks-vpc.internet_gateway_id}"
   tags                = "${local.tags}"
