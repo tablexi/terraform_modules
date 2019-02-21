@@ -5,7 +5,7 @@ locals {
     Name = "${var.name}"
   }
 
-  tags = "${merge(default_tags, var.tags)}"
+  tags = "${merge(local.default_tags, var.tags)}"
 }
 
 module "eks-vpc" {
