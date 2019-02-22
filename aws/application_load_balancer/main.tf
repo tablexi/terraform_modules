@@ -54,6 +54,27 @@ resource "aws_alb_listener" "http_listener" {
   }
 }
 
+resource "aws_alb_listener_rule" "redirect_http_to_https" {
+  count        = "${var.redirect_http_to_https ? 1 : 0}"
+  listener_arn = "${aws_alb_listener.http_listener.arn}"
+  priority     = 1000
+
+  action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "${var.redirect_http_to_https_status_code}"
+    }
+  }
+
+  condition {
+    field  = "path-pattern"
+    values = ["*"]
+  }
+}
+
 resource "aws_alb_target_group" "http_target_group" {
   deregistration_delay = 30
   name                 = "${local.prefix}-http"
