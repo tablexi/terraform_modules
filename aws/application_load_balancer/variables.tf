@@ -88,6 +88,11 @@ variable "internal" {
   default     = false
 }
 
+variable "redirect_domains" {
+  description = "(Optional) Map of domains to redirect. Keys are domains to redirect from, and values are domains to redirect to. Default {}."
+  default     = {}
+}
+
 variable "redirect_http_to_https" {
   description = "(Optional) If true, the HTTP listener will redirect to HTTPS. Default false."
   default     = false
