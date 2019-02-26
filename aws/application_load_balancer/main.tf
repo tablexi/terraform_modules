@@ -54,6 +54,28 @@ resource "aws_alb_listener" "http_listener" {
   }
 }
 
+resource "aws_alb_listener_rule" "redirect_domains_http" {
+  count        = "${length(keys(var.redirect_domains))}"
+  listener_arn = "${aws_alb_listener.http_listener.arn}"
+  priority     = "${500 + count.index}"
+
+  action {
+    type = "redirect"
+
+    redirect {
+      host        = "${element(values(var.redirect_domains), count.index)}"
+      port        = "${var.redirect_http_to_https ? 443 : 80}"
+      protocol    = "${var.redirect_http_to_https ? "HTTPS" : "HTTP"}"
+      status_code = "${var.redirect_http_to_https_status_code}"
+    }
+  }
+
+  condition {
+    field  = "host-header"
+    values = ["${element(keys(var.redirect_domains), count.index)}"]
+  }
+}
+
 resource "aws_alb_listener_rule" "redirect_http_to_https" {
   count        = "${var.redirect_http_to_https ? 1 : 0}"
   listener_arn = "${aws_alb_listener.http_listener.arn}"
@@ -116,6 +138,26 @@ resource "aws_alb_listener" "https_listener" {
   default_action {
     target_group_arn = "${aws_alb_target_group.http_target_group.arn}"
     type             = "forward"
+  }
+}
+
+resource "aws_alb_listener_rule" "redirect_domains_https" {
+  count        = "${length(keys(var.redirect_domains))}"
+  listener_arn = "${aws_alb_listener.https_listener.arn}"
+  priority     = "${500 + count.index}"
+
+  action {
+    type = "redirect"
+
+    redirect {
+      host        = "${element(values(var.redirect_domains), count.index)}"
+      status_code = "${var.redirect_http_to_https_status_code}"
+    }
+  }
+
+  condition {
+    field  = "host-header"
+    values = ["${element(keys(var.redirect_domains), count.index)}"]
   }
 }
 
