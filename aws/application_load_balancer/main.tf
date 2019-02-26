@@ -54,6 +54,27 @@ resource "aws_alb_listener" "http_listener" {
   }
 }
 
+resource "aws_alb_listener_rule" "redirect_http_to_https" {
+  count        = "${var.redirect_http_to_https ? 1 : 0}"
+  listener_arn = "${aws_alb_listener.http_listener.arn}"
+  priority     = 1000
+
+  action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "${var.redirect_http_to_https_status_code}"
+    }
+  }
+
+  condition {
+    field  = "path-pattern"
+    values = ["*"]
+  }
+}
+
 resource "aws_alb_target_group" "http_target_group" {
   deregistration_delay = 30
   name                 = "${local.prefix}-http"
@@ -93,7 +114,7 @@ resource "aws_alb_listener" "https_listener" {
   ssl_policy        = "${var.ssl_policy}"
 
   default_action {
-    target_group_arn = "${var.https_target_group ? element(concat(aws_alb_target_group.https_target_group.*.arn, list("")), 0) : aws_alb_target_group.http_target_group.arn}"
+    target_group_arn = "${aws_alb_target_group.http_target_group.arn}"
     type             = "forward"
   }
 }
