@@ -57,24 +57,13 @@ variable "cidr_blocks_for_ingress" {
   default     = []
 }
 
-variable "replica_db_region" {
-  description = "AWS region to put the replica db"
-  default     = "us-east-1"
-}
-
 variable "skip_final_snapshot" {
   description = "Skip final snapshot before destroying instance."
   default     = true
 }
 
 variable "source_db" {
-  description = "recplication source db"
-  default     = ""
-}
-
-variable "source_db_region" {
-  description = "replication source db provider specification for cross region replication"
-  default     = "us-east-1"
+  description = "Source database identifier."
 }
 
 variable "vpc_id" {
