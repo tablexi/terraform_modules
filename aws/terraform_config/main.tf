@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "mod" {
   bucket = "${var.name}${var.splitter}tf"
 
   tags {
-    Name = "${var.name} terraform configutation"
+    Name = "${var.name} terraform configuration"
   }
 
   versioning {
