@@ -46,3 +46,8 @@ variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
   type        = "map"
 }
+
+variable "depends_on" {
+  description = "(Optional) A list of resources this module depends on"
+  default     = []
+}

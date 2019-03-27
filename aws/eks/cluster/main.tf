@@ -11,6 +11,7 @@ module "master" {
 module "nodes" {
   source = "../nodes"
 
+  depends_on               = ["${module.master.endpoint}"]
   key_name                 = "${var.key_name}"
   master_security_group_id = "${module.master.master_security_group_id}"
   name                     = "${var.name}"
