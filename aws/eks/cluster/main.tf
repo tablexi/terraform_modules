@@ -4,14 +4,19 @@ data "aws_region" "current" {}
 module "master" {
   source = "../master"
 
-  name   = "${var.name}"
-  tags   = "${var.tags}"
+  name = "${var.name}"
+  tags = "${var.tags}"
 }
 
 module "nodes" {
   source = "../nodes"
 
+  ami                      = "${var.ami}"
+  capacity_desired         = "${var.capacity_desired}"
+  capacity_max             = "${var.capacity_max}"
+  capacity_min             = "${var.capacity_min}"
   depends_on               = ["${module.master.endpoint}"]
+  instance_type            = "${var.instance_type}"
   key_name                 = "${var.key_name}"
   master_security_group_id = "${module.master.master_security_group_id}"
   name                     = "${var.name}"
