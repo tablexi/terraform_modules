@@ -10,14 +10,14 @@ locals {
 
 module "eks-vpc" {
   source = "../../vpc"
-  tags   = "${local.tags}"
+  tags   = "${merge(local.tags, map("kubernetes.io/cluster/${var.name}", "shared"))}"
 }
 
 module "eks-subnets" {
   source = "../../vpc/subnets"
 
   internet_gateway_id = "${module.eks-vpc.internet_gateway_id}"
-  tags                = "${local.tags}"
+  tags                = "${merge(local.tags, map("kubernetes.io/cluster/${var.name}", "shared"))}"
   vpc_id              = "${module.eks-vpc.vpc_id}"
 }
 
