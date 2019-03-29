@@ -9,7 +9,7 @@ variable "tags" {
 
 variable "ami" {
   description = "AMI used to build each node"
-  default     = "ami-0c5b63ec54dd3fc38"
+  default     = "ami-0d9f458329e942f90"
 }
 
 variable "instance_type" {
