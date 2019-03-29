@@ -95,7 +95,7 @@ resource "aws_cloudformation_stack" "nodes" {
   depends_on   = ["aws_eks_cluster.master"]
   name         = "${var.name}"
   tags         = "${local.tags}"
-  template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-01-09/amazon-eks-nodegroup.yaml"
+  template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-02-11/amazon-eks-nodegroup.yaml"
 
   parameters {
     ClusterControlPlaneSecurityGroup    = "${aws_security_group.master.id}"
