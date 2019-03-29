@@ -90,23 +90,26 @@ resource "aws_eks_cluster" "master" {
   ]
 }
 
-# =====================================
+resource "aws_cloudformation_stack" "nodes" {
+  capabilities = ["CAPABILITY_IAM"]
+  depends_on   = ["aws_eks_cluster.master"]
+  name         = "${var.name}"
+  tags         = "${local.tags}"
+  template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-01-09/amazon-eks-nodegroup.yaml"
 
-module "nodes" {
-  source = "../nodes"
-
-  ami                      = "${var.ami}"
-  capacity_desired         = "${var.capacity_desired}"
-  capacity_max             = "${var.capacity_max}"
-  capacity_min             = "${var.capacity_min}"
-  depends_on               = ["${module.master.endpoint}"]
-  instance_type            = "${var.instance_type}"
-  key_name                 = "${var.key_name}"
-  master_security_group_id = "${module.master.master_security_group_id}"
-  name                     = "${var.name}"
-  subnets                  = "${module.master.subnets}"
-  tags                     = "${var.tags}"
-  vpc_id                   = "${module.master.vpc_id}"
+  parameters {
+    ClusterControlPlaneSecurityGroup    = "${aws_security_group.master.id}"
+    ClusterName                         = "${var.name}"
+    KeyName                             = "${var.key_name}"
+    NodeAutoScalingGroupDesiredCapacity = "${var.capacity_desired}"
+    NodeAutoScalingGroupMaxSize         = "${var.capacity_max}"
+    NodeAutoScalingGroupMinSize         = "${var.capacity_min}"
+    NodeGroupName                       = "${var.name}"
+    NodeImageId                         = "${var.ami}"
+    NodeInstanceType                    = "${var.instance_type}"
+    Subnets                             = "${join(",", module.eks-subnets.subnets)}"
+    VpcId                               = "${module.eks-vpc.vpc_id}"
+  }
 }
 
 resource "aws_cloudwatch_log_group" "logs" {
@@ -156,5 +159,5 @@ resource "aws_iam_policy" "cluster-logging" {
 
 resource "aws_iam_role_policy_attachment" "cluster-logging" {
   policy_arn = "${aws_iam_policy.cluster-logging.arn}"
-  role       = "${replace(module.nodes.node_instance_role, "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/", "")}"
+  role       = "${replace(aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"], "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/", "")}"
 }
