@@ -10,13 +10,13 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 module "eks-vpc" {
-  source = "../../vpc"
+  source = "../vpc"
 
   tags = "${merge(local.tags, map("kubernetes.io/cluster/${var.name}", "shared"))}"
 }
 
 module "eks-subnets" {
-  source = "../../vpc/subnets"
+  source = "../vpc/subnets"
 
   internet_gateway_id = "${module.eks-vpc.internet_gateway_id}"
   tags                = "${merge(local.tags, map("kubernetes.io/cluster/${var.name}", "shared"))}"
