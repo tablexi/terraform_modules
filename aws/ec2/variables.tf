@@ -60,6 +60,7 @@ variable "subnets" {
 }
 
 variable "tags" {
+  default     = {}
   description = "(Optional) A mapping of tags to assign to the resources"
   type        = "map"
 }
