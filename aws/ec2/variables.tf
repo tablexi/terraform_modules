@@ -59,6 +59,11 @@ variable "subnets" {
   type = "list"
 }
 
+variable "tags" {
+  description = "(Optional) A mapping of tags to assign to the resources"
+  type        = "map"
+}
+
 variable "type" {
   default = "t2.small"
 }
