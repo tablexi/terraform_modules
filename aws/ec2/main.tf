@@ -1,3 +1,11 @@
+locals {
+  default_security_group_tags = {
+    Name = "${var.name}-ec2-instances"
+  }
+
+  security_group_tags = "${merge(local.default_security_group_tags, var.tags)}"
+}
+
 resource "aws_instance" "mod" {
   count                       = "${var.count}"
   ami                         = "${var.ami}"
@@ -10,10 +18,7 @@ resource "aws_instance" "mod" {
 
   source_dest_check = "${var.source_dest_check}"
 
-  tags {
-    Name        = "${format("%s%02d", var.name, count.index + var.name_tag_starting_count)}"
-    Environment = "${var.env}"
-  }
+  tags = "${merge(map("Name", format("%s%02d", var.name, count.index + var.name_tag_starting_count), "Environment", var.env), var.tags)}"
 
   ebs_optimized = "${var.ebs_optimized}"
 
@@ -42,9 +47,7 @@ resource "aws_security_group" "security_group_on_instances" {
     create_before_destroy = true
   }
 
-  tags {
-    "Name" = "${var.name}-ec2-instances"
-  }
+  tags = "${local.security_group_tags}"
 }
 
 resource "aws_security_group_rule" "all_egress_on_instances_to_anywhere" {
