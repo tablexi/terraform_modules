@@ -1,14 +1,8 @@
 locals {
-  default_instance_tags = {
-    Name        = "${format("%s%02d", var.name, count.index + var.name_tag_starting_count)}"
-    Environment = "${var.env}"
-  }
-
   default_security_group_tags = {
     Name = "${var.name}-ec2-instances"
   }
 
-  instance_tags       = "${merge(local.default_instance_tags, var.tags)}"
   security_group_tags = "${merge(local.default_security_group_tags, var.tags)}"
 }
 
@@ -24,7 +18,7 @@ resource "aws_instance" "mod" {
 
   source_dest_check = "${var.source_dest_check}"
 
-  tags = "${local.instance_tags}"
+  tags = "${merge(map("Name", format("%s%02d", var.name, count.index + var.name_tag_starting_count), "Environment", var.env), var.tags)}"
 
   ebs_optimized = "${var.ebs_optimized}"
 
