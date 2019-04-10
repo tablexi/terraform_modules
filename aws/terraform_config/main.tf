@@ -1,7 +1,6 @@
-provider "aws" {}
-
 resource "aws_s3_bucket" "mod" {
   bucket = "${var.name}${var.splitter}tf"
+  region = "${var.region}"
 
   tags {
     Name = "${var.name} terraform configuration"
