@@ -41,7 +41,6 @@ resource "aws_db_instance" "mod" {
   vpc_security_group_ids      = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
   db_subnet_group_name        = "${var.source_db == "" ? local.subnet_group_name : ""}"
   parameter_group_name        = "${local.parameter_group_name}"
-  option_group_name           = "${"default:${var.engine}-${replace(var.engine_version, ".", "-")}"}"
   final_snapshot_identifier   = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   skip_final_snapshot         = "${var.skip_final_snapshot}"
   storage_encrypted           = "${var.storage_encrypted}"
