@@ -1,12 +1,13 @@
 locals {
-  engine_nickname         = "${local.is_postgres ? "pg" : "mysql"}"
-  family                  = "${var.engine}${var.engine_version}"
-  is_postgres             = "${var.engine == "postgres" ? true : false}"
-  major_engine_version    = "${join(".", slice(split(".", var.engine_version), 0, 2))}"
-  parameter_group_name    = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"}"
-  port                    = "${local.is_postgres ? 5432 : 3306}"
-  sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  subnet_group_name       = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
+  engine_nickname             = "${local.is_postgres ? "pg" : "mysql"}"
+  family                      = "${var.engine}${var.engine_version}"
+  is_postgres                 = "${var.engine == "postgres" ? true : false}"
+  major_engine_version_return = "${length(split(".", var.engine_version)) > 1 ? 2 : 1}"
+  major_engine_version        = "${join(".", slice(split(".", var.engine_version), 0, local.major_engine_version_return))}"
+  parameter_group_name        = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"}"
+  port                        = "${local.is_postgres ? 5432 : 3306}"
+  sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
+  subnet_group_name           = "${var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"}"
 }
 
 resource "aws_db_subnet_group" "mod" {
@@ -40,7 +41,6 @@ resource "aws_db_instance" "mod" {
   vpc_security_group_ids      = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
   db_subnet_group_name        = "${var.source_db == "" ? local.subnet_group_name : ""}"
   parameter_group_name        = "${local.parameter_group_name}"
-  option_group_name           = "${"default:${var.engine}-${replace(var.engine_version, ".", "-")}"}"
   final_snapshot_identifier   = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   skip_final_snapshot         = "${var.skip_final_snapshot}"
   storage_encrypted           = "${var.storage_encrypted}"
