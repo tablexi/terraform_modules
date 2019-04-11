@@ -35,6 +35,11 @@ variable "identifier" {
   default     = ""
 }
 
+variable "iops" {
+  description = "The amount of provisioned IOPS"
+  default     =  ""
+}
+
 variable "kms_key_id" {
   description = "If you are using volume encryption, you can use this variable to set the specific key arn."
   default     = ""
