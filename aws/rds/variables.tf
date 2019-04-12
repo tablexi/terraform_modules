@@ -37,7 +37,7 @@ variable "identifier" {
 
 variable "iops" {
   description = "The amount of provisioned IOPS"
-  default     =  ""
+  default     = ""
 }
 
 variable "kms_key_id" {
