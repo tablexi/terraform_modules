@@ -33,7 +33,6 @@ resource "aws_db_instance" "mod" {
   engine_version              = "${var.engine_version}"
   instance_class              = "${var.node_type}"
   storage_type                = "${var.storage_type}"
-  iops                        = "${var.iops}"
   allocated_storage           = "${var.storage}"
   username                    = "${var.username != "" ? var.username : "${var.name}${var.username_suffix}"}"
   password                    = "nopassword"
