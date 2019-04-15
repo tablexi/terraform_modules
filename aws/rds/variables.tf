@@ -35,11 +35,6 @@ variable "identifier" {
   default     = ""
 }
 
-variable "iops" {
-  description = "The amount of provisioned IOPS"
-  default     = ""
-}
-
 variable "kms_key_id" {
   description = "If you are using volume encryption, you can use this variable to set the specific key arn."
   default     = ""
@@ -100,7 +95,7 @@ variable "storage_encrypted" {
 }
 
 variable "storage_type" {
-  description = "Volume type to use.  Options: Standard(magnetic), gp2(SSD), or io1(provisioned IOPS SSD)"
+  description = "Volume type to use.  Options: Standard(magnetic), gp2(SSD)"
   default     = "gp2"
 }
 
