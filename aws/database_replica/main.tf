@@ -15,7 +15,7 @@ locals {
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   source_db               = "${data.aws_db_instance.source_database.id}"
   storage_encrypted       = "${data.aws_db_instance.source_database.storage_encrypted}"
-  storage_type            = "${data.aws_db_instance.source_database.storage_type}"
+  storage_type            = "${var.storage_type != "" ? var.storage_type : data.aws_db_instance.source_database.storage_type}"
 }
 
 resource "aws_db_instance" "mod" {
@@ -29,6 +29,7 @@ resource "aws_db_instance" "mod" {
   final_snapshot_identifier   = "${var.name}-${var.env}-${local.engine}-final-snapshot"
   identifier                  = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${local.engine}"}"
   instance_class              = "${var.node_type}"
+  iops                        = "${var.iops}"
   multi_az                    = "${var.multi_az}"
   option_group_name           = "${"default:${local.engine}-${replace(local.major_engine_version, ".", "-")}"}"
   parameter_group_name        = "${local.parameter_group_name}"

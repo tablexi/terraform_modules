@@ -23,6 +23,11 @@ variable "identifier" {
   default     = ""
 }
 
+variable "iops" {
+  description = "(Optional) The amount of provisioned IOPS. Setting this implies a storage_type of io1."
+  default     = 0
+}
+
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
   default     = false
@@ -64,6 +69,11 @@ variable "skip_final_snapshot" {
 
 variable "source_db" {
   description = "Source database identifier."
+}
+
+variable "storage_type" {
+  description = "(Optional) One of 'standard' (magnetic), 'gp2' (general purpose SSD), or 'io1' (provisioned IOPS SSD). The default is the storage type of the source database, so only set this if you want to use a different storage type on the replica."
+  default     = ""
 }
 
 variable "vpc_id" {

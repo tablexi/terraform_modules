@@ -35,6 +35,11 @@ variable "identifier" {
   default     = ""
 }
 
+variable "iops" {
+  description = "(Optional) The amount of provisioned IOPS. Setting this implies a storage_type of io1."
+  default     = 0
+}
+
 variable "kms_key_id" {
   description = "If you are using volume encryption, you can use this variable to set the specific key arn."
   default     = ""
@@ -95,7 +100,7 @@ variable "storage_encrypted" {
 }
 
 variable "storage_type" {
-  description = "Volume type to use.  Options: Standard(magnetic), gp2(SSD)"
+  description = "(Optional) One of 'standard' (magnetic), 'gp2' (general purpose SSD), or 'io1' (provisioned IOPS SSD). The default is 'io1' if iops is specified, 'standard' if not. Note that this behaviour is different from the AWS web console, where the default is 'gp2'."
   default     = "gp2"
 }
 
