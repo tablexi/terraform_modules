@@ -2,8 +2,8 @@ locals {
   engine_nickname             = "${local.is_postgres ? "pg" : "mysql"}"
   family                      = "${var.engine}${var.engine_version}"
   is_postgres                 = "${var.engine == "postgres" ? true : false}"
-  major_engine_version_return = "${length(split(".", var.engine_version)) > 1 ? 2 : 1}"
   major_engine_version        = "${join(".", slice(split(".", var.engine_version), 0, local.major_engine_version_return))}"
+  major_engine_version_return = "${length(split(".", var.engine_version)) > 1 ? 2 : 1}"
   parameter_group_name        = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"}"
   port                        = "${local.is_postgres ? 5432 : 3306}"
   sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
@@ -12,8 +12,8 @@ locals {
 
 resource "aws_db_subnet_group" "mod" {
   count       = "${var.create_db_subnet_group ? 1 : 0}"
-  name        = "${local.subnet_group_name}"
   description = "${var.name} ${var.env} db ${var.engine} subnet group"
+  name        = "${local.subnet_group_name}"
   subnet_ids  = ["${var.subnets}"]
 
   lifecycle {
@@ -27,48 +27,48 @@ resource "aws_db_subnet_group" "mod" {
 }
 
 resource "aws_db_instance" "mod" {
-  identifier                  = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
-  replicate_source_db         = "${var.source_db}"
-  engine                      = "${var.engine}"
-  engine_version              = "${var.engine_version}"
-  instance_class              = "${var.node_type}"
-  storage_type                = "${var.storage_type}"
   allocated_storage           = "${var.storage}"
-  username                    = "${var.username != "" ? var.username : "${var.name}${var.username_suffix}"}"
-  password                    = "nopassword"
-  backup_retention_period     = "${var.backup_retention_period}"
-  multi_az                    = "${var.multi_az}"
-  vpc_security_group_ids      = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
-  db_subnet_group_name        = "${var.source_db == "" ? local.subnet_group_name : ""}"
-  parameter_group_name        = "${local.parameter_group_name}"
-  final_snapshot_identifier   = "${var.name}-${var.env}-${var.engine}-final-snapshot"
-  skip_final_snapshot         = "${var.skip_final_snapshot}"
-  storage_encrypted           = "${var.storage_encrypted}"
-  kms_key_id                  = "${var.kms_key_id}"
-  publicly_accessible         = "${var.publicly_accessible}"
-  auto_minor_version_upgrade  = "${var.auto_minor_version_upgrade}"
   allow_major_version_upgrade = true
   apply_immediately           = true
+  auto_minor_version_upgrade  = "${var.auto_minor_version_upgrade}"
+  backup_retention_period     = "${var.backup_retention_period}"
+  db_subnet_group_name        = "${var.source_db == "" ? local.subnet_group_name : ""}"
+  engine                      = "${var.engine}"
+  engine_version              = "${var.engine_version}"
+  final_snapshot_identifier   = "${var.name}-${var.env}-${var.engine}-final-snapshot"
+  identifier                  = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
+  instance_class              = "${var.node_type}"
+  kms_key_id                  = "${var.kms_key_id}"
+  multi_az                    = "${var.multi_az}"
+  parameter_group_name        = "${local.parameter_group_name}"
+  password                    = "nopassword"
+  publicly_accessible         = "${var.publicly_accessible}"
+  replicate_source_db         = "${var.source_db}"
+  skip_final_snapshot         = "${var.skip_final_snapshot}"
+  storage_encrypted           = "${var.storage_encrypted}"
+  storage_type                = "${var.storage_type}"
+  username                    = "${var.username != "" ? var.username : "${var.name}${var.username_suffix}"}"
+  vpc_security_group_ids      = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
 }
 
 resource "aws_security_group" "sg_on_rds_instance" {
-  name        = "${local.sg_on_rds_instance_name}"
   description = "${local.sg_on_rds_instance_name}"
+  name        = "${local.sg_on_rds_instance_name}"
   vpc_id      = "${var.vpc_id}"
 
   ingress {
+    cidr_blocks     = ["${var.sg_cidr_blocks}"]
     from_port       = "${local.port}"
-    to_port         = "${local.port}"
     protocol        = "tcp"
     security_groups = ["${var.security_groups_for_ingress}"]
-    cidr_blocks     = ["${var.sg_cidr_blocks}"]
+    to_port         = "${local.port}"
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
   }
 
   tags {
