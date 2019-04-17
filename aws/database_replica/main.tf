@@ -15,7 +15,7 @@ locals {
   sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   source_db               = "${data.aws_db_instance.source_database.id}"
   storage_encrypted       = "${data.aws_db_instance.source_database.storage_encrypted}"
-  storage_type            = "${data.aws_db_instance.source_database.storage_type}"
+  storage_type            = "${var.storage_type != "" ? var.storage_type : data.aws_db_instance.source_database.storage_type}"
 }
 
 resource "aws_db_instance" "mod" {

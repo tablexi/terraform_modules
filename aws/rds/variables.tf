@@ -100,7 +100,7 @@ variable "storage_encrypted" {
 }
 
 variable "storage_type" {
-  description = "Volume type to use.  Options: Standard(magnetic), gp2(SSD)"
+  description = "(Optional) One of 'standard' (magnetic), 'gp2' (general purpose SSD), or 'io1' (provisioned IOPS SSD). The default is 'io1' if iops is specified, 'standard' if not. Note that this behaviour is different from the AWS web console, where the default is 'gp2'."
   default     = "gp2"
 }
 
