@@ -35,6 +35,11 @@ variable "identifier" {
   default     = ""
 }
 
+variable "iops" {
+  description = "(Optional) The amount of provisioned IOPS. Setting this implies a storage_type of io1."
+  default     = 0
+}
+
 variable "kms_key_id" {
   description = "If you are using volume encryption, you can use this variable to set the specific key arn."
   default     = ""

@@ -37,6 +37,7 @@ resource "aws_db_instance" "mod" {
   engine_version              = "${var.engine_version}"
   final_snapshot_identifier   = "${var.name}-${var.env}-${var.engine}-final-snapshot"
   identifier                  = "${var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${var.engine}"}"
+  iops                        = "${var.iops}"
   instance_class              = "${var.node_type}"
   kms_key_id                  = "${var.kms_key_id}"
   multi_az                    = "${var.multi_az}"
