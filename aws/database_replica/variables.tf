@@ -23,6 +23,11 @@ variable "identifier" {
   default     = ""
 }
 
+variable "iops" {
+  description = "(Optional) The amount of provisioned IOPS. Setting this implies a storage_type of io1."
+  default     = 0
+}
+
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
   default     = false
