@@ -76,6 +76,12 @@ variable "storage_type" {
   default     = ""
 }
 
+variable "tags" {
+  default     = {}
+  description = "(Optional) A mapping of tags to assign to the resources"
+  type        = "map"
+}
+
 variable "vpc_id" {
   description = "VPC id to associate this RDS instance with."
 }

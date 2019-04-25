@@ -39,6 +39,8 @@ resource "aws_db_instance" "mod" {
   storage_encrypted           = "${local.storage_encrypted}"
   storage_type                = "${local.storage_type}"
   vpc_security_group_ids      = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
+
+  tags = "${var.tags}"
 }
 
 resource "aws_security_group" "sg_on_rds_instance" {
@@ -61,9 +63,7 @@ resource "aws_security_group" "sg_on_rds_instance" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
-    "Name" = "${local.sg_on_rds_instance_name}"
-  }
+  tags = "${merge(map("Name", local.sg_on_rds_instance_name), var.tags)}"
 
   lifecycle {
     create_before_destroy = true
