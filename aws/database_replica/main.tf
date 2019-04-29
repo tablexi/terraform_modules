@@ -31,7 +31,6 @@ resource "aws_db_instance" "mod" {
   instance_class              = "${var.node_type}"
   iops                        = "${var.iops}"
   multi_az                    = "${var.multi_az}"
-  option_group_name           = "${"default:${local.engine}-${replace(local.major_engine_version, ".", "-")}"}"
   parameter_group_name        = "${local.parameter_group_name}"
   publicly_accessible         = "${var.publicly_accessible}"
   replicate_source_db         = "${local.source_db}"
