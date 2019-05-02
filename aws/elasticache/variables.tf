@@ -59,6 +59,12 @@ variable "subnets" {
   type = "list"
 }
 
+variable "tags" {
+  default     = {}
+  description = "(Optional) A mapping of tags to assign to the resources"
+  type        = "map"
+}
+
 variable "transit_encryption_enabled" {
   default = false
 }

@@ -107,3 +107,9 @@ variable "ssl_policy" {
   description = "(Optional) The name of the SSL Policy for the HTTPS listener. Default ELBSecurityPolicy-TLS-1-2-2017-01."
   default     = "ELBSecurityPolicy-TLS-1-2-2017-01"
 }
+
+variable "tags" {
+  default     = {}
+  description = "(Optional) A mapping of tags to assign to the resources"
+  type        = "map"
+}

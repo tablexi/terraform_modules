@@ -8,6 +8,7 @@ locals {
   parameter_group_name          = "${var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"}"
   port                          = "${var.port != "" ? var.port : "${var.engine == "redis" ? "6379" : "11211"}"}"
   elasticache_replication_group = "${(var.force_replication_group) || (var.num_nodes != 1)}"
+  cluster_tags                  = "${merge(map("Environment", var.env, "Description", "${var.name} ${var.env} ${var.engine} instance"), var.tags)}"
 }
 
 resource "aws_elasticache_cluster" "mod" {
@@ -24,10 +25,7 @@ resource "aws_elasticache_cluster" "mod" {
   security_group_ids   = ["${aws_security_group.sg_on_elasticache_instance.id}"]
   subnet_group_name    = "${aws_elasticache_subnet_group.mod.name}"
 
-  tags = {
-    Environment = "${var.env}"
-    Description = "${var.name} ${var.env} ${var.engine} instance"
-  }
+  tags = "${local.cluster_tags}"
 }
 
 resource "aws_elasticache_replication_group" "mod" {
@@ -47,10 +45,7 @@ resource "aws_elasticache_replication_group" "mod" {
   subnet_group_name             = "${aws_elasticache_subnet_group.mod.name}"
   transit_encryption_enabled    = "${var.transit_encryption_enabled}"
 
-  tags = {
-    Environment = "${var.env}"
-    Description = "${var.name} ${var.env} ${var.engine} instance"
-  }
+  tags = "${local.cluster_tags}"
 }
 
 resource "aws_elasticache_parameter_group" "mod" {
@@ -93,9 +88,7 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags {
-    "Name" = "${var.engine}-${var.env}"
-  }
+  tags = "${merge(map("Name", "${var.engine}-${var.env}"), var.tags)}"
 
   lifecycle {
     create_before_destroy = true

@@ -13,6 +13,8 @@ module "load_balancer" {
   internal            = "${var.internal}"
   security_groups     = ["${aws_security_group.security_group_on_load_balancer.id}"]
   subnets             = ["${var.subnets}"]
+
+  tags = "${var.tags}"
 }
 
 resource "aws_security_group" "security_group_on_load_balancer" {
@@ -41,6 +43,8 @@ resource "aws_security_group" "security_group_on_load_balancer" {
     security_groups = ["${var.security_group_for_instances}"]
     to_port         = 65535
   }
+
+  tags = "${var.tags}"
 }
 
 resource "aws_alb_listener" "http_listener" {
@@ -111,6 +115,8 @@ resource "aws_alb_target_group" "http_target_group" {
     protocol = "HTTP"
     timeout  = 5
   }
+
+  tags = "${var.tags}"
 }
 
 resource "aws_alb_target_group_attachment" "http_target_group_attachments" {
@@ -176,6 +182,8 @@ resource "aws_alb_target_group" "https_target_group" {
     protocol = "HTTPS"
     timeout  = 5
   }
+
+  tags = "${var.tags}"
 }
 
 resource "aws_alb_target_group_attachment" "https_target_group_attachments" {

@@ -3,6 +3,7 @@ resource "aws_cloudtrail" "mod" {
   s3_bucket_name                = "${aws_s3_bucket.mod.id}"
   include_global_service_events = true
   enable_logging                = true
+  tags                          = "${var.tags}"
 }
 
 resource "aws_s3_bucket" "mod" {
@@ -39,4 +40,6 @@ resource "aws_s3_bucket" "mod" {
     ]
   }
   JSON
+
+  tags = "${var.tags}"
 }

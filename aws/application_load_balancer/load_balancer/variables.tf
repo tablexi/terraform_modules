@@ -22,3 +22,9 @@ variable "internal" {
   description = "(Optional) If true, the LB will be internal. Default false."
   default     = false
 }
+
+variable "tags" {
+  default     = {}
+  description = "(Optional) A mapping of tags to assign to the resources"
+  type        = "map"
+}

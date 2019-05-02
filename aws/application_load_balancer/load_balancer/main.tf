@@ -28,6 +28,8 @@ resource "aws_alb" "load_balancer" {
   internal        = "${var.internal}"
   security_groups = ["${var.security_groups}"]
   subnets         = ["${var.subnets}"]
+
+  tags = "${var.tags}"
 }
 
 resource "aws_alb" "load_balancer_with_access_logs" {
@@ -41,6 +43,8 @@ resource "aws_alb" "load_balancer_with_access_logs" {
     bucket  = "${aws_s3_bucket.load_balancer_access_logs.id}"
     enabled = true
   }
+
+  tags = "${var.tags}"
 }
 
 data "aws_caller_identity" "aws_account" {
@@ -59,6 +63,8 @@ resource "aws_s3_bucket" "load_balancer_access_logs" {
       storage_class = "GLACIER"
     }
   }
+
+  tags = "${var.tags}"
 }
 
 resource "aws_s3_bucket_policy" "load_balancer_access_logs" {

@@ -15,6 +15,7 @@ resource "aws_db_subnet_group" "mod" {
   description = "${var.name} ${var.env} db ${var.engine} subnet group"
   name        = "${local.subnet_group_name}"
   subnet_ids  = ["${var.subnets}"]
+  tags        = "${var.tags}"
 
   lifecycle {
     create_before_destroy = true
@@ -48,6 +49,7 @@ resource "aws_db_instance" "mod" {
   skip_final_snapshot         = "${var.skip_final_snapshot}"
   storage_encrypted           = "${var.storage_encrypted}"
   storage_type                = "${var.storage_type}"
+  tags                        = "${var.tags}"
   username                    = "${var.username != "" ? var.username : "${var.name}${var.username_suffix}"}"
   vpc_security_group_ids      = ["${concat(var.vpc_security_group_ids, list(aws_security_group.sg_on_rds_instance.id))}"]
 }
@@ -72,9 +74,7 @@ resource "aws_security_group" "sg_on_rds_instance" {
     to_port     = 0
   }
 
-  tags {
-    "Name" = "${local.sg_on_rds_instance_name}"
-  }
+  tags = "${merge(map("Name", "${local.sg_on_rds_instance_name}"), var.tags)}"
 
   lifecycle {
     create_before_destroy = true
