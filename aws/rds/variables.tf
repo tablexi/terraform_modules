@@ -105,12 +105,12 @@ variable "storage_type" {
 }
 
 variable "subnets" {
-  description = "A list of subnets that the RDS instance can be added to."
-  type        = "list"
+  description = "A list of subnets that the RDS instance can be added to. Either subnets or subnet_group_name must be specified."
+  default     = []
 }
 
 variable "subnet_group_name" {
-  description = "Set db subnet group name"
+  description = "Set db subnet group name. Either subnets or subnet_group_name must be specified."
   default     = ""
 }
 
