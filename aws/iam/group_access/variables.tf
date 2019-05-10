@@ -5,10 +5,10 @@ variable "name" {
 
 variable "users" {
   type        = "list"
-  description = "(Required) - Users that are member of this group"
+  description = "(Required) - Users that are members of this group"
 }
 
 variable "policy_arn" {
   type        = "string"
-  description = "(Required) - The ARN of the polcy applied, ideally managed by aws"
+  description = "(Required) - The ARN of the policy applied, ideally managed by AWS"
 }
