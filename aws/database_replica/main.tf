@@ -3,19 +3,20 @@ data "aws_db_instance" "source_database" {
 }
 
 locals {
-  allocated_storage       = "${data.aws_db_instance.source_database.allocated_storage}"
-  engine                  = "${data.aws_db_instance.source_database.engine}"
-  engine_nickname         = "${local.is_postgres ? "pg" : "mysql"}"
-  engine_version          = "${var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_database.engine_version}"
-  family                  = "${local.engine}${local.major_engine_version}"
-  is_postgres             = "${local.engine == "postgres" ? true : false}"
-  major_engine_version    = "${join(".", slice(split(".", local.engine_version), 0, 2))}"
-  parameter_group_name    = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${local.engine}${local.major_engine_version}"}"
-  port                    = "${local.is_postgres ? 5432 : 3306}"
-  sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  source_db               = "${data.aws_db_instance.source_database.id}"
-  storage_encrypted       = "${data.aws_db_instance.source_database.storage_encrypted}"
-  storage_type            = "${var.storage_type != "" ? var.storage_type : data.aws_db_instance.source_database.storage_type}"
+  allocated_storage           = "${data.aws_db_instance.source_database.allocated_storage}"
+  engine                      = "${data.aws_db_instance.source_database.engine}"
+  engine_nickname             = "${local.is_postgres ? "pg" : "mysql"}"
+  engine_version              = "${var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_database.engine_version}"
+  family                      = "${local.engine}${local.major_engine_version}"
+  is_postgres                 = "${local.engine == "postgres" ? true : false}"
+  major_engine_version        = "${join(".", slice(split(".", local.engine_version), 0, local.major_engine_version_return))}"
+  major_engine_version_return = "${length(split(".", local.engine_version)) > 1 ? 2 : 1}"
+  parameter_group_name        = "${var.parameter_group_name != "" ? var.parameter_group_name : "default.${local.engine}${local.major_engine_version}"}"
+  port                        = "${local.is_postgres ? 5432 : 3306}"
+  sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
+  source_db                   = "${data.aws_db_instance.source_database.id}"
+  storage_encrypted           = "${data.aws_db_instance.source_database.storage_encrypted}"
+  storage_type                = "${var.storage_type != "" ? var.storage_type : data.aws_db_instance.source_database.storage_type}"
 }
 
 resource "aws_db_instance" "mod" {
