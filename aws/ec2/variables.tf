@@ -6,7 +6,7 @@ variable "ami" {
   description = "(Required) The AMI to use for the instance."
 }
 
-variable "count" {
+variable "instance_count" {
   default = 2
 }
 

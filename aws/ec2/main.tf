@@ -7,7 +7,7 @@ locals {
 }
 
 resource "aws_instance" "mod" {
-  count                       = "${var.count}"
+  count                       = "${var.instance_count}"
   ami                         = "${var.ami}"
   instance_type               = "${var.type}"
   key_name                    = "${var.key_name}"
@@ -34,7 +34,7 @@ resource "aws_instance" "mod" {
 }
 
 resource "aws_eip" "mod" {
-  count    = "${var.enable_eip ? var.count : 0}"
+  count    = "${var.enable_eip ? var.instance_count : 0}"
   instance = "${element(aws_instance.mod.*.id, count.index)}"
   vpc      = true
 }
