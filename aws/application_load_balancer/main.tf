@@ -145,7 +145,7 @@ resource "aws_alb_target_group" "target_group" {
     matcher  = "${var.health_check_matcher}"
     path     = "${var.health_check_path}"
     port     = "${var.target_group_port}"
-    protocol = "HTTP"
+    protocol = "${var.target_group_protocol}"
     timeout  = 5
   }
 
