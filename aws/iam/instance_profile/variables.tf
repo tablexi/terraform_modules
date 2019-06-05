@@ -3,13 +3,13 @@ variable "name" {
 }
 
 variable "ses" {
-  type = "bool"
-  default = false
+  type        = "bool"
+  default     = false
   description = "Provide this instance with access to send mail via SES"
 }
 
 variable "s3_bucket" {
-  type = "string"
-  default = ""
+  type        = "string"
+  default     = ""
   description = "Provide this instance with access to the bucket"
 }
