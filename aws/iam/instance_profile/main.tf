@@ -17,7 +17,7 @@ resource "aws_iam_role" "mod" {
         }
       ]
     }
-    EOF
+  EOF
 
   name = "${var.name}"
   path = "/"
@@ -27,7 +27,7 @@ resource "aws_iam_role_policy" "mod-ses-role-policy" {
   name  = "${var.name}-ses"
   count = "${var.ses ? 1 : 0}"
 
-  policy = <<JSON
+  policy = <<-EOF
     {
         "Version": "2012-10-17",
         "Statement": [
@@ -41,7 +41,7 @@ resource "aws_iam_role_policy" "mod-ses-role-policy" {
             }
         ]
     }
-  JSON
+  EOF
 
   role = "${aws_iam_role.mod.id}"
 }
@@ -50,7 +50,7 @@ resource "aws_iam_role_policy" "mod-s3-role-policy" {
   name  = "${var.name}-s3"
   count = "${var.s3_bucket != "" ? 1 : 0}"
 
-  policy = <<JSON
+  policy = <<-EOF
     {
       "Version": "2012-10-17",
       "Statement": [
@@ -71,7 +71,7 @@ resource "aws_iam_role_policy" "mod-s3-role-policy" {
         }
       ]
     }
-  JSON
+  EOF
 
   role = "${aws_iam_role.mod.id}"
 }
