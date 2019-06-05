@@ -3,7 +3,6 @@ variable "name" {
 }
 
 variable "ses" {
-  type        = "bool"
   default     = false
   description = "Provide this instance with access to send mail via SES"
 }
