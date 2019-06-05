@@ -4,7 +4,7 @@ resource "aws_iam_instance_profile" "mod" {
 }
 
 resource "aws_iam_role" "mod" {
-  assume_role_policy = <<-EOF
+  assume_role_policy = <<EOF
     {
       "Version": "2012-10-17",
       "Statement": [
@@ -27,7 +27,7 @@ resource "aws_iam_role_policy" "mod-ses-role-policy" {
   name  = "${var.name}-ses"
   count = "${var.ses ? 1 : 0}"
 
-  policy = <<-EOF
+  policy = <<EOF
     {
       "Version": "2012-10-17",
       "Statement": [
@@ -50,7 +50,7 @@ resource "aws_iam_role_policy" "mod-s3-role-policy" {
   name  = "${var.name}-s3"
   count = "${var.s3_bucket != "" ? 1 : 0}"
 
-  policy = <<-EOF
+  policy = <<EOF
     {
       "Version": "2012-10-17",
       "Statement": [
