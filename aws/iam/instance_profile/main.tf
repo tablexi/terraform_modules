@@ -29,17 +29,17 @@ resource "aws_iam_role_policy" "mod-ses-role-policy" {
 
   policy = <<-EOF
     {
-        "Version": "2012-10-17",
-        "Statement": [
-            {
-                "Effect": "Allow",
-                "Action": [
-                  "ses:SendRawEmail",
-                  "ses:SendEmail"
-                ],
-                "Resource": "*"
-            }
-        ]
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Action": [
+            "ses:SendRawEmail",
+            "ses:SendEmail"
+          ],
+          "Resource": "*"
+        }
+      ]
     }
   EOF
 
