@@ -5,19 +5,19 @@ resource "aws_iam_instance_profile" "mod" {
 
 resource "aws_iam_role" "mod" {
   assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
     {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Action": "sts:AssumeRole",
-          "Principal": {
-            "Service": "ec2.amazonaws.com"
-          },
-          "Effect": "Allow"
-        }
-      ]
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "ec2.amazonaws.com"
+      },
+      "Effect": "Allow"
     }
-  EOF
+  ]
+}
+EOF
 
   name = "${var.name}"
   path = "/"
@@ -28,20 +28,20 @@ resource "aws_iam_role_policy" "mod-ses-role-policy" {
   count = "${var.ses ? 1 : 0}"
 
   policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
     {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Action": [
-            "ses:SendRawEmail",
-            "ses:SendEmail"
-          ],
-          "Resource": "*"
-        }
-      ]
+      "Effect": "Allow",
+      "Action": [
+        "ses:SendRawEmail",
+        "ses:SendEmail"
+      ],
+      "Resource": "*"
     }
-  EOF
+  ]
+}
+EOF
 
   role = "${aws_iam_role.mod.id}"
 }
@@ -51,27 +51,27 @@ resource "aws_iam_role_policy" "mod-s3-role-policy" {
   count = "${var.s3_bucket != "" ? 1 : 0}"
 
   policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
     {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Action": [
-            "s3:ListAllMyBuckets"
-          ],
-          "Effect": "Allow",
-          "Resource": "arn:aws:s3:::*"
-        },
-        {
-          "Action": "s3:*",
-          "Effect": "Allow",
-          "Resource": [
-            "arn:aws:s3:::${var.s3_bucket}",
-            "arn:aws:s3:::${var.s3_bucket}/*"
-          ]
-        }
+      "Action": [
+        "s3:ListAllMyBuckets"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::*"
+    },
+    {
+      "Action": "s3:*",
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::${var.s3_bucket}",
+        "arn:aws:s3:::${var.s3_bucket}/*"
       ]
     }
-  EOF
+  ]
+}
+EOF
 
   role = "${aws_iam_role.mod.id}"
 }
