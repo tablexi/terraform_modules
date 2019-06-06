@@ -53,7 +53,7 @@ resource "aws_alb_listener" "http_listener" {
   protocol          = "HTTP"
 
   default_action {
-    target_group_arn = "${aws_alb_target_group.http_target_group.arn}"
+    target_group_arn = "${aws_alb_target_group.target_group.arn}"
     type             = "forward"
   }
 }
@@ -101,39 +101,6 @@ resource "aws_alb_listener_rule" "redirect_http_to_https" {
   }
 }
 
-resource "aws_alb_target_group" "http_target_group" {
-  deregistration_delay = 30
-  name                 = "${local.prefix}-http"
-  port                 = "${var.http_target_group_port}"
-  protocol             = "HTTP"
-  vpc_id               = "${var.vpc_id}"
-
-  health_check {
-    matcher  = "${var.http_health_check_matcher}"
-    path     = "${var.health_check_path}"
-    port     = "${var.http_target_group_port}"
-    protocol = "HTTP"
-    timeout  = 5
-  }
-
-  tags = "${var.tags}"
-}
-
-resource "aws_alb_target_group_attachment" "http_target_group_attachments" {
-  count            = "${var.instances_count}"
-  target_group_arn = "${aws_alb_target_group.http_target_group.arn}"
-  target_id        = "${element(var.instances, count.index)}"
-}
-
-resource "aws_security_group_rule" "http_ingress_on_instances_from_load_balancer" {
-  from_port                = "${var.http_target_group_port}"
-  protocol                 = "tcp"
-  security_group_id        = "${var.security_group_for_instances}"
-  source_security_group_id = "${aws_security_group.security_group_on_load_balancer.id}"
-  to_port                  = "${var.http_target_group_port}"
-  type                     = "ingress"
-}
-
 resource "aws_alb_listener" "https_listener" {
   certificate_arn   = "${var.certificate_arn}"
   load_balancer_arn = "${module.load_balancer.arn}"
@@ -142,7 +109,7 @@ resource "aws_alb_listener" "https_listener" {
   ssl_policy        = "${var.ssl_policy}"
 
   default_action {
-    target_group_arn = "${aws_alb_target_group.http_target_group.arn}"
+    target_group_arn = "${aws_alb_target_group.target_group.arn}"
     type             = "forward"
   }
 }
@@ -167,37 +134,35 @@ resource "aws_alb_listener_rule" "redirect_domains_https" {
   }
 }
 
-resource "aws_alb_target_group" "https_target_group" {
-  count                = "${var.https_target_group ? 1 : 0}"
+resource "aws_alb_target_group" "target_group" {
   deregistration_delay = 30
-  name                 = "${local.prefix}-https"
-  port                 = "${var.https_target_group_port}"
-  protocol             = "HTTPS"
+  name                 = "${local.prefix}"
+  port                 = "${var.target_group_port}"
+  protocol             = "${var.target_group_protocol}"
   vpc_id               = "${var.vpc_id}"
 
   health_check {
-    matcher  = "${var.https_health_check_matcher}"
+    matcher  = "${var.health_check_matcher}"
     path     = "${var.health_check_path}"
-    port     = "${var.https_target_group_port}"
-    protocol = "HTTPS"
+    port     = "${var.target_group_port}"
+    protocol = "${var.target_group_protocol}"
     timeout  = 5
   }
 
   tags = "${var.tags}"
 }
 
-resource "aws_alb_target_group_attachment" "https_target_group_attachments" {
-  count            = "${var.https_target_group ? var.instances_count : 0}"
-  target_group_arn = "${aws_alb_target_group.https_target_group.arn}"
+resource "aws_alb_target_group_attachment" "target_group_attachments" {
+  count            = "${var.instances_count}"
+  target_group_arn = "${aws_alb_target_group.target_group.arn}"
   target_id        = "${element(var.instances, count.index)}"
 }
 
-resource "aws_security_group_rule" "https_ingress_on_instances_from_load_balancer" {
-  count                    = "${var.https_target_group ? 1 : 0}"
-  from_port                = "${var.https_target_group_port}"
+resource "aws_security_group_rule" "ingress_on_instances_from_load_balancer" {
+  from_port                = "${var.target_group_port}"
   protocol                 = "tcp"
   security_group_id        = "${var.security_group_for_instances}"
   source_security_group_id = "${aws_security_group.security_group_on_load_balancer.id}"
-  to_port                  = "${var.https_target_group_port}"
+  to_port                  = "${var.target_group_port}"
   type                     = "ingress"
 }
