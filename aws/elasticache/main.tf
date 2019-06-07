@@ -29,6 +29,7 @@ resource "aws_elasticache_cluster" "mod" {
 }
 
 resource "aws_elasticache_replication_group" "mod" {
+  apply_immediately             = true
   at_rest_encryption_enabled    = "${var.at_rest_encryption_enabled}"
   auto_minor_version_upgrade    = true
   automatic_failover_enabled    = "${var.automatic_failover_enabled}"
