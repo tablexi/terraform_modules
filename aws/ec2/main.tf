@@ -25,7 +25,7 @@ resource "aws_instance" "mod" {
   root_block_device {
     volume_type           = "${var.root_block_type}"
     volume_size           = "${var.root_block_size}"
-    delete_on_termination = false
+    delete_on_termination = "${var.root_block_termination}"
   }
 
   lifecycle {
