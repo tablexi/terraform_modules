@@ -39,6 +39,10 @@ variable "root_block_size" {
   default = 16
 }
 
+variable "root_block_termination" {
+  default = false
+}
+
 variable "ssh_ingress_cidr_blocks" {
   default = ["0.0.0.0/0"]
 }
