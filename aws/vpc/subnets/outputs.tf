@@ -3,7 +3,7 @@ output "subnets" {
 }
 
 output "route_table_id" {
-  value = aws_route_table.mod[*].id
+  value = element(aws_route_table.mod[*].id, 0)
 }
 
 output "subnets_by_az" {
