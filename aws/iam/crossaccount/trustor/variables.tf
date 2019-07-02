@@ -35,5 +35,7 @@ variable "access_policy" {
 }
 JSON
 
+
   description = "Default policy of cross account role"
 }
+

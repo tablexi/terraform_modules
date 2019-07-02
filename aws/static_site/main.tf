@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "mod" {
-  bucket = "${var.bucket_name}"
+  bucket = var.bucket_name
   acl    = "public-read"
 
   policy = <<EOF
@@ -20,6 +20,7 @@ resource "aws_s3_bucket" "mod" {
 }
 EOF
 
+
   website {
     index_document = "index.html"
     error_document = "index.html"
@@ -32,21 +33,21 @@ locals {
 
 resource "aws_cloudfront_distribution" "mod" {
   origin {
-    domain_name = "${aws_s3_bucket.mod.bucket_regional_domain_name}"
-    origin_id   = "${local.s3_origin_id}"
+    domain_name = aws_s3_bucket.mod.bucket_regional_domain_name
+    origin_id = local.s3_origin_id
   }
 
-  aliases = ["${var.domain}"]
+  aliases = [var.domain]
 
-  enabled             = true
-  is_ipv6_enabled     = true
+  enabled = true
+  is_ipv6_enabled = true
   default_root_object = "index.html"
-  price_class         = "PriceClass_100"
+  price_class = "PriceClass_100"
 
   default_cache_behavior {
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "${local.s3_origin_id}"
+    allowed_methods = ["GET", "HEAD"]
+    cached_methods = ["GET", "HEAD"]
+    target_origin_id = local.s3_origin_id
     viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
@@ -64,11 +65,12 @@ resource "aws_cloudfront_distribution" "mod" {
     }
   }
 
-  tags = "${var.tags}"
+  tags = var.tags
 
   viewer_certificate {
-    acm_certificate_arn      = "${var.acm_certificate_arn}"
+    acm_certificate_arn = var.acm_certificate_arn
     minimum_protocol_version = "TLSv1.2_2018"
-    ssl_support_method       = "sni-only"
+    ssl_support_method = "sni-only"
   }
 }
+

@@ -22,11 +22,13 @@ resource "aws_iam_policy" "mod" {
         }
       ]
     }
-    EOF
+EOF
+
 }
 
 resource "aws_iam_policy_attachment" "mod" {
-  name       = "s3-${var.name}-${var.env}-access"
-  users      = ["${var.users}"]
-  policy_arn = "${aws_iam_policy.mod.arn}"
+  name = "s3-${var.name}-${var.env}-access"
+  users = var.users
+  policy_arn = aws_iam_policy.mod.arn
 }
+

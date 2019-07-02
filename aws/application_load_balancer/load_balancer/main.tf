@@ -23,53 +23,53 @@ locals {
 }
 
 resource "aws_alb" "load_balancer" {
-  count           = "${var.access_logs_enabled ? 0 : 1}"
-  name            = "${var.name}"
-  internal        = "${var.internal}"
-  security_groups = ["${var.security_groups}"]
-  subnets         = ["${var.subnets}"]
+  count           = var.access_logs_enabled ? 0 : 1
+  name            = var.name
+  internal        = var.internal
+  security_groups = var.security_groups
+  subnets         = var.subnets
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 resource "aws_alb" "load_balancer_with_access_logs" {
-  count           = "${var.access_logs_enabled ? 1 : 0}"
-  name            = "${var.name}"
-  internal        = "${var.internal}"
-  security_groups = ["${var.security_groups}"]
-  subnets         = ["${var.subnets}"]
+  count           = var.access_logs_enabled ? 1 : 0
+  name            = var.name
+  internal        = var.internal
+  security_groups = var.security_groups
+  subnets         = var.subnets
 
   access_logs {
-    bucket  = "${aws_s3_bucket.load_balancer_access_logs.id}"
+    bucket  = aws_s3_bucket.load_balancer_access_logs[0].id
     enabled = true
   }
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 data "aws_caller_identity" "aws_account" {
-  count = "${var.access_logs_enabled ? 1 : 0}"
+  count = var.access_logs_enabled ? 1 : 0
 }
 
 resource "aws_s3_bucket" "load_balancer_access_logs" {
   bucket = "${var.name}-logs"
-  count  = "${var.access_logs_enabled ? 1 : 0}"
+  count  = var.access_logs_enabled ? 1 : 0
 
   lifecycle_rule {
     enabled = true
 
     transition {
-      days          = "${local.access_logs_glacier_transition_days}"
+      days          = local.access_logs_glacier_transition_days
       storage_class = "GLACIER"
     }
   }
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 resource "aws_s3_bucket_policy" "load_balancer_access_logs" {
-  bucket = "${aws_s3_bucket.load_balancer_access_logs.id}"
-  count  = "${var.access_logs_enabled ? 1 : 0}"
+  bucket = aws_s3_bucket.load_balancer_access_logs[0].id
+  count  = var.access_logs_enabled ? 1 : 0
 
   policy = <<-JSON
     {
@@ -80,14 +80,16 @@ resource "aws_s3_bucket_policy" "load_balancer_access_logs" {
             "s3:PutObject"
           ],
           "Effect": "Allow",
-          "Resource": "${aws_s3_bucket.load_balancer_access_logs.arn}/AWSLogs/${data.aws_caller_identity.aws_account.account_id}/*",
+          "Resource": "${aws_s3_bucket.load_balancer_access_logs[0].arn}/AWSLogs/${data.aws_caller_identity.aws_account[0].account_id}/*",
           "Principal": {
             "AWS": [
-              "arn:aws:iam::${lookup(local.elastic_load_balancing_account_ids, aws_s3_bucket.load_balancer_access_logs.region)}:root"
+              "arn:aws:iam::${local.elastic_load_balancing_account_ids[aws_s3_bucket.load_balancer_access_logs[0].region]}:root"
             ]
           }
         }
       ]
     }
-    JSON
+JSON
+
 }
+

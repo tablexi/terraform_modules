@@ -1,6 +1,6 @@
 resource "aws_iam_group_policy" "mod" {
   name  = "${var.trustor_account_name}CrossAccountPolicy"
-  group = "${var.trustee_group_name}"
+  group = var.trustee_group_name
 
   policy = <<JSON
 {
@@ -12,4 +12,6 @@ resource "aws_iam_group_policy" "mod" {
   }
 }
 JSON
+
 }
+

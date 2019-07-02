@@ -5,5 +5,6 @@ variable "cidr" {
 
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
+

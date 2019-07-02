@@ -18,4 +18,6 @@ variable "ingress_cidr_blocks" {
   description = "List of cidr blocks to allow incoming access to on port 22."
 }
 
-variable "vpc_id" {}
+variable "vpc_id" {
+}
+

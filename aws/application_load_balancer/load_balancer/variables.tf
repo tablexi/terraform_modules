@@ -1,16 +1,16 @@
 variable "name" {
   description = "(Required) The name of this load balancer."
-  type        = "string"
+  type        = string
 }
 
 variable "security_groups" {
   description = "(Required) A list of security group IDs to attach to the load balancer."
-  type        = "list"
+  type        = list(string)
 }
 
 variable "subnets" {
   description = "(Required) A list of subnet IDs to attach to the load balancer."
-  type        = "list"
+  type        = list(string)
 }
 
 variable "access_logs_enabled" {
@@ -26,5 +26,6 @@ variable "internal" {
 variable "tags" {
   default     = {}
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
+

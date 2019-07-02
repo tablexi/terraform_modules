@@ -1,31 +1,44 @@
 locals {
   default_tags = {
-    Name = "${var.name}"
+    Name = var.name
   }
 
-  tags = "${merge(local.default_tags, var.tags)}"
+  tags = merge(local.default_tags, var.tags)
 }
 
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
+data "aws_caller_identity" "current" {
+}
+
+data "aws_region" "current" {
+}
 
 module "eks-vpc" {
   source = "../vpc"
 
-  tags = "${merge(local.tags, map("kubernetes.io/cluster/${var.name}", "shared"))}"
+  tags = merge(
+    local.tags,
+    {
+      "kubernetes.io/cluster/${var.name}" = "shared"
+    },
+  )
 }
 
 module "eks-subnets" {
   source = "../vpc/subnets"
 
-  internet_gateway_id = "${module.eks-vpc.internet_gateway_id}"
-  tags                = "${merge(local.tags, map("kubernetes.io/cluster/${var.name}", "shared"))}"
-  vpc_id              = "${module.eks-vpc.vpc_id}"
+  internet_gateway_id = module.eks-vpc.internet_gateway_id
+  tags = merge(
+    local.tags,
+    {
+      "kubernetes.io/cluster/${var.name}" = "shared"
+    },
+  )
+  vpc_id = module.eks-vpc.vpc_id
 }
 
 resource "aws_iam_role" "eks_service_role" {
-  name = "${var.name}"
-  tags = "${local.tags}"
+  name = var.name
+  tags = local.tags
 
   assume_role_policy = <<-EOF
     {
@@ -40,81 +53,82 @@ resource "aws_iam_role" "eks_service_role" {
         }
       ]
     }
-    EOF
+EOF
+
 }
 
 resource "aws_iam_role_policy_attachment" "eks_service_role_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = "${aws_iam_role.eks_service_role.name}"
+  role = aws_iam_role.eks_service_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks_service_role_service_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role       = "${aws_iam_role.eks_service_role.name}"
+  role = aws_iam_role.eks_service_role.name
 }
 
 resource "aws_security_group" "master" {
-  name   = "${var.name}"
-  tags   = "${local.tags}"
-  vpc_id = "${module.eks-vpc.vpc_id}"
+  name = var.name
+  tags = local.tags
+  vpc_id = module.eks-vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "master_egress" {
-  cidr_blocks       = ["0.0.0.0/0"]
-  from_port         = 0
-  protocol          = "-1"
-  security_group_id = "${aws_security_group.master.id}"
-  to_port           = 0
-  type              = "egress"
+  cidr_blocks = ["0.0.0.0/0"]
+  from_port = 0
+  protocol = "-1"
+  security_group_id = aws_security_group.master.id
+  to_port = 0
+  type = "egress"
 }
 
 resource "aws_eks_cluster" "master" {
-  name     = "${var.name}"
-  role_arn = "${aws_iam_role.eks_service_role.arn}"
+  name = var.name
+  role_arn = aws_iam_role.eks_service_role.arn
 
   vpc_config {
-    security_group_ids = ["${aws_security_group.master.id}"]
+    security_group_ids = [aws_security_group.master.id]
 
     subnet_ids = [
-      "${lookup(module.eks-subnets.subnets_by_az, "us-east-1b")}",
-      "${lookup(module.eks-subnets.subnets_by_az, "us-east-1c")}",
-      "${lookup(module.eks-subnets.subnets_by_az, "us-east-1d")}",
-      "${lookup(module.eks-subnets.subnets_by_az, "us-east-1e")}",
-      "${lookup(module.eks-subnets.subnets_by_az, "us-east-1f")}",
+      module.eks-subnets.subnets_by_az["us-east-1b"],
+      module.eks-subnets.subnets_by_az["us-east-1c"],
+      module.eks-subnets.subnets_by_az["us-east-1d"],
+      module.eks-subnets.subnets_by_az["us-east-1e"],
+      module.eks-subnets.subnets_by_az["us-east-1f"],
     ]
   }
 
   depends_on = [
-    "aws_iam_role_policy_attachment.eks_service_role_cluster_policy",
-    "aws_iam_role_policy_attachment.eks_service_role_service_policy",
+    aws_iam_role_policy_attachment.eks_service_role_cluster_policy,
+    aws_iam_role_policy_attachment.eks_service_role_service_policy,
   ]
 }
 
 resource "aws_cloudformation_stack" "nodes" {
   capabilities = ["CAPABILITY_IAM"]
-  depends_on   = ["aws_eks_cluster.master"]
-  name         = "${var.name}"
-  tags         = "${local.tags}"
+  depends_on = [aws_eks_cluster.master]
+  name = var.name
+  tags = local.tags
   template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-02-11/amazon-eks-nodegroup.yaml"
 
-  parameters {
-    ClusterControlPlaneSecurityGroup    = "${aws_security_group.master.id}"
-    ClusterName                         = "${var.name}"
-    KeyName                             = "${var.key_name}"
-    NodeAutoScalingGroupDesiredCapacity = "${var.capacity_desired}"
-    NodeAutoScalingGroupMaxSize         = "${var.capacity_max}"
-    NodeAutoScalingGroupMinSize         = "${var.capacity_min}"
-    NodeGroupName                       = "${var.name}"
-    NodeImageId                         = "${var.ami}"
-    NodeInstanceType                    = "${var.instance_type}"
-    Subnets                             = "${join(",", module.eks-subnets.subnets)}"
-    VpcId                               = "${module.eks-vpc.vpc_id}"
+  parameters = {
+    ClusterControlPlaneSecurityGroup = aws_security_group.master.id
+    ClusterName = var.name
+    KeyName = var.key_name
+    NodeAutoScalingGroupDesiredCapacity = var.capacity_desired
+    NodeAutoScalingGroupMaxSize = var.capacity_max
+    NodeAutoScalingGroupMinSize = var.capacity_min
+    NodeGroupName = var.name
+    NodeImageId = var.ami
+    NodeInstanceType = var.instance_type
+    Subnets = join(",", module.eks-subnets.subnets)
+    VpcId = module.eks-vpc.vpc_id
   }
 }
 
 resource "aws_cloudwatch_log_group" "logs" {
-  name = "${var.name}"
-  tags = "${var.tags}"
+  name = var.name
+  tags = var.tags
 }
 
 resource "aws_iam_policy" "cluster-logging" {
@@ -154,10 +168,16 @@ resource "aws_iam_policy" "cluster-logging" {
         }
       ]
     }
-    POLICY
+POLICY
+
 }
 
 resource "aws_iam_role_policy_attachment" "cluster-logging" {
-  policy_arn = "${aws_iam_policy.cluster-logging.arn}"
-  role       = "${replace(aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"], "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/", "")}"
+policy_arn = aws_iam_policy.cluster-logging.arn
+role = replace(
+aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"],
+"arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/",
+"",
+)
 }
+

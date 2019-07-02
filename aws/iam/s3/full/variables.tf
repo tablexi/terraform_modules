@@ -1,11 +1,14 @@
-variable "bucket_id" {}
+variable "bucket_id" {
+}
 
 variable "env" {
   default = "Prod"
 }
 
-variable "name" {}
+variable "name" {
+}
 
 variable "users" {
-  type = "list"
+  type = list(string)
 }
+

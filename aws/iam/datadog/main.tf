@@ -1,6 +1,6 @@
 resource "aws_iam_policy" "mod" {
-  name        = "${var.datadog_policy_name}"
-  description = "${var.datadog_policy_name}"
+  name        = var.datadog_policy_name
+  description = var.datadog_policy_name
   path        = "/"
 
   policy = <<JSON
@@ -75,10 +75,11 @@ resource "aws_iam_policy" "mod" {
   ]
 }
 JSON
+
 }
 
 resource "aws_iam_role" "mod" {
-  name = "${var.datadog_role_name}"
+  name = var.datadog_role_name
 
   assume_role_policy = <<JSON
 {
@@ -95,10 +96,12 @@ resource "aws_iam_role" "mod" {
   }
 }
 JSON
+
 }
 
 resource "aws_iam_policy_attachment" "mod" {
-  name       = "Allow Datadog PolicyAccess via Role"
-  policy_arn = "${aws_iam_policy.mod.arn}"
-  roles      = ["${aws_iam_role.mod.name}"]
+name       = "Allow Datadog PolicyAccess via Role"
+policy_arn = aws_iam_policy.mod.arn
+roles      = [aws_iam_role.mod.name]
 }
+

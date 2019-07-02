@@ -4,7 +4,7 @@ resource "aws_iam_group" "mod" {
 
 resource "aws_iam_group_policy" "mod" {
   name  = "AmazonSesSendingAccess"
-  group = "${aws_iam_group.mod.id}"
+  group = aws_iam_group.mod.id
 
   policy = <<JSON
 {
@@ -21,10 +21,12 @@ resource "aws_iam_group_policy" "mod" {
     ]
 }
 JSON
+
 }
 
 resource "aws_iam_group_membership" "mod" {
-  name  = "app-server-group-membership"
-  users = ["${var.users}"]
-  group = "${aws_iam_group.mod.name}"
+  name = "app-server-group-membership"
+  users = var.users
+  group = aws_iam_group.mod.name
 }
+

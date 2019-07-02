@@ -12,3 +12,4 @@ variable "datadog_role_name" {
   default     = "DataDogReadOnlyRole"
   description = "AWS Role name"
 }
+
