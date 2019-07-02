@@ -1,5 +1,5 @@
 output "subnets" {
-  value = [aws_subnet.mod[*].id]
+  value = aws_subnet.mod[*].id
 }
 
 output "route_table_id" {
