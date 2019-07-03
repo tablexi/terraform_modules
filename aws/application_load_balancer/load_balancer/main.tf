@@ -71,25 +71,24 @@ resource "aws_s3_bucket_policy" "load_balancer_access_logs" {
   bucket = aws_s3_bucket.load_balancer_access_logs[0].id
   count  = var.access_logs_enabled ? 1 : 0
 
-  policy = <<-JSON
+  policy = jsonencode(
     {
-      "Version": "2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Action": [
-            "s3:PutObject"
-          ],
-          "Effect": "Allow",
-          "Resource": "${aws_s3_bucket.load_balancer_access_logs[0].arn}/AWSLogs/${data.aws_caller_identity.aws_account[0].account_id}/*",
-          "Principal": {
-            "AWS": [
-              "arn:aws:iam::${local.elastic_load_balancing_account_ids[aws_s3_bucket.load_balancer_access_logs[0].region]}:root"
+          Action = [
+            "s3:PutObject",
+          ]
+          Effect   = "Allow"
+          Resource = "${aws_s3_bucket.load_balancer_access_logs[0].arn}/AWSLogs/${data.aws_caller_identity.aws_account[0].account_id}/*"
+          Principal = {
+            AWS = [
+              "arn:aws:iam::${local.elastic_load_balancing_account_ids[aws_s3_bucket.load_balancer_access_logs[0].region]}:root",
             ]
           }
-        }
+        },
       ]
     }
-JSON
-
+  )
 }
 

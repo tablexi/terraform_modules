@@ -40,50 +40,49 @@ resource "aws_iam_role" "eks_service_role" {
   name = var.name
   tags = local.tags
 
-  assume_role_policy = <<-EOF
+  assume_role_policy = jsonencode(
     {
-      "Version":"2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Effect": "Allow",
-          "Principal": {
-            "Service":"eks.amazonaws.com"
-          },
-          "Action": "sts:AssumeRole"
-        }
+          Effect = "Allow"
+          Principal = {
+            Service = "eks.amazonaws.com"
+          }
+          Action = "sts:AssumeRole"
+        },
       ]
     }
-EOF
-
+  )
 }
 
 resource "aws_iam_role_policy_attachment" "eks_service_role_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role = aws_iam_role.eks_service_role.name
+  role       = aws_iam_role.eks_service_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "eks_service_role_service_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-  role = aws_iam_role.eks_service_role.name
+  role       = aws_iam_role.eks_service_role.name
 }
 
 resource "aws_security_group" "master" {
-  name = var.name
-  tags = local.tags
+  name   = var.name
+  tags   = local.tags
   vpc_id = module.eks-vpc.vpc_id
 }
 
 resource "aws_security_group_rule" "master_egress" {
-  cidr_blocks = ["0.0.0.0/0"]
-  from_port = 0
-  protocol = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  protocol          = "-1"
   security_group_id = aws_security_group.master.id
-  to_port = 0
-  type = "egress"
+  to_port           = 0
+  type              = "egress"
 }
 
 resource "aws_eks_cluster" "master" {
-  name = var.name
+  name     = var.name
   role_arn = aws_iam_role.eks_service_role.arn
 
   vpc_config {
@@ -106,23 +105,23 @@ resource "aws_eks_cluster" "master" {
 
 resource "aws_cloudformation_stack" "nodes" {
   capabilities = ["CAPABILITY_IAM"]
-  depends_on = [aws_eks_cluster.master]
-  name = var.name
-  tags = local.tags
+  depends_on   = [aws_eks_cluster.master]
+  name         = var.name
+  tags         = local.tags
   template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-02-11/amazon-eks-nodegroup.yaml"
 
   parameters = {
-    ClusterControlPlaneSecurityGroup = aws_security_group.master.id
-    ClusterName = var.name
-    KeyName = var.key_name
+    ClusterControlPlaneSecurityGroup    = aws_security_group.master.id
+    ClusterName                         = var.name
+    KeyName                             = var.key_name
     NodeAutoScalingGroupDesiredCapacity = var.capacity_desired
-    NodeAutoScalingGroupMaxSize = var.capacity_max
-    NodeAutoScalingGroupMinSize = var.capacity_min
-    NodeGroupName = var.name
-    NodeImageId = var.ami
-    NodeInstanceType = var.instance_type
-    Subnets = join(",", module.eks-subnets.subnets)
-    VpcId = module.eks-vpc.vpc_id
+    NodeAutoScalingGroupMaxSize         = var.capacity_max
+    NodeAutoScalingGroupMinSize         = var.capacity_min
+    NodeGroupName                       = var.name
+    NodeImageId                         = var.ami
+    NodeInstanceType                    = var.instance_type
+    Subnets                             = join(",", module.eks-subnets.subnets)
+    VpcId                               = module.eks-vpc.vpc_id
   }
 }
 
@@ -134,50 +133,48 @@ resource "aws_cloudwatch_log_group" "logs" {
 resource "aws_iam_policy" "cluster-logging" {
   name = "${var.name}-logging"
 
-  policy = <<-POLICY
+  policy = jsonencode(
     {
-      "Version": "2012-10-17",
-      "Statement": [
+      Version = "2012-10-17"
+      Statement = [
         {
-          "Effect": "Allow",
-          "Action": [
-            "logs:DescribeLogGroups"
-          ],
-          "Resource": [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group::log-stream:*"
+          Effect = "Allow"
+          Action = [
+            "logs:DescribeLogGroups",
+          ]
+          Resource = [
+            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group::log-stream:*",
           ]
         },
         {
-          "Effect": "Allow",
-          "Action": [
-            "logs:DescribeLogStreams"
-          ],
-          "Resource": [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:*"
+          Effect = "Allow"
+          Action = [
+            "logs:DescribeLogStreams",
+          ]
+          Resource = [
+            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:*",
           ]
         },
         {
-          "Effect": "Allow",
-          "Action": [
+          Effect = "Allow"
+          Action = [
             "logs:CreateLogStream",
-            "logs:PutLogEvents"
-          ],
-          "Resource": [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:fluentd-cloudwatch"
+            "logs:PutLogEvents",
           ]
-        }
+          Resource = [
+            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:fluentd-cloudwatch",
+          ]
+        },
       ]
     }
-POLICY
-
+  )
 }
 
 resource "aws_iam_role_policy_attachment" "cluster-logging" {
-policy_arn = aws_iam_policy.cluster-logging.arn
-role = replace(
-aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"],
-"arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/",
-"",
-)
+  policy_arn = aws_iam_policy.cluster-logging.arn
+  role = replace(
+    aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"],
+    "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/",
+    "",
+  )
 }
-
