@@ -86,7 +86,7 @@ resource "aws_iam_role" "mod" {
         Action = "sts:AssumeRole"
         Condition = {
           StringEquals = {
-            sts:ExternalId = "${var.datadog_external_id}"
+            "sts:ExternalId" = "${var.datadog_external_id}"
           }
         }
         Effect = "Allow"
