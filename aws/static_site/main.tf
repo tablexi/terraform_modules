@@ -43,11 +43,29 @@ resource "aws_cloudfront_distribution" "mod" {
   default_root_object = "index.html"
   price_class         = "PriceClass_100"
 
+  ordered_cache_behavior {
+    path_pattern           = "static/*"
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "${local.s3_origin_id}"
+    viewer_protocol_policy = "redirect-to-https"
+
+    forwarded_values {
+      query_string = true
+
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
   default_cache_behavior {
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
     target_origin_id       = "${local.s3_origin_id}"
     viewer_protocol_policy = "redirect-to-https"
+    default_ttl            = 0
+    max_ttl                = 0
 
     forwarded_values {
       query_string = true
