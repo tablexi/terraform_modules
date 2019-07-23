@@ -44,10 +44,10 @@ resource "aws_cloudfront_distribution" "mod" {
   price_class         = "PriceClass_100"
 
   ordered_cache_behavior {
-    path_pattern     = "static/*"
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "${local.s3_origin_id}"
+    path_pattern           = "static/*"
+    allowed_methods        = ["GET", "HEAD"]
+    cached_methods         = ["GET", "HEAD"]
+    target_origin_id       = "${local.s3_origin_id}"
     viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
@@ -81,12 +81,15 @@ resource "aws_cloudfront_distribution" "mod" {
       restriction_type = "none"
     }
   }
+
   tags = "${var.tags}"
+
   viewer_certificate {
     acm_certificate_arn      = "${var.acm_certificate_arn}"
     minimum_protocol_version = "TLSv1.2_2018"
     ssl_support_method       = "sni-only"
   }
+
   // Allow for React Router to work using the vanity domains
   custom_error_response {
     error_caching_min_ttl = "300"
@@ -94,6 +97,7 @@ resource "aws_cloudfront_distribution" "mod" {
     response_code         = "200"
     response_page_path    = "/index.html"
   }
+
   custom_error_response {
     error_caching_min_ttl = "300"
     error_code            = "404"
