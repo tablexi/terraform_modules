@@ -104,7 +104,7 @@ resource "aws_cloudformation_stack" "nodes" {
     NodeAutoScalingGroupDesiredCapacity = "${var.capacity_desired}"
     NodeAutoScalingGroupMaxSize         = "${var.capacity_max}"
     NodeAutoScalingGroupMinSize         = "${var.capacity_min}"
-    NodeGroupName                       = "${var.name}"
+    NodeGroupName                       = "default"
     NodeImageId                         = "${var.ami}"
     NodeInstanceType                    = "${var.instance_type}"
     Subnets                             = "${join(",", module.eks-subnets.subnets)}"
