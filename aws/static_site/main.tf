@@ -21,8 +21,8 @@ resource "aws_s3_bucket" "mod" {
 EOF
 
   website {
-    index_document = "index.html"
-    error_document = "index.html"
+    index_document = "${var.index_document}"
+    error_document = "${var.index_document}"
   }
 }
 
