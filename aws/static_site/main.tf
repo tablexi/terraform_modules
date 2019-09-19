@@ -21,8 +21,8 @@ resource "aws_s3_bucket" "mod" {
 EOF
 
   website {
-    index_document = "index.html"
-    error_document = "index.html"
+    index_document = "${var.index_document}"
+    error_document = "${var.index_document}"
   }
 }
 
@@ -40,7 +40,7 @@ resource "aws_cloudfront_distribution" "mod" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  default_root_object = "index.html"
+  default_root_object = "${var.index_document}"
   price_class         = "PriceClass_100"
 
   ordered_cache_behavior {
@@ -95,13 +95,13 @@ resource "aws_cloudfront_distribution" "mod" {
     error_caching_min_ttl = "300"
     error_code            = "403"
     response_code         = "200"
-    response_page_path    = "/index.html"
+    response_page_path    = "/"
   }
 
   custom_error_response {
     error_caching_min_ttl = "300"
     error_code            = "404"
     response_code         = "200"
-    response_page_path    = "/index.html"
+    response_page_path    = "/"
   }
 }
