@@ -4,7 +4,7 @@ variable "name" {
 
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
 
 variable "ami" {
@@ -31,4 +31,6 @@ variable "capacity_max" {
   default     = 6
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
+

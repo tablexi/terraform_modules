@@ -12,28 +12,29 @@ variable "assume_role_policy" {
 }
 
 variable "access_policy" {
-  default = <<JSON
-{
-  "Version": "2012-10-17",
-  "Statement": [
+  default = jsonencode(
     {
-      "Effect": "Allow",
-      "Action": "*",
-      "Resource": "*"
-    },
-    {
-      "Effect": "Deny",
-      "Action": [
-        "dynamodb:DeleteTable",
-        "rds:DeleteDBCluster",
-        "rds:DeleteDBInstance",
-        "s3:DeleteBucket"
-      ],
-      "Resource": "*"
+      Statement = [
+        {
+          Action   = "*"
+          Effect   = "Allow"
+          Resource = "*"
+        },
+        {
+          Action = [
+            "dynamodb:DeleteTable",
+            "rds:DeleteDBCluster",
+            "rds:DeleteDBInstance",
+            "s3:DeleteBucket",
+          ]
+          Effect   = "Deny"
+          Resource = "*"
+        },
+      ]
+      Version = "2012-10-17"
     }
-  ]
-}
-JSON
+  )
 
   description = "Default policy of cross account role"
 }
+

@@ -16,7 +16,8 @@ variable "engine" {
   description = "redis, memcache, etc."
 }
 
-variable "engine_version" {}
+variable "engine_version" {
+}
 
 variable "env" {
   default = "production"
@@ -31,7 +32,8 @@ variable "maintenance_window" {
   description = "Set the weekly maintenance window for the cluster. The format is ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC)"
 }
 
-variable "name" {}
+variable "name" {
+}
 
 variable "node_type" {
   default = "cache.t2.micro"
@@ -56,17 +58,19 @@ variable "security_groups_for_ingress" {
 }
 
 variable "subnets" {
-  type = "list"
+  type = list(string)
 }
 
 variable "tags" {
   default     = {}
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
 
 variable "transit_encryption_enabled" {
   default = false
 }
 
-variable "vpc_id" {}
+variable "vpc_id" {
+}
+

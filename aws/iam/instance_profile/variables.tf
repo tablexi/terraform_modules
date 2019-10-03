@@ -1,5 +1,5 @@
 variable "name" {
-  type = "string"
+  type = string
 }
 
 variable "ses" {
@@ -8,7 +8,8 @@ variable "ses" {
 }
 
 variable "s3_bucket" {
-  type        = "string"
+  type        = string
   default     = ""
   description = "Provide this instance with access to the bucket"
 }
+

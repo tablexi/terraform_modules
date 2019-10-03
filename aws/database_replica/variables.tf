@@ -79,7 +79,7 @@ variable "storage_type" {
 variable "tags" {
   default     = {}
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
 
 variable "vpc_id" {
@@ -88,6 +88,7 @@ variable "vpc_id" {
 
 variable "vpc_security_group_ids" {
   description = "Additional security group ids to associate this RDS instance with."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
+

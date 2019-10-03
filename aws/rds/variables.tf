@@ -20,13 +20,11 @@ variable "env" {
 
 variable "engine" {
   description = "Postgres, MySQL, etc."
-
   # default = "postgres"
 }
 
 variable "engine_version" {
   description = "Version # of the Postgres or MySQL installation. Do not include patch version as it is auto upgraded."
-
   # default = "9.6"
 }
 
@@ -117,7 +115,7 @@ variable "subnet_group_name" {
 variable "tags" {
   default     = {}
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
 
 variable "username" {
@@ -136,6 +134,7 @@ variable "vpc_id" {
 
 variable "vpc_security_group_ids" {
   description = "Additional security group ids to associate this RDS instance with."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
+

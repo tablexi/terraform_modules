@@ -24,7 +24,8 @@ variable "env" {
   default = "production"
 }
 
-variable "key_name" {}
+variable "key_name" {
+}
 
 variable "name_tag_starting_count" {
   default     = 1
@@ -47,26 +48,18 @@ variable "ssh_ingress_cidr_blocks" {
   default = ["0.0.0.0/0"]
 }
 
-variable "ssh_ingress_cidr_blocks_enable" {
-  default = true
-}
-
 variable "ssh_ingress_sgs" {
   default = []
 }
 
-variable "ssh_ingress_sgs_count" {
-  default = 0
-}
-
 variable "subnets" {
-  type = "list"
+  type = list(string)
 }
 
 variable "tags" {
   default     = {}
   description = "(Optional) A mapping of tags to assign to the resources"
-  type        = "map"
+  type        = map(string)
 }
 
 variable "type" {
@@ -74,7 +67,7 @@ variable "type" {
 }
 
 variable "vpc_security_group_ids" {
-  type    = "list"
+  type    = list(string)
   default = []
 }
 
@@ -95,3 +88,4 @@ variable "source_dest_check" {
   default     = true
   description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
 }
+

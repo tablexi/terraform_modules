@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "mod" {
   bucket = "${var.name}${var.splitter}tf"
 
-  tags {
+  tags = {
     Name = "${var.name} terraform configuration"
   }
 
@@ -21,3 +21,4 @@ resource "aws_dynamodb_table" "tf_state_locking" {
     type = "S"
   }
 }
+

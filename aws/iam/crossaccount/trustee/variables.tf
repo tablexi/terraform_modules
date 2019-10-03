@@ -13,3 +13,4 @@ variable "trustee_account_name" {
 variable "trustee_group_name" {
   description = "Trusted group to getting cross account access"
 }
+
