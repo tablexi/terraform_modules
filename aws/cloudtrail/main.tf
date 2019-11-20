@@ -26,7 +26,7 @@ resource "aws_s3_bucket" "mod" {
           Action = "s3:PutObject"
           Condition = {
             StringEquals = {
-              s3:x-amz-acl = "bucket-owner-full-control"
+              "s3:x-amz-acl" = "bucket-owner-full-control"
             }
           }
           Effect = "Allow"
