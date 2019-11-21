@@ -150,12 +150,20 @@ resource "aws_alb_target_group" "target_group" {
   }
 
   tags = var.tags
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_alb_target_group_attachment" "target_group_attachments" {
   count            = length(var.instances)
   target_group_arn = aws_alb_target_group.target_group.arn
   target_id        = element(var.instances, count.index)
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_security_group_rule" "ingress_on_instances_from_load_balancer" {
@@ -165,5 +173,9 @@ resource "aws_security_group_rule" "ingress_on_instances_from_load_balancer" {
   source_security_group_id = aws_security_group.security_group_on_load_balancer.id
   to_port                  = var.target_group_port
   type                     = "ingress"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
