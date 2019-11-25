@@ -5,7 +5,6 @@ locals {
 locals {
   cluster_name                  = "${var.name}-${var.env}"
   family                        = "${var.engine}${local.version_major_minor_only}"
-  parameter_group_name          = var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"
   port                          = var.port != "" ? var.port : var.engine == "redis" ? "6379" : "11211"
   elasticache_replication_group = var.force_replication_group || var.num_nodes != 1
   cluster_tags = merge(
@@ -27,7 +26,6 @@ resource "aws_elasticache_cluster" "mod" {
   maintenance_window   = var.maintenance_window
   node_type            = var.node_type
   port                 = local.port
-  parameter_group_name = local.parameter_group_name
   security_group_ids   = [aws_security_group.sg_on_elasticache_instance.id]
   subnet_group_name    = aws_elasticache_subnet_group.mod.name
 
@@ -44,7 +42,6 @@ resource "aws_elasticache_replication_group" "mod" {
   maintenance_window            = var.maintenance_window
   node_type                     = var.node_type
   number_cache_clusters         = var.num_nodes
-  parameter_group_name          = aws_elasticache_parameter_group.mod[0].id
   port                          = local.port
   replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
   replication_group_id          = local.cluster_name
@@ -53,17 +50,6 @@ resource "aws_elasticache_replication_group" "mod" {
   transit_encryption_enabled    = var.transit_encryption_enabled
 
   tags = local.cluster_tags
-}
-
-resource "aws_elasticache_parameter_group" "mod" {
-  count       = var.create_parameter_group ? 1 : 0
-  name        = local.parameter_group_name
-  family      = local.family
-  description = "${var.name} ${var.env} env ${var.engine} cluster param group"
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_elasticache_subnet_group" "mod" {
