@@ -21,6 +21,11 @@ variable "netnum_offset" {
   description = "Offset the subnets netnum by a specific amount."
 }
 
+variable "blacklisted_names" {
+  default     = []
+  description = "(Optional) List of blacklisted Availability Zone names."
+}
+
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
   type        = map(string)
