@@ -1,5 +1,7 @@
 # Find the available availability zones
-data "aws_availability_zones" "available" {}
+data "aws_availability_zones" "available" {
+  blacklisted_names = "${var.blacklisted_names}"
+}
 
 data "aws_vpc" "current" {
   id = "${var.vpc_id}"
