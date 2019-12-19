@@ -3,11 +3,7 @@ output "master_security_group_id" {
 }
 
 output "node_instance_role" {
-  value = aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"]
-}
-
-output "node_security_group_id" {
-  value = aws_cloudformation_stack.nodes.outputs["NodeSecurityGroup"]
+  value = aws_iam_role.nodes.arn
 }
 
 output "subnets" {
