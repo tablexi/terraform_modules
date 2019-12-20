@@ -7,11 +7,6 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "ami" {
-  description = "AMI used to build each node"
-  default     = "ami-0d9f458329e942f90"
-}
-
 variable "instance_type" {
   default = "t3.medium"
 }
@@ -30,7 +25,3 @@ variable "capacity_max" {
   description = "Maximum number of nodes to create"
   default     = 6
 }
-
-variable "key_name" {
-}
-
