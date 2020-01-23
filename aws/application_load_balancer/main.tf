@@ -75,8 +75,9 @@ resource "aws_alb_listener_rule" "redirect_domains_http" {
   }
 
   condition {
-    field  = "host-header"
-    values = [element(keys(var.redirect_domains), count.index)]
+    host_header {
+      values = [element(keys(var.redirect_domains), count.index)]
+    }
   }
 }
 
@@ -96,8 +97,9 @@ resource "aws_alb_listener_rule" "redirect_http_to_https" {
   }
 
   condition {
-    field  = "path-pattern"
-    values = ["*"]
+    path_pattern {
+      values = ["*"]
+    }
   }
 }
 
@@ -129,8 +131,9 @@ resource "aws_alb_listener_rule" "redirect_domains_https" {
   }
 
   condition {
-    field  = "host-header"
-    values = [element(keys(var.redirect_domains), count.index)]
+    host_header {
+      values = [element(keys(var.redirect_domains), count.index)]
+    }
   }
 }
 
@@ -178,4 +181,3 @@ resource "aws_security_group_rule" "ingress_on_instances_from_load_balancer" {
     create_before_destroy = true
   }
 }
-
