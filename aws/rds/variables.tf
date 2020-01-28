@@ -20,12 +20,10 @@ variable "env" {
 
 variable "engine" {
   description = "Postgres, MySQL, etc."
-  # default = "postgres"
 }
 
 variable "engine_version" {
   description = "Version # of the Postgres or MySQL installation. Do not include patch version as it is auto upgraded."
-  # default = "9.6"
 }
 
 variable "identifier" {
@@ -41,6 +39,11 @@ variable "iops" {
 variable "kms_key_id" {
   description = "If you are using volume encryption, you can use this variable to set the specific key arn."
   default     = ""
+}
+
+variable "monitoring_interval" {
+  default     = 60
+  description = "(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 60. Valid Values: 0, 1, 5, 10, 15, 30, 60."
 }
 
 variable "multi_az" {

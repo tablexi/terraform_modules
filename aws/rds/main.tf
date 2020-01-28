@@ -50,6 +50,7 @@ resource "aws_db_instance" "mod" {
   iops                        = var.iops
   instance_class              = var.node_type
   kms_key_id                  = var.kms_key_id
+  monitoring_interval         = var.monitoring_interval
   multi_az                    = var.multi_az
   parameter_group_name        = local.parameter_group_name
   password                    = "nopassword"
