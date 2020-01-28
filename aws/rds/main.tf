@@ -51,6 +51,7 @@ resource "aws_db_instance" "mod" {
   instance_class              = var.node_type
   kms_key_id                  = var.kms_key_id
   monitoring_interval         = var.monitoring_interval
+  monitoring_role_arn         = var.monitoring_interval == 0 ? "" : aws_iam_role.rds_enhanced_monitoring[0].arn
   multi_az                    = var.multi_az
   parameter_group_name        = local.parameter_group_name
   password                    = "nopassword"
@@ -97,5 +98,34 @@ resource "aws_security_group" "sg_on_rds_instance" {
 
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+resource "aws_iam_role" "rds_enhanced_monitoring" {
+  assume_role_policy = "${data.aws_iam_policy_document.rds_enhanced_monitoring[0].json}"
+  count              = var.monitoring_interval == 0 ? 0 : 1
+  name_prefix        = "rds-enhanced-monitoring"
+}
+
+resource "aws_iam_role_policy_attachment" "rds_enhanced_monitoring" {
+  count      = var.monitoring_interval == 0 ? 0 : 1
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
+  role       = "${aws_iam_role.rds_enhanced_monitoring[0].name}"
+}
+
+data "aws_iam_policy_document" "rds_enhanced_monitoring" {
+  count = var.monitoring_interval == 0 ? 0 : 1
+
+  statement {
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["monitoring.rds.amazonaws.com"]
+    }
   }
 }
