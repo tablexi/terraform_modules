@@ -1,3 +1,7 @@
+locals {
+  starting_priority = 1000
+}
+
 resource "aws_route53_record" "aliases" {
   for_each = var.rules
 
@@ -16,6 +20,7 @@ resource "aws_lb_listener_rule" "http_redirects" {
   for_each = var.rules
 
   listener_arn = var.load_balancer.http_listener_arn
+  priority     = local.starting_priority + index(keys(var.rules), each.key)
 
   condition {
     host_header {
@@ -39,6 +44,7 @@ resource "aws_lb_listener_rule" "https_redirects" {
   for_each = var.rules
 
   listener_arn = var.load_balancer.https_listener_arn
+  priority     = local.starting_priority + index(keys(var.rules), each.key)
 
   condition {
     host_header {
