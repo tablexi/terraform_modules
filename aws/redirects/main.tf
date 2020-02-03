@@ -1,20 +1,25 @@
-resource "aws_route53_record" "cnames" {
+resource "aws_route53_record" "aliases" {
   for_each = var.rules
 
-  name    = each.key
-  records = [var.load_balancer.dns_name]
-  ttl     = 60
-  type    = "CNAME"
+  name    = join(".", compact([each.key, var.dns_zone.name]))
+  type    = "A"
   zone_id = var.dns_zone.id
+
+  alias {
+    evaluate_target_health = false
+    name                   = var.load_balancer.dns_name
+    zone_id                = var.load_balancer.zone_id
+  }
 }
 
 resource "aws_lb_listener_rule" "http_redirects" {
-  for_each     = var.rules
+  for_each = var.rules
+
   listener_arn = var.load_balancer.http_listener_arn
 
   condition {
     host_header {
-      values = [each.key]
+      values = [aws_route53_record.aliases[each.key].fqdn]
     }
   }
 
@@ -31,12 +36,13 @@ resource "aws_lb_listener_rule" "http_redirects" {
 }
 
 resource "aws_lb_listener_rule" "https_redirects" {
-  for_each     = var.rules
+  for_each = var.rules
+
   listener_arn = var.load_balancer.https_listener_arn
 
   condition {
     host_header {
-      values = [each.key]
+      values = [aws_route53_record.aliases[each.key].fqdn]
     }
   }
 
