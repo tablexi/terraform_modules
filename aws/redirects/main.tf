@@ -1,3 +1,13 @@
+resource "aws_route53_record" "cnames" {
+  for_each = var.rules
+
+  name    = each.key
+  records = [var.load_balancer.dns_name]
+  ttl     = 60
+  type    = "CNAME"
+  zone_id = var.dns_zone.id
+}
+
 resource "aws_lb_listener_rule" "http_redirects" {
   for_each     = var.rules
   listener_arn = var.load_balancer.http_listener_arn
