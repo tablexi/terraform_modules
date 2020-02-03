@@ -32,7 +32,7 @@ resource "aws_lb_listener_rule" "http_redirects" {
     type = "redirect"
     redirect {
       host        = each.value["host"]
-      path        = each.value["path"]
+      path        = lookup(each.value, "path", "/#{path}")
       port        = "443"
       protocol    = "HTTPS"
       status_code = "HTTP_301"
@@ -56,7 +56,7 @@ resource "aws_lb_listener_rule" "https_redirects" {
     type = "redirect"
     redirect {
       host        = each.value["host"]
-      path        = each.value["path"]
+      path        = lookup(each.value, "path", "/#{path}")
       port        = "443"
       protocol    = "HTTPS"
       status_code = "HTTP_301"
