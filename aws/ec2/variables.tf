@@ -1,7 +1,3 @@
-variable "associate_public_ip_address" {
-  default = true
-}
-
 variable "ami" {
   description = "(Required) The AMI to use for the instance."
 }

@@ -13,7 +13,7 @@ resource "aws_instance" "mod" {
   key_name                    = var.key_name
   vpc_security_group_ids      = concat(list(aws_security_group.security_group_on_instances.id), var.vpc_security_group_ids)
   subnet_id                   = element(var.subnets, count.index)
-  associate_public_ip_address = var.associate_public_ip_address
+  associate_public_ip_address = true
   iam_instance_profile        = var.iam_instance_profile
 
   tags = merge(
