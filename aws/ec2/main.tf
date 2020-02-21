@@ -84,14 +84,3 @@ resource "aws_security_group_rule" "ssh_ingress_on_instances_cidr_blocks" {
   to_port           = 22
   type              = "ingress"
 }
-
-resource "aws_security_group_rule" "ssh_ingress_on_instances_sgs" {
-  count                    = length(var.ssh_ingress_sgs)
-  source_security_group_id = element(var.ssh_ingress_sgs, count.index)
-  from_port                = 22
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.security_group_on_instances.id
-  to_port                  = 22
-  type                     = "ingress"
-}
-

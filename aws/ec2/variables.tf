@@ -36,10 +36,6 @@ variable "root_block_size" {
   default = 16
 }
 
-variable "ssh_ingress_sgs" {
-  default = []
-}
-
 variable "subnets" {
   type = list(string)
 }
