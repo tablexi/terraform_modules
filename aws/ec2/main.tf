@@ -77,8 +77,7 @@ resource "aws_security_group_rule" "all_ingress_on_instances_from_self" {
 }
 
 resource "aws_security_group_rule" "ssh_ingress_on_instances_cidr_blocks" {
-  count             = length(var.ssh_ingress_cidr_blocks) > 0 ? 1 : 0
-  cidr_blocks       = var.ssh_ingress_cidr_blocks
+  cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.security_group_on_instances.id

@@ -40,10 +40,6 @@ variable "root_block_size" {
   default = 16
 }
 
-variable "ssh_ingress_cidr_blocks" {
-  default = ["0.0.0.0/0"]
-}
-
 variable "ssh_ingress_sgs" {
   default = []
 }
