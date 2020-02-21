@@ -16,8 +16,6 @@ resource "aws_instance" "mod" {
   associate_public_ip_address = var.associate_public_ip_address
   iam_instance_profile        = var.iam_instance_profile
 
-  source_dest_check = var.source_dest_check
-
   tags = merge(
     {
       "Name" = format(
