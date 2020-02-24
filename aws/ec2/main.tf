@@ -13,10 +13,8 @@ resource "aws_instance" "mod" {
   key_name                    = var.key_name
   vpc_security_group_ids      = concat(list(aws_security_group.security_group_on_instances.id), var.vpc_security_group_ids)
   subnet_id                   = element(var.subnets, count.index)
-  associate_public_ip_address = var.associate_public_ip_address
+  associate_public_ip_address = true
   iam_instance_profile        = var.iam_instance_profile
-
-  source_dest_check = var.source_dest_check
 
   tags = merge(
     {
@@ -33,9 +31,9 @@ resource "aws_instance" "mod" {
   ebs_optimized = var.ebs_optimized
 
   root_block_device {
-    volume_type           = var.root_block_type
+    delete_on_termination = false
     volume_size           = var.root_block_size
-    delete_on_termination = var.root_block_termination
+    volume_type           = var.root_block_type
   }
 
   lifecycle {
@@ -79,22 +77,10 @@ resource "aws_security_group_rule" "all_ingress_on_instances_from_self" {
 }
 
 resource "aws_security_group_rule" "ssh_ingress_on_instances_cidr_blocks" {
-  count             = length(var.ssh_ingress_cidr_blocks) > 0 ? 1 : 0
-  cidr_blocks       = var.ssh_ingress_cidr_blocks
+  cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 22
   protocol          = "tcp"
   security_group_id = aws_security_group.security_group_on_instances.id
   to_port           = 22
   type              = "ingress"
 }
-
-resource "aws_security_group_rule" "ssh_ingress_on_instances_sgs" {
-  count                    = length(var.ssh_ingress_sgs)
-  source_security_group_id = element(var.ssh_ingress_sgs, count.index)
-  from_port                = 22
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.security_group_on_instances.id
-  to_port                  = 22
-  type                     = "ingress"
-}
-
