@@ -1,9 +1,5 @@
 locals {
-  default_tags = {
-    Name = var.name
-  }
-
-  tags = merge(local.default_tags, var.tags)
+  tags = merge({ Name = var.name }, var.tags)
 }
 
 module "eks-vpc" {
