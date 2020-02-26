@@ -6,12 +6,6 @@ locals {
   tags = merge(local.default_tags, var.tags)
 }
 
-data "aws_caller_identity" "current" {
-}
-
-data "aws_region" "current" {
-}
-
 module "eks-vpc" {
   source = "../vpc"
 
@@ -166,54 +160,4 @@ resource "aws_eks_node_group" "default" {
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
   ]
-}
-
-resource "aws_cloudwatch_log_group" "logs" {
-  name = var.name
-  tags = var.tags
-}
-
-resource "aws_iam_policy" "cluster-logging" {
-  name = "${var.name}-logging"
-
-  policy = jsonencode(
-    {
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Effect = "Allow"
-          Action = [
-            "logs:DescribeLogGroups",
-          ]
-          Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group::log-stream:*",
-          ]
-        },
-        {
-          Effect = "Allow"
-          Action = [
-            "logs:DescribeLogStreams",
-          ]
-          Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:*",
-          ]
-        },
-        {
-          Effect = "Allow"
-          Action = [
-            "logs:CreateLogStream",
-            "logs:PutLogEvents",
-          ]
-          Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:fluentd-cloudwatch",
-          ]
-        },
-      ]
-    }
-  )
-}
-
-resource "aws_iam_role_policy_attachment" "cluster-logging" {
-  policy_arn = aws_iam_policy.cluster-logging.arn
-  role = aws_iam_role.nodes.name
 }
