@@ -138,6 +138,10 @@ resource "aws_eks_node_group" "default" {
   node_group_name = "default"
   node_role_arn   = aws_iam_role.nodes.arn
 
+  remote_access {
+    ec2_ssh_key = var.ec2_ssh_key
+  }
+
   scaling_config {
     desired_size = var.capacity_desired
     max_size     = var.capacity_max
