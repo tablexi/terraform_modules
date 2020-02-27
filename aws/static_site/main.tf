@@ -21,8 +21,8 @@ resource "aws_s3_bucket" "mod" {
   )
 
   website {
-    index_document = "${var.index_document}"
-    error_document = "${var.index_document}"
+    index_document = var.index_document
+    error_document = var.index_document
   }
 }
 
@@ -40,14 +40,14 @@ resource "aws_cloudfront_distribution" "mod" {
 
   enabled             = true
   is_ipv6_enabled     = true
-  default_root_object = "${var.index_document}"
+  default_root_object = var.index_document
   price_class         = "PriceClass_100"
 
   ordered_cache_behavior {
     path_pattern           = "static/*"
     allowed_methods        = ["GET", "HEAD"]
     cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "${local.s3_origin_id}"
+    target_origin_id       = local.s3_origin_id
     viewer_protocol_policy = "redirect-to-https"
 
     forwarded_values {
