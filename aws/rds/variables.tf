@@ -57,7 +57,7 @@ variable "name" {
 
 variable "node_type" {
   description = "AWS RDS instance type."
-  default     = "db.t2.medium"
+  default     = "db.t3.medium"
 }
 
 variable "parameter_group_name" {
