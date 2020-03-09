@@ -1,7 +1,3 @@
-variable "associate_public_ip_address" {
-  default = true
-}
-
 variable "ami" {
   description = "(Required) The AMI to use for the instance."
 }
@@ -40,18 +36,6 @@ variable "root_block_size" {
   default = 16
 }
 
-variable "root_block_termination" {
-  default = false
-}
-
-variable "ssh_ingress_cidr_blocks" {
-  default = ["0.0.0.0/0"]
-}
-
-variable "ssh_ingress_sgs" {
-  default = []
-}
-
 variable "subnets" {
   type = list(string)
 }
@@ -83,9 +67,3 @@ variable "iam_instance_profile" {
   default     = ""
   description = "The IAM instance profile to associate with the instance."
 }
-
-variable "source_dest_check" {
-  default     = true
-  description = "Controls if traffic is routed to the instance when the destination address does not match the instance. Used for NAT or VPNs."
-}
-

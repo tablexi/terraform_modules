@@ -1,15 +1,5 @@
 locals {
-  default_tags = {
-    Name = var.name
-  }
-
-  tags = merge(local.default_tags, var.tags)
-}
-
-data "aws_caller_identity" "current" {
-}
-
-data "aws_region" "current" {
+  tags = merge({ Name = var.name }, var.tags)
 }
 
 module "eks-vpc" {
@@ -103,78 +93,71 @@ resource "aws_eks_cluster" "master" {
   ]
 }
 
-resource "aws_cloudformation_stack" "nodes" {
-  capabilities = ["CAPABILITY_IAM"]
-  depends_on   = [aws_eks_cluster.master]
-  name         = var.name
-  tags         = local.tags
-  template_url = "https://amazon-eks.s3-us-west-2.amazonaws.com/cloudformation/2019-02-11/amazon-eks-nodegroup.yaml"
+data "aws_iam_policy_document" "nodes_assume_role_policy" {
+  version = "2012-10-17"
 
-  parameters = {
-    ClusterControlPlaneSecurityGroup    = aws_security_group.master.id
-    ClusterName                         = var.name
-    KeyName                             = var.key_name
-    NodeAutoScalingGroupDesiredCapacity = var.capacity_desired
-    NodeAutoScalingGroupMaxSize         = var.capacity_max
-    NodeAutoScalingGroupMinSize         = var.capacity_min
-    NodeGroupName                       = "default"
-    NodeImageId                         = var.ami
-    NodeInstanceType                    = var.instance_type
-    Subnets                             = join(",", module.eks-subnets.subnets)
-    VpcId                               = module.eks-vpc.vpc_id
+  statement {
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
   }
 }
 
-resource "aws_cloudwatch_log_group" "logs" {
-  name = var.name
-  tags = var.tags
+resource "aws_iam_role" "nodes" {
+  name               = "${var.name}-nodes"
+  assume_role_policy = data.aws_iam_policy_document.nodes_assume_role_policy.json
 }
 
-resource "aws_iam_policy" "cluster-logging" {
-  name = "${var.name}-logging"
-
-  policy = jsonencode(
-    {
-      Version = "2012-10-17"
-      Statement = [
-        {
-          Effect = "Allow"
-          Action = [
-            "logs:DescribeLogGroups",
-          ]
-          Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group::log-stream:*",
-          ]
-        },
-        {
-          Effect = "Allow"
-          Action = [
-            "logs:DescribeLogStreams",
-          ]
-          Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:*",
-          ]
-        },
-        {
-          Effect = "Allow"
-          Action = [
-            "logs:CreateLogStream",
-            "logs:PutLogEvents",
-          ]
-          Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:${aws_cloudwatch_log_group.logs.name}:log-stream:fluentd-cloudwatch",
-          ]
-        },
-      ]
-    }
-  )
+resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
+  role       = aws_iam_role.nodes.name
 }
 
-resource "aws_iam_role_policy_attachment" "cluster-logging" {
-  policy_arn = aws_iam_policy.cluster-logging.arn
-  role = replace(
-    aws_cloudformation_stack.nodes.outputs["NodeInstanceRole"],
-    "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/",
-    "",
-  )
+resource "aws_iam_role_policy_attachment" "nodes-AmazonEKS_CNI_Policy" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  role       = aws_iam_role.nodes.name
+}
+
+resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadOnly" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+  role       = aws_iam_role.nodes.name
+}
+
+resource "aws_eks_node_group" "default" {
+  cluster_name    = var.name
+  instance_types  = [var.instance_type]
+  node_group_name = "default"
+  node_role_arn   = aws_iam_role.nodes.arn
+
+  remote_access {
+    ec2_ssh_key = var.ec2_ssh_key
+  }
+
+  scaling_config {
+    desired_size = var.capacity_desired
+    max_size     = var.capacity_max
+    min_size     = var.capacity_min
+  }
+
+  subnet_ids = [
+    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1b")}",
+    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1c")}",
+    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1d")}",
+    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1e")}",
+    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1f")}",
+  ]
+
+  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
+  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
+  depends_on = [
+    aws_eks_cluster.master,
+    aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
+    aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
+  ]
 }

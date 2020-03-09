@@ -6,3 +6,7 @@ output "website_endpoint" {
   value = aws_s3_bucket.mod.website_endpoint
 }
 
+output "cloudfront_domain_name" {
+  value = aws_cloudfront_distribution.mod.domain_name
+}
+

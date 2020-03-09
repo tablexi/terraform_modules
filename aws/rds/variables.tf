@@ -20,12 +20,10 @@ variable "env" {
 
 variable "engine" {
   description = "Postgres, MySQL, etc."
-  # default = "postgres"
 }
 
 variable "engine_version" {
   description = "Version # of the Postgres or MySQL installation. Do not include patch version as it is auto upgraded."
-  # default = "9.6"
 }
 
 variable "identifier" {
@@ -43,6 +41,11 @@ variable "kms_key_id" {
   default     = ""
 }
 
+variable "monitoring_interval" {
+  default     = 60
+  description = "(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 60. Valid Values: 0, 1, 5, 10, 15, 30, 60."
+}
+
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
   default     = true
@@ -54,7 +57,7 @@ variable "name" {
 
 variable "node_type" {
   description = "AWS RDS instance type."
-  default     = "db.t2.medium"
+  default     = "db.t3.medium"
 }
 
 variable "parameter_group_name" {

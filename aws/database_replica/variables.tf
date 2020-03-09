@@ -33,6 +33,11 @@ variable "multi_az" {
   default     = false
 }
 
+variable "monitoring_interval" {
+  default     = 60
+  description = "(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 60. Valid Values: 0, 1, 5, 10, 15, 30, 60."
+}
+
 variable "name" {
   description = "Name of the RDS instance and various RDS services (EG subnet group and security groups)."
 }

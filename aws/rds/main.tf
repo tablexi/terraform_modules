@@ -2,6 +2,13 @@ locals {
   engine_nickname = local.is_postgres ? "pg" : "mysql"
   family          = "${var.engine}${var.engine_version}"
   is_postgres     = var.engine == "postgres" ? true : false
+  major_engine_version_return = length(split(".", var.engine_version)) > 1 ? 2 : 1
+  parameter_group_name        = var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"
+  port                        = local.is_postgres ? 5432 : 3306
+  sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
+  subnet_group_name           = var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"
+  table_xi_office_cidr_block  = "199.182.213.26/32"
+
   major_engine_version = join(
     ".",
     slice(
@@ -10,11 +17,6 @@ locals {
       local.major_engine_version_return,
     ),
   )
-  major_engine_version_return = length(split(".", var.engine_version)) > 1 ? 2 : 1
-  parameter_group_name        = var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"
-  port                        = local.is_postgres ? 5432 : 3306
-  sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  subnet_group_name           = var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"
 }
 
 resource "aws_db_subnet_group" "mod" {
@@ -48,6 +50,8 @@ resource "aws_db_instance" "mod" {
   iops                        = var.iops
   instance_class              = var.node_type
   kms_key_id                  = var.kms_key_id
+  monitoring_interval         = var.monitoring_interval
+  monitoring_role_arn         = var.monitoring_interval == 0 ? "" : aws_iam_role.rds_enhanced_monitoring[0].arn
   multi_az                    = var.multi_az
   parameter_group_name        = local.parameter_group_name
   password                    = "nopassword"
@@ -58,14 +62,7 @@ resource "aws_db_instance" "mod" {
   storage_type                = var.storage_type
   tags                        = var.tags
   username                    = var.username != "" ? var.username : "${var.name}${var.username_suffix}"
-  # TF-UPGRADE-TODO: In Terraform v0.10 and earlier, it was sometimes necessary to
-  # force an interpolation expression to be interpreted as a list by wrapping it
-  # in an extra set of list brackets. That form was supported for compatibilty in
-  # v0.11, but is no longer supported in Terraform v0.12.
-  #
-  # If the expression in the following list itself returns a list, remove the
-  # brackets to avoid interpretation as a list of lists. If the expression
-  # returns a single list item then leave it as-is and remove this TODO comment.
+
   vpc_security_group_ids = concat(
     var.vpc_security_group_ids,
     [aws_security_group.sg_on_rds_instance.id],
@@ -78,7 +75,7 @@ resource "aws_security_group" "sg_on_rds_instance" {
   vpc_id      = var.vpc_id
 
   ingress {
-    cidr_blocks     = var.sg_cidr_blocks
+    cidr_blocks     = concat([local.table_xi_office_cidr_block], var.sg_cidr_blocks)
     from_port       = local.port
     protocol        = "tcp"
     security_groups = var.security_groups_for_ingress
@@ -104,3 +101,31 @@ resource "aws_security_group" "sg_on_rds_instance" {
   }
 }
 
+resource "aws_iam_role" "rds_enhanced_monitoring" {
+  assume_role_policy = data.aws_iam_policy_document.rds_enhanced_monitoring[0].json
+  count              = var.monitoring_interval == 0 ? 0 : 1
+  name_prefix        = "rds-enhanced-monitoring"
+}
+
+resource "aws_iam_role_policy_attachment" "rds_enhanced_monitoring" {
+  count      = var.monitoring_interval == 0 ? 0 : 1
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonRDSEnhancedMonitoringRole"
+  role       = aws_iam_role.rds_enhanced_monitoring[0].name
+}
+
+data "aws_iam_policy_document" "rds_enhanced_monitoring" {
+  count = var.monitoring_interval == 0 ? 0 : 1
+
+  statement {
+    actions = [
+      "sts:AssumeRole",
+    ]
+
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["monitoring.rds.amazonaws.com"]
+    }
+  }
+}

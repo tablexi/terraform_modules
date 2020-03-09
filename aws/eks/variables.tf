@@ -1,21 +1,3 @@
-variable "name" {
-  description = "Name of the cluster"
-}
-
-variable "tags" {
-  description = "(Optional) A mapping of tags to assign to the resources"
-  type        = map(string)
-}
-
-variable "ami" {
-  description = "AMI used to build each node"
-  default     = "ami-0d9f458329e942f90"
-}
-
-variable "instance_type" {
-  default = "t3.medium"
-}
-
 variable "capacity_min" {
   description = "Minimum number of nodes to create"
   default     = 3
@@ -31,6 +13,20 @@ variable "capacity_max" {
   default     = 6
 }
 
-variable "key_name" {
+variable "ec2_ssh_key" {
+  description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group."
+  type        = string
 }
 
+variable "instance_type" {
+  default = "t3.medium"
+}
+
+variable "name" {
+  description = "Name of the cluster"
+}
+
+variable "tags" {
+  description = "(Optional) A mapping of tags to assign to the resources"
+  type        = map(string)
+}
