@@ -18,3 +18,6 @@ output "https_listener_arn" {
   value = aws_alb_listener.https_listener.arn
 }
 
+output "securiy_group_id" {
+  value = aws_security_group.security_group_on_load_balancer.id
+}
