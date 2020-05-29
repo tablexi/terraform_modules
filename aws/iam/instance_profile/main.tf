@@ -47,6 +47,28 @@ resource "aws_iam_role_policy" "mod-ses-role-policy" {
   role = aws_iam_role.mod.id
 }
 
+resource "aws_iam_role_policy" "mod-sns-role-policy" {
+  name  = "${var.name}-sns"
+  count = var.sns ? 1 : 0
+
+  policy = jsonencode(
+    {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Effect = "Allow"
+          Action = [
+            "sns:*",
+          ]
+          Resource = "*"
+        },
+      ]
+    }
+  )
+
+  role = aws_iam_role.mod.id
+}
+
 resource "aws_iam_role_policy" "mod-s3-role-policy" {
   name  = "${var.name}-s3"
   count = var.s3_bucket != "" ? 1 : 0
