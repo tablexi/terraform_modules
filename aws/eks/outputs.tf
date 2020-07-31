@@ -6,6 +6,10 @@ output "node_instance_role" {
   value = aws_iam_role.nodes.arn
 }
 
+output "oidc_provider" {
+  value = aws_iam_openid_connect_provider.default.arn
+}
+
 output "subnets" {
   value = module.eks-subnets.subnets
 }
