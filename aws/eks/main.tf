@@ -165,7 +165,7 @@ resource "aws_eks_node_group" "default" {
 # IAM Service Account integration
 # https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
 resource "aws_iam_openid_connect_provider" "default" {
-  url = aws_eks_cluster.master.identity.oidc.issuer
+  url = aws_eks_cluster.master.identity[0].oidc[0].issuer
 
   client_id_list = [
     "sts.amazonaws.com",
