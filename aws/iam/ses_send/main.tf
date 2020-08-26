@@ -17,7 +17,7 @@ resource "aws_iam_policy" "mod" {
 }
 
 resource "aws_iam_policy_attachment" "mod" {
-  name       = "test-attachment"
+  name       = "ses-sending-policy-attachment"
   users      = var.users
   roles      = var.roles
   policy_arn = aws_iam_policy.mod.arn
