@@ -1,4 +1,5 @@
 resource "aws_iam_group" "mod" {
+  count = length(var.users)  > 0 ? 1 : 0
   name = "ses_senders"
 }
 
@@ -15,6 +16,7 @@ data "aws_iam_policy_document" "mod" {
 }
 
 resource "aws_iam_group_policy" "mod" {
+  count = length(var.users)  > 0 ? 1 : 0
   name  = "AmazonSesSendingAccess"
   group = aws_iam_group.mod.id
 
