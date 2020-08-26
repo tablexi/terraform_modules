@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "mod" {
 resource "aws_iam_policy" "mod" {
   name  = "AmazonSesSendingAccess"
 
-  policy = aws_iam_policy_document.mod.json
+  policy = data.aws_iam_policy_document.mod.json
 }
 
 resource "aws_iam_policy_attachment" "mod" {
