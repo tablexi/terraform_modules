@@ -1,31 +1,24 @@
-resource "aws_iam_group" "mod" {
-  name = "ses_senders"
+data "aws_iam_policy_document" "mod" {
+  version = "2012-10-17"
+  statement {
+    effect = "Allow"
+    actions = [
+      "ses:SendRawEmail",
+      "ses:SendEmail",
+    ]
+    resources = ["*"]
+  }
 }
 
-resource "aws_iam_group_policy" "mod" {
+resource "aws_iam_policy" "mod" {
   name  = "AmazonSesSendingAccess"
-  group = aws_iam_group.mod.id
 
-  policy = jsonencode(
-    {
-      Statement = [
-        {
-          Action = [
-            "ses:SendRawEmail",
-            "ses:SendEmail",
-          ]
-          Effect   = "Allow"
-          Resource = "*"
-        },
-      ]
-      Version = "2012-10-17"
-    }
-  )
+  policy = data.aws_iam_policy_document.mod.json
 }
 
-resource "aws_iam_group_membership" "mod" {
-  name  = "app-server-group-membership"
-  users = var.users
-  group = aws_iam_group.mod.name
+resource "aws_iam_policy_attachment" "mod" {
+  name       = "ses-sending-policy-attachment"
+  users      = var.users
+  roles      = var.roles
+  policy_arn = aws_iam_policy.mod.arn
 }
-
