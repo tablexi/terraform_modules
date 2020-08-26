@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "mod" {
 resource "aws_iam_group_policy" "mod" {
   count = length(var.users)  > 0 ? 1 : 0
   name  = "AmazonSesSendingAccess"
-  group = aws_iam_group.mod.id
+  group = aws_iam_group.mod[count.index].id
 
   policy = data.aws_iam_policy_document.mod.json
 }
@@ -27,7 +27,7 @@ resource "aws_iam_group_membership" "mod" {
   count = length(var.users)  > 0 ? 1 : 0
   name  = "app-server-group-membership"
   users = var.users
-  group = aws_iam_group.mod.name
+  group = aws_iam_group.mod[count.index].name
 }
 
 resource "aws_iam_role_policy" "mod" {
