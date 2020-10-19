@@ -20,6 +20,13 @@ resource "aws_s3_bucket" "mod" {
     }
   )
 
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = var.enable_cors_get ? ["*"] : []
+    max_age_seconds = 3000
+  }
+
   website {
     index_document = var.index_document
     error_document = var.index_document
