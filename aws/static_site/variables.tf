@@ -20,3 +20,8 @@ variable "tags" {
   type        = map(string)
 }
 
+variable "enable_cors_get" {
+  description = "Enables Cross Origin Resource Sharing (CORS) get requests from any origin."
+  type = bool
+  default = false
+}
