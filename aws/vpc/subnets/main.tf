@@ -1,6 +1,6 @@
 # Find the available availability zones
 data "aws_availability_zones" "available" {
-  blacklisted_names = var.blacklisted_names
+  exclude_names = var.exclude_names
 }
 
 data "aws_vpc" "current" {
