@@ -1,6 +1,11 @@
 locals {
+  domain_names_parts = {
+    for domain in var.domain_names: domain => split(".", domain)
+  }
+
   zone_names = {
-    for domain in var.domain_names: domain => join(".", slice(split(".", domain), 1, length(split(".", domain))))
+    for domain, parts in local.domain_names_parts:
+      domain => join(".", length(parts) > 2 ? slice(parts, 1, length(parts)) : parts)
   }
 }
 
