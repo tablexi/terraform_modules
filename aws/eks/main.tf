@@ -162,6 +162,10 @@ resource "aws_eks_node_group" "default" {
   ]
 }
 
+data "tls_certificate" "default" {
+  url = "${aws_eks_cluster.master.identity.0.oidc.0.issuer}"
+}
+
 # IAM Service Account integration
 # https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
 resource "aws_iam_openid_connect_provider" "default" {
@@ -171,5 +175,5 @@ resource "aws_iam_openid_connect_provider" "default" {
     "sts.amazonaws.com",
   ]
 
-  thumbprint_list = []
+  thumbprint_list = ["${data.tls_certificate.default.certificates.0.sha1_fingerprint}"]
 }
