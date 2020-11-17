@@ -1,6 +1,7 @@
 # Find the available availability zones
 data "aws_availability_zones" "available" {
   exclude_names = var.exclude_names
+  state         = "available"
 }
 
 data "aws_vpc" "current" {
