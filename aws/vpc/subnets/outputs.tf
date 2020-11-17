@@ -7,9 +7,5 @@ output "route_table_id" {
 }
 
 output "subnets_by_az" {
-  value = zipmap(
-    data.aws_availability_zones.available.names,
-    aws_subnet.mod[*].id,
-  )
+  value = { for subnet in aws_subnet.mod: subnet.availability_zone => subnet.id }
 }
-
