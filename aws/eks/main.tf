@@ -16,6 +16,7 @@ module "eks-vpc" {
 module "eks-subnets" {
   source = "../vpc/subnets"
 
+  exclude_names       = var.exclude_zones
   internet_gateway_id = module.eks-vpc.internet_gateway_id
   tags = merge(
     local.tags,

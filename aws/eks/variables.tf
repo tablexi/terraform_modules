@@ -18,6 +18,11 @@ variable "ec2_ssh_key" {
   type        = string
 }
 
+variable "exclude_zones" {
+  default     = []
+  description = "(Optional) List of Availability Zone names to exclude."
+}
+
 variable "instance_type" {
   default = "t3.medium"
 }

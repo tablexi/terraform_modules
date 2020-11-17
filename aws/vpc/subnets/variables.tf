@@ -23,7 +23,7 @@ variable "netnum_offset" {
 
 variable "exclude_names" {
   default     = []
-  description = "(Optional) List of blacklisted Availability Zone names."
+  description = "(Optional) List of Availability Zone names to exclude."
 }
 
 variable "tags" {
