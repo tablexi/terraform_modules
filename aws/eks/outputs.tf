@@ -1,3 +1,7 @@
+output "cluster_arn" {
+  value = aws_eks_cluster.master.arn
+}
+
 output "main_oidc_identity" {
   value = aws_eks_cluster.master.identity[0].oidc[0].issuer
 }
