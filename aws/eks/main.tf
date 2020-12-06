@@ -78,13 +78,7 @@ resource "aws_eks_cluster" "master" {
   vpc_config {
     security_group_ids = [aws_security_group.master.id]
 
-    subnet_ids = [
-      module.eks-subnets.subnets_by_az["us-east-1b"],
-      module.eks-subnets.subnets_by_az["us-east-1c"],
-      module.eks-subnets.subnets_by_az["us-east-1d"],
-      module.eks-subnets.subnets_by_az["us-east-1e"],
-      module.eks-subnets.subnets_by_az["us-east-1f"],
-    ]
+    subnet_ids = module.eks-subnets.subnets
   }
 
   depends_on = [
@@ -144,13 +138,7 @@ resource "aws_eks_node_group" "default" {
     min_size     = var.capacity_min
   }
 
-  subnet_ids = [
-    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1b")}",
-    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1c")}",
-    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1d")}",
-    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1e")}",
-    "${lookup(module.eks-subnets.subnets_by_az, "us-east-1f")}",
-  ]
+  subnet_ids = module.eks-subnets.subnets
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
