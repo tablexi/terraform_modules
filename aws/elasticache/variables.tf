@@ -57,11 +57,6 @@ variable "security_groups_for_ingress" {
   default     = []
 }
 
-variable "sg_cidr_blocks" {
-  description = "cidr_blocks to give ElastiCache port access to."
-  default     = []
-}
-
 variable "subnets" {
   type = list(string)
 }

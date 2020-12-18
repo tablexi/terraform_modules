@@ -1,6 +1,5 @@
 locals {
   version_major_minor_only = join(".", slice(split(".", var.engine_version), 0, 2))
-  table_xi_office_cidr_block  = "199.182.213.26/32"
 }
 
 locals {
@@ -83,7 +82,6 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
   vpc_id      = var.vpc_id
 
   ingress {
-    cidr_blocks     = concat([local.table_xi_office_cidr_block], var.sg_cidr_blocks)
     from_port       = local.port
     to_port         = local.port
     protocol        = "tcp"
