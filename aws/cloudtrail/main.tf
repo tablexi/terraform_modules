@@ -5,8 +5,8 @@ resource "aws_cloudtrail" "mod" {
   enable_logging                = true
   enable_log_file_validation    = true
 
-  cloud_watch_logs_group_arn    = "${aws_cloudwatch_log_group.mod.arn}:*"
-  cloud_watch_logs_role_arn     = aws_iam_role.cloudwatch.arn
+  cloud_watch_logs_group_arn    = var.cloud_watch_logs_group_arn
+  cloud_watch_logs_role_arn     = var.cloud_watch_logs_role_arn
 
   tags                          = var.tags
 }
@@ -22,31 +22,6 @@ resource "aws_s3_bucket" "mod" {
     target_bucket = "cloudtrail-logs"
     target_prefix = var.name
   }
-}
-
-resource "aws_cloudwatch_log_group" "mod" {
-  name = "${var.name}-cloudtrail-logs"
-}
-
-resource "aws_iam_role" "cloudwatch" {
-  name               = "${var.name}-cloudwatch"
-  path               = "/service-role/"
-  description        = "${var.name} cloudwatch logs role"
-  assume_role_policy = data.aws_iam_policy_document.assume-role.json
-
-  tags               = var.tags
-}
-
-resource "aws_iam_policy" "cloudwatch" {
-  name        = "${var.name}-cloudwatch-policy"
-  description = "${var.name} cloudwatch logs policy"
-  policy      = data.aws_iam_policy_document.cloudwatch.json
-}
-
-resource "aws_iam_policy_attachment" "mod" {
-  name       = "${var.name}-cloudwatch-attachment"
-  roles      = [aws_iam_role.cloudwatch.name]
-  policy_arn = aws_iam_policy.cloudwatch.arn
 }
 
 data "aws_iam_policy_document" "s3" {
@@ -75,30 +50,5 @@ data "aws_iam_policy_document" "s3" {
       type        = "Service"
       identifiers = ["cloudtrail.amazonaws.com"]
     }
-  }
-}
-
-data "aws_iam_policy_document" "assume-role" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["cloudtrail.amazonaws.com"]
-    }
-  }
-}
-
-data "aws_iam_policy_document" "cloudwatch" {
-  statement {
-    sid       = "AWSCloudTrailCreateLogStream"
-    actions   = ["logs:CreateLogStream"]
-    resources = ["${aws_cloudwatch_log_group.mod.arn}:*"]
-  }
-
-  statement {
-    sid       = "AWSCloudTrailPutLogEvents"
-    actions   = ["logs:PutLogEvents"]
-    resources = ["${aws_cloudwatch_log_group.mod.arn}:*"]
   }
 }
