@@ -13,6 +13,12 @@ variable "capacity_max" {
   default     = 6
 }
 
+variable "uses_nat_gateway" {
+  description = "Create a NAT Gateway for all outgoing internet traffic"
+  default     = false
+  type        = bool
+}
+
 variable "ec2_ssh_key" {
   description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group."
   type        = string
@@ -31,7 +37,7 @@ variable "subnet_module" {
     exclude_names = list(string)
     netnum_offset = number
   })
-  default     = {
+  default = {
     exclude_names = []
     netnum_offset = 0
   }

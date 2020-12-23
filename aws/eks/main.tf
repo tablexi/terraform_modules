@@ -13,13 +13,30 @@ module "eks-vpc" {
   )
 }
 
+module "eks-vpc-nat-gateway" {
+  source = "../nat_gateway"
+
+  uses_nat_gateway          = var.uses_nat_gateway
+  internet_gateway_id       = module.eks-vpc.internet_gateway_id
+  name                      = var.name
+  vpc_id                    = module.eks-vpc.vpc_id
+  subnet_cidr_netnum_offset = 100 # So that it doesn't vary based on capacity
+
+  tags = merge(
+    local.tags,
+    {
+      "kubernetes.io/cluster/${var.name}" = "shared"
+    },
+  )
+}
+
 module "eks-subnets" {
   source = "../vpc/subnets"
 
   exclude_names = var.subnet_module.exclude_names
   netnum_offset = var.subnet_module.netnum_offset
 
-  internet_gateway_id = module.eks-vpc.internet_gateway_id
+  gateway_id = var.uses_nat_gateway ? module.eks-vpc-nat-gateway.nat_gateway_id : module.eks-vpc.internet_gateway_id
   tags = merge(
     local.tags,
     {
