@@ -26,9 +26,16 @@ variable "name" {
   description = "Name of the cluster"
 }
 
-variable "excluded_az_names" {
-  default     = []
-  description = "(Optional) List of Availability Zone names to exclude."
+variable "subnet_module" {
+  type = object({
+    exclude_names = list(string)
+    netnum_offset = number
+  })
+  default     = {
+    exclude_names = []
+    netnum_offset = 0
+  }
+  description = "(Optional) Expose some subnet module variables to root module"
 }
 
 variable "tags" {
