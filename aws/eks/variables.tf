@@ -26,6 +26,11 @@ variable "name" {
   description = "Name of the cluster"
 }
 
+variable "excluded_az_names" {
+  default     = []
+  description = "(Optional) List of Availability Zone names to exclude."
+}
+
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
   type        = map(string)
