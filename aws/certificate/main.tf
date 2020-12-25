@@ -5,7 +5,7 @@ locals {
 
   zone_names = {
     for domain, parts in local.domain_names_parts:
-      domain => join(".", length(parts) > 2 ? slice(parts, 1, length(parts)) : parts)
+      domain => join(".", slice(parts, length(parts) - 2, length(parts)))
   }
 }
 
