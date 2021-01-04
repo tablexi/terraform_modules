@@ -54,7 +54,7 @@ resource "aws_route_table" "mod" {
 resource "aws_route" "mod" {
   count                  = var.uses_nat_gateway ? 1 : 0
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = aws_nat_gateway.gw[0].id
+  gateway_id             = var.internet_gateway_id
   route_table_id         = aws_route_table.mod[0].id
 }
 
