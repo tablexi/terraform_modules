@@ -141,3 +141,9 @@ variable "vpc_security_group_ids" {
   default     = []
 }
 
+
+variable "expose_to_txi_office" {
+  description = "include TXI Office IP in security group"
+  type        = bool
+  default     = true
+}
