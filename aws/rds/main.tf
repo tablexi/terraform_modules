@@ -75,7 +75,7 @@ resource "aws_security_group" "sg_on_rds_instance" {
   vpc_id      = var.vpc_id
 
   ingress {
-    cidr_blocks     = concat([local.table_xi_office_cidr_block], var.sg_cidr_blocks)
+    cidr_blocks     = var.expose_to_txi_office ? concat([local.table_xi_office_cidr_block], var.sg_cidr_blocks) : var.sg_cidr_blocks
     from_port       = local.port
     protocol        = "tcp"
     security_groups = var.security_groups_for_ingress
