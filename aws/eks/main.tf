@@ -154,7 +154,7 @@ resource "aws_eks_node_group" "default" {
 }
 
 data "tls_certificate" "default" {
-  url = "${aws_eks_cluster.master.identity.0.oidc.0.issuer}"
+  url = aws_eks_cluster.master.identity.0.oidc.0.issuer
 }
 
 # IAM Service Account integration
