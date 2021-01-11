@@ -15,7 +15,7 @@ resource "aws_route_table" "mod" {
 resource "aws_route" "mod" {
   count                  = var.public ? 1 : 0
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = var.internet_gateway_id
+  gateway_id             = var.gateway_id
   route_table_id         = aws_route_table.mod.id
 }
 
