@@ -21,9 +21,10 @@ variable "uses_nat_gateway" {
   type        = bool
 }
 
-variable "availability_zone" {
-  description = "Which AZ to create the NAT Gateway"
-  default     = "us-east-1a"
+variable "exclude_availability_zones" {
+  description = "Which AZ(s) should NOT be used (all other zones will have a subnet created)"
+  type        = list(string)
+  default     = []
 }
 
 variable "subnet_cidr_newbits" {

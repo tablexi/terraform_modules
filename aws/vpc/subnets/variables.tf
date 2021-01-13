@@ -2,8 +2,13 @@ variable "vpc_id" {
   description = "The unique ID of the VPC."
 }
 
-variable "gateway_id" {
-  description = "The unique ID of the Internet (or NAT) gateway."
+variable "internet_gateway_id" {
+  description = "The unique ID of the Internet gateway."
+}
+
+variable "nat_gateway_id" {
+  description = "The ID of the NAT Gateway (if applicable)"
+  default = 0
 }
 
 variable "public" {
