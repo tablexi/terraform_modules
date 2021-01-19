@@ -12,10 +12,13 @@ resource "aws_route_table" "mod" {
   vpc_id = var.vpc_id
 }
 
+# no nat-gateway, create with internet_gateway
+# nat-gateway, create with nat_gateway, not internet_gateway
 resource "aws_route" "mod" {
   count                  = var.public ? 1 : 0
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = var.gateway_id
+  gateway_id             = var.nat_gateway_id == 0 ? var.internet_gateway_id : null
+  nat_gateway_id         = var.nat_gateway_id == 0 ? null : var.nat_gateway_id
   route_table_id         = aws_route_table.mod.id
 }
 
