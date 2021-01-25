@@ -8,3 +8,12 @@ variable "tags" {
   type        = map(string)
 }
 
+variable "cloud_watch_logs_group_arn" {
+  default     = ""
+  description = "(Optional) The ARN of a CloudWatch Log Group for the trail"
+}
+
+variable "cloud_watch_logs_role_arn" {
+  default     = ""
+  description = "(Optional) The ARN of a Role with CloudWatch permissions to attach"
+}
