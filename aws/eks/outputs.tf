@@ -25,3 +25,7 @@ output "subnets" {
 output "vpc_id" {
   value = module.eks-vpc.vpc_id
 }
+
+output "vpc" {
+  value = module.eks-vpc
+}
