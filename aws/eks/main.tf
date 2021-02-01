@@ -1,5 +1,11 @@
 locals {
-  tags = merge({ Name = var.name }, var.tags)
+  elb_discovery_tag = var.uses_nat_gateway ? "kubernetes.io/role/internal-elb" : "kubernetes.io/role/elb"
+  tags              = merge({ Name = var.name }, var.tags)
+
+  subnet_tags = merge(local.tags, {
+    (local.elb_discovery_tag) = true,
+    "kubernetes.io/cluster/${var.name}" = "shared"
+  })
 }
 
 module "eks-vpc" {
@@ -35,17 +41,10 @@ module "eks-subnets" {
   source = "../vpc/subnets"
 
   exclude_names = var.subnet_module.exclude_names
-  netnum_offset = var.subnet_module.netnum_offset
-
   internet_gateway_id = module.eks-vpc.internet_gateway_id
-  nat_gateway_id = var.uses_nat_gateway ? module.eks-vpc-nat-gateway[0].nat_gateway_id : 0
-
-  tags = merge(
-    local.tags,
-    {
-      "kubernetes.io/cluster/${var.name}" = "shared"
-    },
-  )
+  nat_gateway_id      = var.uses_nat_gateway ? module.eks-vpc-nat-gateway[0].nat_gateway_id : 0
+  netnum_offset = var.subnet_module.netnum_offset
+  tags = local.subnet_tags
   vpc_id = module.eks-vpc.vpc_id
 }
 

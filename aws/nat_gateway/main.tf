@@ -1,3 +1,7 @@
+locals {
+  subnet_tags = merge(var.tags, { "kubernetes.io/role/elb" = true })
+}
+
 # Create subnets for use by the LoadBalancer for ingress
 # And use the first of these subnets for the NAT Gateway
 
@@ -18,14 +22,14 @@ resource "aws_subnet" "mod" {
     var.subnet_cidr_netnum_offset + count.index + 1,
   )
   map_public_ip_on_launch = true
-  tags                    = var.tags
+  tags                    = local.subnet_tags
   vpc_id                  = var.vpc_id
 }
 
 # ElasticIP address for use with the NAT Gateway
 resource "aws_eip" "nat-gw-eip" {
-  vpc   = true
-  tags  = var.tags
+  vpc  = true
+  tags = var.tags
 }
 
 # NAT Gateway in the first subnet
