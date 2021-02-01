@@ -33,3 +33,7 @@ output "eks-vpc" {
 output "elastic_ip" {
   value = var.uses_nat_gateway ? module.eks-vpc-nat-gateway[0].elastic_ip : null
 }
+
+output "vpc" {
+  value = module.eks-vpc
+}
