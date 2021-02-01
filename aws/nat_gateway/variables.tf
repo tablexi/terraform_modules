@@ -15,12 +15,6 @@ variable "internet_gateway_id" {
   description = "Internet Gateway router for internet traffic"
 }
 
-variable "uses_nat_gateway" {
-  description = "Enable creation of this NAT Gateway and associated subnet/routes"
-  default     = false
-  type        = bool
-}
-
 variable "exclude_availability_zones" {
   description = "Which AZ(s) should NOT be used (all other zones will have a subnet created)"
   type        = list(string)

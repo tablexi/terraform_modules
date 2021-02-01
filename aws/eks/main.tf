@@ -16,12 +16,12 @@ module "eks-vpc" {
 module "eks-vpc-nat-gateway" {
   source = "../nat_gateway"
 
-  uses_nat_gateway           = var.uses_nat_gateway
+  count                      = var.uses_nat_gateway ? 1 : 0
   exclude_availability_zones = var.subnet_module.exclude_names
   internet_gateway_id        = module.eks-vpc.internet_gateway_id
   name                       = var.name
-  vpc_id                     = module.eks-vpc.vpc_id
   subnet_cidr_netnum_offset  = 100 # So that it doesn't vary based on capacity
+  vpc_id                     = module.eks-vpc.vpc_id
 
   tags = merge(
     local.tags,
@@ -38,7 +38,7 @@ module "eks-subnets" {
   netnum_offset = var.subnet_module.netnum_offset
 
   internet_gateway_id = module.eks-vpc.internet_gateway_id
-  nat_gateway_id = var.uses_nat_gateway ? module.eks-vpc-nat-gateway.nat_gateway_id : 0
+  nat_gateway_id = var.uses_nat_gateway ? module.eks-vpc-nat-gateway[0].nat_gateway_id : 0
 
   tags = merge(
     local.tags,
