@@ -11,6 +11,13 @@ resource "aws_cloudtrail" "mod" {
   tags                          = var.tags
 }
 
+resource "aws_s3_bucket" "logs" {
+  bucket = "${var.name}-cloudtrail-logs"
+  acl    = "log-delivery-write"
+
+  tags   = var.tags
+}
+
 resource "aws_s3_bucket" "mod" {
   bucket = "${var.name}-cloudtrail"
   acl    = "private"
@@ -19,7 +26,7 @@ resource "aws_s3_bucket" "mod" {
   tags   = var.tags
 
   logging {
-    target_bucket = "cloudtrail-logs"
+    target_bucket = aws_s3_bucket.logs.id
     target_prefix = var.name
   }
 }
