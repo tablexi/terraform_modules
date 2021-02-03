@@ -5,17 +5,17 @@ resource "aws_cloudtrail" "mod" {
   enable_logging                = true
   enable_log_file_validation    = true
 
-  cloud_watch_logs_group_arn    = var.cloud_watch_logs_group_arn
-  cloud_watch_logs_role_arn     = var.cloud_watch_logs_role_arn
+  cloud_watch_logs_group_arn = var.cloud_watch_logs_group_arn
+  cloud_watch_logs_role_arn  = var.cloud_watch_logs_role_arn
 
-  tags                          = var.tags
+  tags = var.tags
 }
 
 resource "aws_s3_bucket" "logs" {
-  bucket = "${var.name}-cloudtrail-logs"
-  acl    = "log-delivery-write"
+  bucket_prefix = "${var.name}-cloudtrail-logs"
+  acl           = "log-delivery-write"
 
-  tags   = var.tags
+  tags = var.tags
 }
 
 resource "aws_s3_bucket" "mod" {
@@ -23,7 +23,7 @@ resource "aws_s3_bucket" "mod" {
   acl    = "private"
   policy = data.aws_iam_policy_document.s3.json
 
-  tags   = var.tags
+  tags = var.tags
 
   logging {
     target_bucket = aws_s3_bucket.logs.id
