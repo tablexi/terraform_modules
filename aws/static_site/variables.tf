@@ -22,14 +22,14 @@ variable "tags" {
 
 variable "enable_cors_get" {
   description = "Enables Cross Origin Resource Sharing (CORS) get requests from any origin."
-  type = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "cors_rule" {
   description = "List of maps containing rules for Cross-Origin Resource Sharing."
   type        = any
-  default     = [{
+  default = [{
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
     allowed_origins = ["*"]

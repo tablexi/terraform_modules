@@ -8,7 +8,7 @@ variable "internet_gateway_id" {
 
 variable "nat_gateway_id" {
   description = "The ID of the NAT Gateway (if applicable)"
-  default = 0
+  default     = 0
 }
 
 variable "public" {
