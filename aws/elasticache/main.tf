@@ -85,6 +85,7 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
     from_port       = local.port
     to_port         = local.port
     protocol        = "tcp"
+    cidr_blocks     = var.sg_cidr_blocks
     security_groups = var.security_groups_for_ingress
   }
 
