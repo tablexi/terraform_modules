@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "mod" {
 }
 
 resource "aws_iam_policy" "mod" {
-  name  = "AmazonSesSendingAccess"
+  name = "AmazonSesSendingAccess"
 
   policy = data.aws_iam_policy_document.mod.json
 }

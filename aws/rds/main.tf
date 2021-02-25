@@ -1,7 +1,7 @@
 locals {
-  engine_nickname = local.is_postgres ? "pg" : "mysql"
-  family          = "${var.engine}${var.engine_version}"
-  is_postgres     = var.engine == "postgres" ? true : false
+  engine_nickname             = local.is_postgres ? "pg" : "mysql"
+  family                      = "${var.engine}${var.engine_version}"
+  is_postgres                 = var.engine == "postgres" ? true : false
   major_engine_version_return = length(split(".", var.engine_version)) > 1 ? 2 : 1
   parameter_group_name        = var.parameter_group_name != "" ? var.parameter_group_name : "default.${var.engine}${local.major_engine_version}"
   port                        = local.is_postgres ? 5432 : 3306
