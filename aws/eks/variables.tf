@@ -44,6 +44,11 @@ variable "subnet_module" {
   description = "(Optional) Expose some subnet module variables to root module"
 }
 
+variable "vpc_cidr" {
+  description = "(Optional) The CIDR block for the VPC."
+  default     = "10.0.0.0/16"
+}
+
 variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
   type        = map(string)
