@@ -57,11 +57,6 @@ variable "security_groups_for_ingress" {
   default     = []
 }
 
-variable "sg_cidr_blocks" {
-  description = "CIDR blocks which should be allowed ingress on the ElastiCache instance."
-  default     = []
-}
-
 variable "subnets" {
   type = list(string)
 }
