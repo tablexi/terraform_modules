@@ -170,7 +170,7 @@ resource "aws_eks_node_group" "default" {
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
   ]
-  
+
   # This is the only way to allow the node group to scale independently of the terraform state.
   # We can use terraform to define the descired_size to start, but don't want to impede any other scaling mechanisms.
   lifecycle {
