@@ -8,7 +8,7 @@ resource "aws_iam_role" "mod" {
   description        = "${var.name} cloudwatch logs role"
   assume_role_policy = data.aws_iam_policy_document.assume-role.json
 
-  tags               = var.tags
+  tags = var.tags
 }
 
 resource "aws_iam_policy" "mod" {
