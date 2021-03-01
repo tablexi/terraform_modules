@@ -11,6 +11,7 @@ locals {
 module "eks-vpc" {
   source = "../vpc"
 
+  cidr = var.vpc_cidr
   tags = merge(
     local.tags,
     {

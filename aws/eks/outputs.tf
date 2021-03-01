@@ -2,6 +2,10 @@ output "cluster_arn" {
   value = aws_eks_cluster.master.arn
 }
 
+output "cluster_security_group_id" {
+  value = aws_eks_cluster.master.vpc_config[0].cluster_security_group_id
+}
+
 output "main_oidc_identity" {
   value = aws_eks_cluster.master.identity[0].oidc[0].issuer
 }
@@ -24,6 +28,10 @@ output "subnets" {
 
 output "vpc_id" {
   value = module.eks-vpc.vpc_id
+}
+
+output "vpc_cidr_block" {
+  value = module.eks-vpc.cidr_block
 }
 
 output "elastic_ip" {
