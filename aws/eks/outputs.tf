@@ -30,14 +30,6 @@ output "eks-vpc" {
   value = module.eks-vpc
 }
 
-output "vpc_id" {
-  value = module.eks-vpc.vpc_id
-}
-
-output "vpc_cidr_block" {
-  value = module.eks-vpc.cidr_block
-}
-
 output "elastic_ip" {
   value = var.uses_nat_gateway ? module.eks-vpc-nat-gateway[0].elastic_ip : null
 }
