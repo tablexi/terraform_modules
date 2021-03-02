@@ -26,12 +26,8 @@ output "subnets" {
   value = module.eks-subnets.subnets
 }
 
-output "vpc_id" {
-  value = module.eks-vpc.vpc_id
-}
-
-output "vpc_cidr_block" {
-  value = module.eks-vpc.cidr_block
+output "eks-vpc" {
+  value = module.eks-vpc
 }
 
 output "elastic_ip" {
