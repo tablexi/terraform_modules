@@ -24,6 +24,12 @@ variable "ec2_ssh_key" {
   type        = string
 }
 
+variable "disk_size" {
+  default     = 20
+  description = "Node disk size in GB"
+  type        = number
+}
+
 variable "instance_type" {
   default = "t3.medium"
 }

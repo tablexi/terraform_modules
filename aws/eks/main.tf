@@ -148,6 +148,7 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 resource "aws_eks_node_group" "default" {
   cluster_name    = var.name
   instance_types  = [var.instance_type]
+  disk_size       = var.disk_size
   node_group_name = "default"
   node_role_arn   = aws_iam_role.nodes.arn
 
