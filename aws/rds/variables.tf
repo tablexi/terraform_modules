@@ -92,7 +92,7 @@ variable "source_db" {
 
 variable "storage" {
   description = "Volume storage size for the RDS instance in gigabytes."
-  default     = 5
+  default     = 20
 }
 
 variable "storage_encrypted" {
