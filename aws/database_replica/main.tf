@@ -3,27 +3,15 @@ data "aws_db_instance" "source_database" {
 }
 
 locals {
-  allocated_storage = data.aws_db_instance.source_database.allocated_storage
-  engine            = data.aws_db_instance.source_database.engine
-  engine_nickname   = local.is_postgres ? "pg" : "mysql"
-  engine_version    = var.engine_version != "" ? var.engine_version : data.aws_db_instance.source_database.engine_version
-  family            = "${local.engine}${local.major_engine_version}"
-  is_postgres       = local.engine == "postgres" ? true : false
-  major_engine_version = join(
-    ".",
-    slice(
-      split(".", local.engine_version),
-      0,
-      local.major_engine_version_return,
-    ),
-  )
-  major_engine_version_return = length(split(".", local.engine_version)) > 1 ? 2 : 1
-  parameter_group_name        = var.parameter_group_name != "" ? var.parameter_group_name : "default.${local.engine}${local.major_engine_version}"
-  port                        = local.is_postgres ? 5432 : 3306
-  sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
-  source_db                   = data.aws_db_instance.source_database.id
-  storage_encrypted           = data.aws_db_instance.source_database.storage_encrypted
-  storage_type                = var.storage_type != "" ? var.storage_type : data.aws_db_instance.source_database.storage_type
+  allocated_storage       = data.aws_db_instance.source_database.allocated_storage
+  engine                  = data.aws_db_instance.source_database.engine
+  engine_nickname         = local.is_postgres ? "pg" : "mysql"
+  is_postgres             = local.engine == "postgres" ? true : false
+  port                    = local.is_postgres ? 5432 : 3306
+  sg_on_rds_instance_name = "rds-${var.name}_${var.env}-${local.engine_nickname}"
+  source_db               = data.aws_db_instance.source_database.id
+  storage_encrypted       = data.aws_db_instance.source_database.storage_encrypted
+  storage_type            = var.storage_type != "" ? var.storage_type : data.aws_db_instance.source_database.storage_type
 }
 
 resource "aws_db_instance" "mod" {
@@ -33,7 +21,7 @@ resource "aws_db_instance" "mod" {
   auto_minor_version_upgrade  = var.auto_minor_version_upgrade
   backup_retention_period     = var.backup_retention_period
   engine                      = local.engine
-  engine_version              = local.engine_version
+  engine_version              = data.aws_db_instance.source_database.engine_version
   final_snapshot_identifier   = "${var.name}-${var.env}-${local.engine}-final-snapshot"
   identifier                  = var.identifier != "" ? var.identifier : "${var.name}-${var.env}-${local.engine}"
   instance_class              = var.node_type
@@ -41,7 +29,7 @@ resource "aws_db_instance" "mod" {
   monitoring_interval         = var.monitoring_interval
   monitoring_role_arn         = var.monitoring_interval == 0 ? "" : aws_iam_role.rds_enhanced_monitoring[0].arn
   multi_az                    = var.multi_az
-  parameter_group_name        = local.parameter_group_name
+  parameter_group_name        = data.aws_db_instance.source_database.db_parameter_groups[0]
   publicly_accessible         = var.publicly_accessible
   replicate_source_db         = local.source_db
   skip_final_snapshot         = var.skip_final_snapshot
