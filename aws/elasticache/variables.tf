@@ -32,6 +32,11 @@ variable "maintenance_window" {
   description = "Set the weekly maintenance window for the cluster. The format is ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC)"
 }
 
+variable "multi_az_enabled" {
+  default     = false
+  description = "(Optional) Specifies whether to enable Multi-AZ Support for the replication group. If true, automatic_failover_enabled must also be enabled. Defaults to false."
+}
+
 variable "name" {
 }
 
