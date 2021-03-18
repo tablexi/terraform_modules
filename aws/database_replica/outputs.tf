@@ -6,10 +6,6 @@ output "env" {
   value = var.env
 }
 
-output "family" {
-  value = local.family
-}
-
 output "name" {
   value = var.name
 }

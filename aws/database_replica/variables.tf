@@ -13,11 +13,6 @@ variable "env" {
   default     = "production"
 }
 
-variable "engine_version" {
-  description = "Engine version. Defaults to the version of the source database."
-  default     = ""
-}
-
 variable "identifier" {
   description = "Set the identifier for the instance"
   default     = ""
