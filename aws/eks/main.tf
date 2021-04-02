@@ -1,6 +1,6 @@
 locals {
   elb_discovery_tag = var.uses_nat_gateway ? "kubernetes.io/role/internal-elb" : "kubernetes.io/role/elb"
-  tags              = merge({ Name = var.name }, var.tags)
+  tags              = merge({ Name = var.name, eks_cluster_name = var.name }, var.tags)
 
   subnet_tags = merge(local.tags, {
     (local.elb_discovery_tag)           = true,
