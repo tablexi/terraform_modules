@@ -79,28 +79,28 @@ resource "aws_iam_role_policy_attachment" "eks_service_role_service_policy" {
   role       = aws_iam_role.eks_service_role.name
 }
 
-resource "aws_security_group" "master" {
+resource "aws_security_group" "main" {
   name   = var.name
   tags   = local.tags
   vpc_id = module.eks-vpc.vpc_id
 }
 
-resource "aws_security_group_rule" "master_egress" {
+resource "aws_security_group_rule" "main_egress" {
   cidr_blocks       = ["0.0.0.0/0"]
   from_port         = 0
   protocol          = "-1"
-  security_group_id = aws_security_group.master.id
+  security_group_id = aws_security_group.main.id
   to_port           = 0
   type              = "egress"
 }
 
-resource "aws_eks_cluster" "master" {
+resource "aws_eks_cluster" "main" {
   name     = var.name
   role_arn = aws_iam_role.eks_service_role.arn
   tags     = local.tags
 
   vpc_config {
-    security_group_ids = [aws_security_group.master.id]
+    security_group_ids = [aws_security_group.main.id]
 
     subnet_ids = module.eks-subnets.subnets
   }
@@ -169,7 +169,7 @@ resource "aws_eks_node_group" "default" {
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
-    aws_eks_cluster.master,
+    aws_eks_cluster.main,
     aws_iam_role_policy_attachment.nodes-AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.nodes-AmazonEKS_CNI_Policy,
     aws_iam_role_policy_attachment.nodes-AmazonEC2ContainerRegistryReadOnly,
@@ -183,13 +183,13 @@ resource "aws_eks_node_group" "default" {
 }
 
 data "tls_certificate" "default" {
-  url = aws_eks_cluster.master.identity.0.oidc.0.issuer
+  url = aws_eks_cluster.main.identity.0.oidc.0.issuer
 }
 
 # IAM Service Account integration
 # https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
 resource "aws_iam_openid_connect_provider" "default" {
-  url = aws_eks_cluster.master.identity[0].oidc[0].issuer
+  url = aws_eks_cluster.main.identity[0].oidc[0].issuer
 
   client_id_list = [
     "sts.amazonaws.com",
