@@ -97,6 +97,7 @@ resource "aws_security_group_rule" "main_egress" {
 resource "aws_eks_cluster" "main" {
   name     = var.name
   role_arn = aws_iam_role.eks_service_role.arn
+  tags     = local.tags
 
   vpc_config {
     security_group_ids = [aws_security_group.main.id]
@@ -151,6 +152,7 @@ resource "aws_eks_node_group" "default" {
   disk_size       = var.disk_size
   node_group_name = "default"
   node_role_arn   = aws_iam_role.nodes.arn
+  tags            = local.tags
 
   remote_access {
     ec2_ssh_key = var.ec2_ssh_key
