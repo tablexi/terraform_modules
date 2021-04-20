@@ -28,7 +28,7 @@ variable "uses_cluster_autoscaler" {
 variable "cluster_autoscaler" {
   description = "Cluster autoscaler namespace name"
   default = {
-    namespace = "kube-system"
+    namespace      = "kube-system"
     serviceaccount = "cluster-autoscaler"
   }
   type = map(string)
