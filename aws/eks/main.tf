@@ -251,7 +251,7 @@ data "aws_iam_policy_document" "cluster-autoscaler" {
 
 resource "aws_iam_role" "cluster-autoscaler" {
   count = var.uses_cluster_autoscaler ? 1 : 0
-  name  = "ClusterAutoscaler"
+  name  = "cluster-autoscaler-${var.name}"
 
   assume_role_policy = data.aws_iam_policy_document.cluster-autoscaler-trust-relationship.json
 }
