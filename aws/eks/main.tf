@@ -189,7 +189,8 @@ resource "aws_eks_node_group" "default" {
   # This is the only way to allow the node group to scale independently of the terraform state.
   # We can use terraform to define the descired_size to start, but don't want to impede any other scaling mechanisms.
   lifecycle {
-    ignore_changes = [scaling_config[0].desired_size]
+    ignore_changes        = [scaling_config[0].desired_size]
+    create_before_destroy = true
   }
 }
 
