@@ -259,7 +259,7 @@ resource "aws_iam_role" "cluster-autoscaler" {
 resource "aws_iam_role_policy" "cluster-autoscaler-policy" {
   count = var.uses_cluster_autoscaler ? 1 : 0
   name  = "${var.name}ClusterAutoscalerPolicy"
-  role  = aws_iam_role.cluster-autoscaler.id
+  role  = aws_iam_role.cluster-autoscaler[0].id
 
   policy = data.aws_iam_policy_document.cluster-autoscaler.json
 }
