@@ -19,6 +19,12 @@ variable "uses_nat_gateway" {
   type        = bool
 }
 
+variable "uses_cluster_autoscaler" {
+  description = "Update node group tags and create IAM role with autoscale group credentials"
+  default     = false
+  type        = bool
+}
+
 variable "ec2_ssh_key" {
   description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group."
   type        = string

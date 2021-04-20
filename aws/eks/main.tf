@@ -6,6 +6,16 @@ locals {
     (local.elb_discovery_tag)           = true,
     "kubernetes.io/cluster/${var.name}" = "shared"
   })
+
+  # Node Group Cluster Autoscaler prerequisites
+  # https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-prerequisites
+  node_group_tags = var.uses_cluster_autoscaler ? merge(
+    local.tags,
+    {
+      "k8s.io/cluster-autoscaler/${var.name}" = "owned",
+      "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
+    },
+  ) : local.tags
 }
 
 module "eks-vpc" {
@@ -152,7 +162,7 @@ resource "aws_eks_node_group" "default" {
   disk_size       = var.disk_size
   node_group_name = "default"
   node_role_arn   = aws_iam_role.nodes.arn
-  tags            = local.tags
+  tags            = local.node_group_tags
 
   remote_access {
     ec2_ssh_key = var.ec2_ssh_key
@@ -196,4 +206,60 @@ resource "aws_iam_openid_connect_provider" "default" {
   ]
 
   thumbprint_list = [data.tls_certificate.default.certificates.0.sha1_fingerprint]
+}
+
+# Cluster Autoscaler IAM Policy and Role
+# https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-create-policy
+
+data "aws_iam_policy_document" "cluster-autoscaler-trust-relationship" {
+  version = "2012-10-17"
+
+  statement {
+    effect = "Allow"
+    principals {
+      type = "Federated"
+      identifiers = [
+        aws_iam_openid_connect_provider.default.arn,
+      ]
+    }
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    condition {
+      test     = "StringEquals"
+      variable = "${trimprefix(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://")}:sub"
+      values   = ["system:serviceaccount:cert-manager:cert-manager"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "cluster-autoscaler" {
+  version = "2012-10-17"
+
+  statement {
+    actions = [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "ec2:DescribeLaunchTemplateVersions",
+    ]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role" "cluster-autoscaler" {
+  count = var.uses_cluster_autoscaler ? 1 : 0
+  name  = "ClusterAutoscaler"
+
+  assume_role_policy = data.aws_iam_policy_document.cluster-autoscaler-trust-relationship.json
+}
+
+resource "aws_iam_role_policy" "cluster-autoscaler-policy" {
+  count = var.uses_cluster_autoscaler ? 1 : 0
+  name  = "${var.name}ClusterAutoscalerPolicy"
+  role  = aws_iam_role.cluster-autoscaler.id
+
+  policy = data.aws_iam_policy_document.cluster-autoscaler.json
 }
