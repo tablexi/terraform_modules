@@ -162,10 +162,10 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 resource "random_id" "node-group-name" {
   prefix = "default-"
   keepers = {
-    capacity_type = var.capacity_type
-    ec2_ssh_key = var.ec2_ssh_key
-    instance_types = var.instance_types
-    subnet_ids = module.eks-subnets.subnets
+    capacity_type  = var.capacity_type
+    ec2_ssh_key    = var.ec2_ssh_key
+    instance_types = join(", ", var.instance_types)
+    subnet_ids     = join(", ", module.eks-subnets.subnets)
   }
   byte_length = 12
 }
