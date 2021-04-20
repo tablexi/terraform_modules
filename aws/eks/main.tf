@@ -175,7 +175,7 @@ resource "aws_eks_node_group" "default" {
   capacity_type   = var.capacity_type
   instance_types  = var.instance_types
   disk_size       = var.disk_size
-  node_group_name = random_id.node-group-name.b64_url 
+  node_group_name = random_id.node-group-name.b64_url
   node_role_arn   = aws_iam_role.nodes.arn
   tags            = local.node_group_tags
 
