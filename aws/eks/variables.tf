@@ -45,8 +45,16 @@ variable "disk_size" {
   type        = number
 }
 
-variable "instance_type" {
-  default = "t3.medium"
+variable "capacity_type" {
+  description = "Node group capacity type"
+  default     = "ON_DEMAND"
+  type        = string
+}
+
+variable "instance_types" {
+  description = "List of instance types to associate with the node group"
+  default     = ["t3.medium"]
+  type        = list(string)
 }
 
 variable "name" {
