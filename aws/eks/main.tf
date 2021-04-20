@@ -226,7 +226,7 @@ data "aws_iam_policy_document" "cluster-autoscaler-trust-relationship" {
     condition {
       test     = "StringEquals"
       variable = "${trimprefix(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://")}:sub"
-      values   = ["system:serviceaccount:cert-manager:cert-manager"]
+      values   = ["system:serviceaccount:${var.cluster_autoscaler.namespace}:${var.cluster_autoscaler.serviceaccount}"]
     }
   }
 }

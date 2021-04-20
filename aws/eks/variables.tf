@@ -25,6 +25,15 @@ variable "uses_cluster_autoscaler" {
   type        = bool
 }
 
+variable "cluster_autoscaler" {
+  description = "Cluster autoscaler namespace name"
+  default = {
+    namespace = "kube-system"
+    serviceaccount = "cluster-autoscaler"
+  }
+  type = map(string)
+}
+
 variable "ec2_ssh_key" {
   description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group."
   type        = string
