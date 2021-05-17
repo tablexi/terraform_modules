@@ -6,6 +6,16 @@ locals {
     (local.elb_discovery_tag)           = true,
     "kubernetes.io/cluster/${var.name}" = "shared"
   })
+
+  # Node Group Cluster Autoscaler prerequisites
+  # https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-prerequisites
+  node_group_tags = var.uses_cluster_autoscaler ? merge(
+    local.tags,
+    {
+      "k8s.io/cluster-autoscaler/${var.name}" = "owned",
+      "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
+    },
+  ) : local.tags
 }
 
 module "eks-vpc" {
@@ -146,13 +156,28 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
   role       = aws_iam_role.nodes.name
 }
 
+# Update the node_group name as part of an upgrade to a desctructive change.
+# This will allow us to create a new node group with the changes before destroying the old node_group
+# by giving each node group a unique name.
+resource "random_id" "node-group-name" {
+  prefix = "default-"
+  keepers = {
+    capacity_type  = var.capacity_type
+    ec2_ssh_key    = var.ec2_ssh_key
+    instance_types = join(", ", var.instance_types)
+    subnet_ids     = join(", ", module.eks-subnets.subnets)
+  }
+  byte_length = 12
+}
+
 resource "aws_eks_node_group" "default" {
   cluster_name    = var.name
-  instance_types  = [var.instance_type]
+  capacity_type   = var.capacity_type
+  instance_types  = var.instance_types
   disk_size       = var.disk_size
-  node_group_name = "default"
+  node_group_name = random_id.node-group-name.b64_url
   node_role_arn   = aws_iam_role.nodes.arn
-  tags            = local.tags
+  tags            = local.node_group_tags
 
   remote_access {
     ec2_ssh_key = var.ec2_ssh_key
@@ -178,7 +203,8 @@ resource "aws_eks_node_group" "default" {
   # This is the only way to allow the node group to scale independently of the terraform state.
   # We can use terraform to define the descired_size to start, but don't want to impede any other scaling mechanisms.
   lifecycle {
-    ignore_changes = [scaling_config[0].desired_size]
+    ignore_changes        = [scaling_config[0].desired_size]
+    create_before_destroy = true
   }
 }
 
@@ -196,4 +222,60 @@ resource "aws_iam_openid_connect_provider" "default" {
   ]
 
   thumbprint_list = [data.tls_certificate.default.certificates.0.sha1_fingerprint]
+}
+
+# Cluster Autoscaler IAM Policy and Role
+# https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html#ca-create-policy
+
+data "aws_iam_policy_document" "cluster-autoscaler-trust-relationship" {
+  version = "2012-10-17"
+
+  statement {
+    effect = "Allow"
+    principals {
+      type = "Federated"
+      identifiers = [
+        aws_iam_openid_connect_provider.default.arn,
+      ]
+    }
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    condition {
+      test     = "StringEquals"
+      variable = "${trimprefix(aws_eks_cluster.main.identity[0].oidc[0].issuer, "https://")}:sub"
+      values   = ["system:serviceaccount:${var.cluster_autoscaler.namespace}:${var.cluster_autoscaler.serviceaccount}"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "cluster-autoscaler" {
+  version = "2012-10-17"
+
+  statement {
+    actions = [
+      "autoscaling:DescribeAutoScalingGroups",
+      "autoscaling:DescribeAutoScalingInstances",
+      "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeTags",
+      "autoscaling:SetDesiredCapacity",
+      "autoscaling:TerminateInstanceInAutoScalingGroup",
+      "ec2:DescribeLaunchTemplateVersions",
+    ]
+    effect    = "Allow"
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_role" "cluster-autoscaler" {
+  count = var.uses_cluster_autoscaler ? 1 : 0
+  name  = "cluster-autoscaler-${var.name}-serviceaccount"
+
+  assume_role_policy = data.aws_iam_policy_document.cluster-autoscaler-trust-relationship.json
+}
+
+resource "aws_iam_role_policy" "cluster-autoscaler-policy" {
+  count = var.uses_cluster_autoscaler ? 1 : 0
+  name  = "${var.name}ClusterAutoscalerPolicy"
+  role  = aws_iam_role.cluster-autoscaler[0].id
+
+  policy = data.aws_iam_policy_document.cluster-autoscaler.json
 }
