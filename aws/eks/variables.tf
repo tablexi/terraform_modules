@@ -19,6 +19,21 @@ variable "uses_nat_gateway" {
   type        = bool
 }
 
+variable "uses_cluster_autoscaler" {
+  description = "Update node group tags and create IAM role with autoscale group credentials"
+  default     = false
+  type        = bool
+}
+
+variable "cluster_autoscaler" {
+  description = "Cluster autoscaler namespace name"
+  default = {
+    namespace      = "kube-system"
+    serviceaccount = "cluster-autoscaler"
+  }
+  type = map(string)
+}
+
 variable "ec2_ssh_key" {
   description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group."
   type        = string
@@ -30,8 +45,16 @@ variable "disk_size" {
   type        = number
 }
 
-variable "instance_type" {
-  default = "t3.medium"
+variable "capacity_type" {
+  description = "Node group capacity type"
+  default     = "ON_DEMAND"
+  type        = string
+}
+
+variable "instance_types" {
+  description = "List of instance types to associate with the node group"
+  default     = ["t3.medium"]
+  type        = list(string)
 }
 
 variable "name" {

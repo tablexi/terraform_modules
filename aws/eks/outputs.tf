@@ -41,3 +41,7 @@ output "elastic_ip" {
 output "vpc" {
   value = module.eks-vpc
 }
+
+output "cluster_autoscaler_role_arn" {
+  value = var.uses_cluster_autoscaler ? aws_iam_role.cluster-autoscaler[0].arn : null
+}
