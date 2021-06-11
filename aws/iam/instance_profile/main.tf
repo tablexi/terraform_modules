@@ -24,6 +24,15 @@ resource "aws_iam_role" "mod" {
   path = "/"
 }
 
+data "aws_iam_policy" "AmazonSSMManagedInstanceCore" {
+  arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_role_policy_attachment" "mod-ssm-role-policy" {
+  role       = aws_iam_role.mod.id
+  policy_arn = data.aws_iam_policy.AmazonSSMManagedInstanceCore.arn
+}
+
 resource "aws_iam_role_policy" "mod-ses-role-policy" {
   name  = "${var.name}-ses"
   count = var.ses ? 1 : 0
@@ -98,4 +107,3 @@ resource "aws_iam_role_policy" "mod-s3-role-policy" {
 
   role = aws_iam_role.mod.id
 }
-
