@@ -7,7 +7,7 @@ locals {
   port                        = local.is_postgres ? 5432 : 3306
   sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   subnet_group_name           = var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"
-  table_xi_office_cidr_block  = "199.182.213.26/32"
+  txi_cidr_blocks             = ["199.182.213.26/32"]
 
   major_engine_version = join(
     ".",
@@ -75,7 +75,7 @@ resource "aws_security_group" "sg_on_rds_instance" {
   vpc_id      = var.vpc_id
 
   ingress {
-    cidr_blocks     = var.expose_to_txi_office ? concat([local.table_xi_office_cidr_block], var.sg_cidr_blocks) : var.sg_cidr_blocks
+    cidr_blocks     = var.expose_to_txi_office ? concat(local.txi_cidr_blocks, var.sg_cidr_blocks) : var.sg_cidr_blocks
     from_port       = local.port
     protocol        = "tcp"
     security_groups = var.security_groups_for_ingress
