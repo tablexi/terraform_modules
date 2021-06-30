@@ -7,7 +7,7 @@ locals {
   port                        = local.is_postgres ? 5432 : 3306
   sg_on_rds_instance_name     = "rds-${var.name}_${var.env}-${local.engine_nickname}"
   subnet_group_name           = var.subnet_group_name != "" ? var.subnet_group_name : "${var.name}-${var.env}-${local.engine_nickname}-sg"
-  txi_cidr_blocks             = ["199.182.213.26/32"]
+  txi_cidr_blocks             = ["199.182.213.26/32", "66.115.191.74/32"]
 
   major_engine_version = join(
     ".",
