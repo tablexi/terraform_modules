@@ -6,8 +6,9 @@ variable "bucket_name" {
   description = "S3 bucket name"
 }
 
-variable "domain" {
-  description = "Vanity subdomain for cloudfront distribution"
+variable "domains" {
+  description = "Vanity subdomains for cloudfront distribution"
+  type        = list(string)
 }
 
 variable "index_document" {
