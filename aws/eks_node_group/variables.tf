@@ -52,5 +52,5 @@ variable "instance_types" {
 
 variable "ami_type" {
   description = "(Optional) Type of Amazon Machine Image (AMI) associated with the EKS Node Group. Defaults to AL2_x86_64. Valid values: AL2_x86_64, AL2_x86_64_GPU, AL2_ARM_64, CUSTOM."
-  default = "AL2_x86_64"
+  default     = "AL2_x86_64"
 }
