@@ -37,3 +37,15 @@ output "elastic_ip" {
 output "cluster_autoscaler_role_arn" {
   value = var.uses_cluster_autoscaler ? aws_iam_role.cluster-autoscaler[0].arn : null
 }
+
+output "uses_cluster_autoscaler" {
+  value = var.uses_cluster_autoscaler
+}
+
+output "tags" {
+  value = aws_eks_cluster.main.tags
+}
+
+output "name" {
+  value = aws_eks_cluster.main.name
+}
