@@ -122,6 +122,7 @@ resource "aws_eks_cluster" "main" {
 }
 
 data "aws_iam_policy_document" "nodes_assume_role_policy" {
+  count   = var.create_nodes ? 1 : 0
   version = "2012-10-17"
 
   statement {
@@ -137,29 +138,34 @@ data "aws_iam_policy_document" "nodes_assume_role_policy" {
 }
 
 resource "aws_iam_role" "nodes" {
+  count              = var.create_nodes ? 1 : 0
   name               = "${var.name}-nodes"
-  assume_role_policy = data.aws_iam_policy_document.nodes_assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.nodes_assume_role_policy[0].json
 }
 
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEKSWorkerNodePolicy" {
+  count      = var.create_nodes ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.nodes.name
+  role       = aws_iam_role.nodes[0].name
 }
 
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEKS_CNI_Policy" {
+  count      = var.create_nodes ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.nodes.name
+  role       = aws_iam_role.nodes[0].name
 }
 
 resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadOnly" {
+  count      = var.create_nodes ? 1 : 0
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.nodes.name
+  role       = aws_iam_role.nodes[0].name
 }
 
 # Update the node_group name as part of an upgrade to a desctructive change.
 # This will allow us to create a new node group with the changes before destroying the old node_group
 # by giving each node group a unique name.
 resource "random_id" "node-group-name" {
+  count  = var.create_nodes ? 1 : 0
   prefix = "default-"
   keepers = {
     capacity_type  = var.capacity_type
@@ -171,12 +177,13 @@ resource "random_id" "node-group-name" {
 }
 
 resource "aws_eks_node_group" "default" {
+  count           = var.create_nodes ? 1 : 0
   cluster_name    = var.name
   capacity_type   = var.capacity_type
   instance_types  = var.instance_types
   disk_size       = var.disk_size
-  node_group_name = random_id.node-group-name.b64_url
-  node_role_arn   = aws_iam_role.nodes.arn
+  node_group_name = random_id.node-group-name[0].b64_url
+  node_role_arn   = aws_iam_role.nodes[0].arn
   tags            = local.node_group_tags
 
   remote_access {
