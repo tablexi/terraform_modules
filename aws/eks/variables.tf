@@ -82,3 +82,8 @@ variable "tags" {
   description = "(Optional) A mapping of tags to assign to the resources"
   type        = map(string)
 }
+
+variable "create_nodes" {
+  description = "(Optional) Create a node group for the EKS cluster. Defaults to true."
+  default     = true
+}

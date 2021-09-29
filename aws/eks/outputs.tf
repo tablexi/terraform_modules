@@ -15,7 +15,7 @@ output "main_security_group_id" {
 }
 
 output "node_instance_role" {
-  value = aws_iam_role.nodes.arn
+  value = aws_iam_role.nodes[0].arn
 }
 
 output "oidc_provider" {
