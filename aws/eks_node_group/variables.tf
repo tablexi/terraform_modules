@@ -12,8 +12,8 @@ variable "subnet_ids" {
   type        = list(string)
 }
 
-variable "node_iam_role_arn" {
-  description = "(Required) The arn for the role to be associated with the nodes"
+variable "node_iam_role" {
+  description = "(Required) The role to be associated with the nodes"
 }
 
 variable "min_size" {

@@ -16,7 +16,7 @@ resource "aws_eks_node_group" "nodes" {
   disk_size              = var.disk_size
   instance_types         = var.instance_types
   node_group_name_prefix = var.node_group_name_prefix
-  node_role_arn          = var.node_iam_role_arn
+  node_role_arn          = var.node_iam_role.arn
   tags                   = local.node_group_tags
 
   remote_access {
@@ -35,6 +35,7 @@ resource "aws_eks_node_group" "nodes" {
   # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
   depends_on = [
     var.cluster,
+    var.node_iam_role,
   ]
 
   # Do not detect Terraform drift for the desired size, so that the node group’s
