@@ -38,6 +38,7 @@ resource "aws_db_subnet_group" "mod" {
 
 resource "aws_db_instance" "mod" {
   allocated_storage           = var.storage
+  max_allocated_storage       = var.max_allocated_storage
   allow_major_version_upgrade = true
   apply_immediately           = true
   auto_minor_version_upgrade  = var.auto_minor_version_upgrade
