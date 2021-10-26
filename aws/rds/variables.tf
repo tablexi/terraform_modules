@@ -98,6 +98,7 @@ variable "storage" {
 variable "max_allocated_storage" {
   description = "Maximum Volume storage size for the RDS instance in gigabytes. Setting this will enable autoscaling of storage"
   type        = number
+  default     = null
 }
 
 variable "storage_encrypted" {
