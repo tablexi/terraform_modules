@@ -37,3 +37,9 @@ variable "cors_rule" {
     max_age_seconds = 3000
   }]
 }
+
+variable "versioning" {
+  description = "Enables versioning in the s3 bucket"
+  type        = bool
+  default     = false
+}

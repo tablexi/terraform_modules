@@ -2,6 +2,10 @@ resource "aws_s3_bucket" "mod" {
   bucket = var.bucket_name
   acl    = "public-read"
 
+  versioning {
+    enabled = var.versioning
+  }
+
   policy = jsonencode(
     {
       Id = "bucket_policy_site"
