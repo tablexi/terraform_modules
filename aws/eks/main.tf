@@ -179,7 +179,6 @@ resource "aws_eks_node_group" "default" {
   disk_size       = var.disk_size
   node_group_name = random_id.node-group-name[0].b64_url
   node_role_arn   = aws_iam_role.nodes.arn
-  tags            = local.node_group_tags
 
   remote_access {
     ec2_ssh_key = var.ec2_ssh_key
@@ -207,6 +206,26 @@ resource "aws_eks_node_group" "default" {
   lifecycle {
     ignore_changes        = [scaling_config[0].desired_size]
     create_before_destroy = true
+  }
+}
+
+resource "aws_autoscaling_group_tag" "default" {
+  for_each = toset(
+    [for asg in flatten(
+      [for resources in aws_eks_node_group.default.resources : resources.autoscaling_groups]
+    ) : asg.name]
+  )
+
+  autoscaling_group_name = each.value
+
+  dynamic "tag" {
+    for_each = local.node_group_tags
+
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
   }
 }
 
