@@ -17,7 +17,6 @@ resource "aws_eks_node_group" "nodes" {
   instance_types         = var.instance_types
   node_group_name_prefix = var.node_group_name_prefix
   node_role_arn          = var.node_iam_role.arn
-  tags                   = local.node_group_tags
 
   remote_access {
     ec2_ssh_key = var.ec2_ssh_key
@@ -42,5 +41,25 @@ resource "aws_eks_node_group" "nodes" {
   # size can change outside of Terraform as necessary.
   lifecycle {
     ignore_changes = [scaling_config[0].desired_size]
+  }
+}
+
+resource "aws_autoscaling_group_tag" "nodes" {
+  for_each = toset(
+    [for asg in flatten(
+      [for resources in aws_eks_node_group.nodes.*.resources : resources.autoscaling_groups]
+    ) : asg.name]
+  )
+
+  autoscaling_group_name = each.value
+
+  dynamic "tag" {
+    for_each = local.node_group_tags
+
+    content {
+      key                 = tag.key
+      value               = tag.value
+      propagate_at_launch = true
+    }
   }
 }
