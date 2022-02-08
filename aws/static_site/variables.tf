@@ -6,8 +6,9 @@ variable "bucket_name" {
   description = "S3 bucket name"
 }
 
-variable "domain" {
-  description = "Vanity subdomain for cloudfront distribution"
+variable "domains" {
+  description = "Vanity subdomains for cloudfront distribution"
+  type        = list(string)
 }
 
 variable "index_document" {
@@ -35,4 +36,10 @@ variable "cors_rule" {
     allowed_origins = ["*"]
     max_age_seconds = 3000
   }]
+}
+
+variable "versioning" {
+  description = "Enables versioning in the s3 bucket"
+  type        = bool
+  default     = false
 }

@@ -14,8 +14,8 @@ output "main_security_group_id" {
   value = aws_security_group.main.id
 }
 
-output "node_instance_role" {
-  value = aws_iam_role.nodes.arn
+output "node_iam_role" {
+  value = aws_iam_role.nodes
 }
 
 output "cluster_security_group_id" {
@@ -44,4 +44,16 @@ output "vpc" {
 
 output "cluster_autoscaler_role_arn" {
   value = var.uses_cluster_autoscaler ? aws_iam_role.cluster-autoscaler[0].arn : null
+}
+
+output "uses_cluster_autoscaler" {
+  value = var.uses_cluster_autoscaler
+}
+
+output "tags" {
+  value = aws_eks_cluster.main.tags
+}
+
+output "name" {
+  value = aws_eks_cluster.main.name
 }

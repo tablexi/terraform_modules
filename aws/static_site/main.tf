@@ -2,6 +2,10 @@ resource "aws_s3_bucket" "mod" {
   bucket = var.bucket_name
   acl    = "public-read"
 
+  versioning {
+    enabled = var.versioning
+  }
+
   policy = jsonencode(
     {
       Id = "bucket_policy_site"
@@ -39,7 +43,7 @@ resource "aws_s3_bucket" "mod" {
 }
 
 locals {
-  s3_origin_id = "S3-${var.domain}"
+  s3_origin_id = "S3-${element(var.domains, 0)}"
 }
 
 resource "aws_cloudfront_distribution" "mod" {
@@ -48,7 +52,7 @@ resource "aws_cloudfront_distribution" "mod" {
     origin_id   = local.s3_origin_id
   }
 
-  aliases = [var.domain]
+  aliases = var.domains
 
   enabled             = true
   is_ipv6_enabled     = true
