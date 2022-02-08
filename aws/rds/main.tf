@@ -50,6 +50,7 @@ resource "aws_db_instance" "mod" {
   iops                        = var.iops
   instance_class              = var.node_type
   kms_key_id                  = var.kms_key_id
+  max_allocated_storage       = var.max_allocated_storage
   monitoring_interval         = var.monitoring_interval
   monitoring_role_arn         = var.monitoring_interval == 0 ? "" : aws_iam_role.rds_enhanced_monitoring[0].arn
   multi_az                    = var.multi_az

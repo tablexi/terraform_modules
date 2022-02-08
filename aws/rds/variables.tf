@@ -41,6 +41,12 @@ variable "kms_key_id" {
   default     = ""
 }
 
+variable "max_allocated_storage" {
+  description = "To enable storage autoscaling, you need to set this value to the upper limit of storage that RDS can automatically scale to. Must be greater then or equal to storage value." 
+  default = 0
+  type = number
+}
+
 variable "monitoring_interval" {
   default     = 60
   description = "(Optional) The interval, in seconds, between points when Enhanced Monitoring metrics are collected for the DB instance. To disable collecting Enhanced Monitoring metrics, specify 0. The default is 60. Valid Values: 0, 1, 5, 10, 15, 30, 60."
