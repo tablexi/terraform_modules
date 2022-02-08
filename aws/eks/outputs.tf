@@ -18,6 +18,10 @@ output "node_iam_role" {
   value = aws_iam_role.nodes
 }
 
+output "cluster_security_group_id" {
+  value = aws_eks_cluster.master.vpc_config[0].cluster_security_group_id
+}
+
 output "oidc_provider" {
   value = aws_iam_openid_connect_provider.default.arn
 }
@@ -32,6 +36,10 @@ output "eks-vpc" {
 
 output "elastic_ip" {
   value = var.uses_nat_gateway ? module.eks-vpc-nat-gateway[0].elastic_ip : null
+}
+
+output "vpc" {
+  value = module.eks-vpc
 }
 
 output "cluster_autoscaler_role_arn" {
