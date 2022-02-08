@@ -42,9 +42,9 @@ variable "kms_key_id" {
 }
 
 variable "max_allocated_storage" {
-  description = "To enable storage autoscaling, you need to set this value to the upper limit of storage that RDS can automatically scale to. Must be greater then or equal to storage value." 
-  default = 0
-  type = number
+  description = "To enable storage autoscaling, you need to set this value to the upper limit of storage that RDS can automatically scale to. Must be greater then or equal to storage value."
+  default     = 0
+  type        = number
 }
 
 variable "monitoring_interval" {
