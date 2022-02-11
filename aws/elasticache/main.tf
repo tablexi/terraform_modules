@@ -7,7 +7,7 @@ locals {
   family                        = "${var.engine}${local.version_major_minor_only}"
   parameter_group_name          = var.parameter_group_name != "" ? var.parameter_group_name : "${local.cluster_name}-params${replace(local.version_major_minor_only, ".", "")}"
   port                          = var.port != "" ? var.port : var.engine == "redis" ? "6379" : "11211"
-  elasticache_replication_group = var.force_replication_group || var.num_nodes != 1
+  elasticache_replication_group = var.force_replication_group || (var.num_nodes != 1 && var.engine == "redis")
   cluster_tags = merge(
     {
       "Environment" = var.env
@@ -21,7 +21,7 @@ resource "aws_elasticache_cluster" "mod" {
   apply_immediately    = true
   count                = local.elasticache_replication_group ? 0 : 1
   cluster_id           = local.cluster_name
-  num_cache_nodes      = 1
+  num_cache_nodes      = var.engine == "redis" ? 1 : var.num_nodes
   engine               = var.engine
   engine_version       = var.engine_version
   maintenance_window   = var.maintenance_window
