@@ -94,7 +94,7 @@ variable "addons" {
   type        = list(string)
 }
 
-variable "addon_resolve_conflict" {
+variable "addon_resolve_conflicts" {
   description = "EKS addon conflict resolution NONE|OVERWRITE"
   default     = "OVERWRITE"
   type        = string
