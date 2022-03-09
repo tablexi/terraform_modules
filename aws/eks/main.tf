@@ -123,7 +123,7 @@ resource "aws_eks_cluster" "main" {
 
 resource "aws_eks_addon" "main" {
   for_each         = toset(var.addons)
-  name             = aws_eks_cluster.main.name
+  cluster_name     = aws_eks_cluster.main.name
   addon_name       = each.key
   resolve_conflicts = var.addon_resolve_conflicts
 }
