@@ -87,3 +87,15 @@ variable "create_nodes" {
   description = "(Optional) Create a node group for the EKS cluster. Defaults to true."
   default     = true
 }
+
+variable "addons" {
+  description = "(Optional) List of EKS addons to manage"
+  default = []
+  type = list
+}
+
+variable "addon_resolve_conflict" {
+  description = "EKS addon conflict resolution NONE|OVERWRITE"
+  default = "OVERWRITE"
+  type = string
+}
