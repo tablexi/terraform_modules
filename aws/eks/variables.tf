@@ -91,7 +91,7 @@ variable "create_nodes" {
 variable "addons" {
   description = "(Optional) List of EKS addons to manage"
   default     = []
-  type        = list
+  type        = list(string)
 }
 
 variable "addon_resolve_conflict" {
