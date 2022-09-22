@@ -1,3 +1,7 @@
+output "bucket_id" {
+  value = aws_s3_bucket.mod.id
+}
+
 output "website_domain" {
   value = aws_s3_bucket.mod.website_domain
 }
