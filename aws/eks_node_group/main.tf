@@ -19,8 +19,13 @@ resource "aws_eks_node_group" "nodes" {
   node_role_arn          = var.node_iam_role.arn
   tags                   = local.node_group_tags
 
-  remote_access {
-    ec2_ssh_key = var.ec2_ssh_key
+  dynamic "ec2_ssh_key" {
+    for_each = var.ec2_ssh_key
+    content {
+      remote_access = {
+        ec2_ssh_key = var.ec2_ssh_key
+      }
+    }
   }
 
   scaling_config {
