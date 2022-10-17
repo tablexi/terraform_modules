@@ -22,7 +22,7 @@ resource "aws_eks_node_group" "nodes" {
   dynamic "remote_access" {
     for_each = [var.ec2_ssh_key]
     content {
-      ec2_ssh_key = var.ec2_ssh_key
+      ec2_ssh_key = remote_access.value
     }
   }
 
