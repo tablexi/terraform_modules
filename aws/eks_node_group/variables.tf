@@ -34,6 +34,7 @@ variable "max_size" {
 variable "ec2_ssh_key" {
   description = "(Optional) EC2 Key Pair name that provides access for SSH communication with the worker nodes in the EKS Node Group."
   type        = string
+  default     = null
 }
 
 variable "disk_size" {
