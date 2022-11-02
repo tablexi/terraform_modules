@@ -66,7 +66,7 @@ resource "aws_elasticache_parameter_group" "mod" {
     for_each = var.parameters
     content {
       name  = parameter.key
-      value = paramter.value
+      value = parameter.value
     }
   }
 
