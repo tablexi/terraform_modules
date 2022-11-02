@@ -62,6 +62,14 @@ resource "aws_elasticache_parameter_group" "mod" {
   family      = local.family
   description = "${var.name} ${var.env} env ${var.engine} cluster param group"
 
+  dynamic "parameter" {
+    for_each = var.parameters
+    content {
+      name  = parameter.key
+      value = parameter.value
+    }
+  }
+
   lifecycle {
     create_before_destroy = true
   }
@@ -107,4 +115,3 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
     create_before_destroy = true
   }
 }
-
