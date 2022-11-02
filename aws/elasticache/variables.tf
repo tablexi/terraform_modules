@@ -53,6 +53,12 @@ variable "parameter_group_name" {
   default     = ""
 }
 
+variable "parameters" {
+  description = "map of parameters (name = value) to set"
+  default     = {}
+  type        = map(string)
+}
+
 variable "port" {
   default = ""
 }
@@ -78,4 +84,3 @@ variable "transit_encryption_enabled" {
 
 variable "vpc_id" {
 }
-
