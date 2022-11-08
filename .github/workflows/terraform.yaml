@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: hashicorp/terraform:0.14.7
+      image: hashicorp/terraform:1.0.10
 
     steps:
       - uses: actions/checkout@v1
