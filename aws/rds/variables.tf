@@ -71,6 +71,11 @@ variable "parameter_group_name" {
   default     = ""
 }
 
+variable "performance_insights_enabled" {
+  description = "Specifies whether Performance Insights are enabled. Defaults to false."
+  default     = false
+}
+
 variable "publicly_accessible" {
   description = "Bool to control if instance is publicly accessible."
   default     = true
