@@ -23,6 +23,12 @@ variable "iops" {
   default     = 0
 }
 
+variable "max_allocated_storage" {
+  description = "To enable storage autoscaling, you need to set this value to the upper limit of storage that RDS can automatically scale to. Must be greater then or equal to allocated_storage value."
+  default     = 0
+  type        = number
+}
+
 variable "multi_az" {
   description = "AWS RDS automatically creates a primary DB Instance and synchronously replicates the data to a standby instance in a different Availability Zone."
   default     = false
