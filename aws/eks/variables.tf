@@ -94,6 +94,12 @@ variable "addons" {
   type        = list(string)
 }
 
+variable "addons_full" {
+  description = "(Optional) List of EKS addon objects with all configurations"
+  default     = []
+  type        = list(object())
+}
+
 variable "addon_resolve_conflicts" {
   description = "EKS addon conflict resolution NONE|OVERWRITE"
   default     = "OVERWRITE"
