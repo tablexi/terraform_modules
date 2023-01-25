@@ -96,8 +96,8 @@ variable "addons" {
 
 variable "addons_full" {
   description = "(Optional) List of EKS addon objects with all configurations"
-  default     = []
-  type        = list(object())
+  default     = null
+  type        = map(map(string))
 }
 
 variable "addon_resolve_conflicts" {

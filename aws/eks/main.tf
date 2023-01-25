@@ -122,21 +122,20 @@ resource "aws_eks_cluster" "main" {
 }
 
 locals {
-  addons = concat([
+  addons = merge({
     for addon_name in var.addons:
-      { name = addon_name }
-  ],
-  var.addons_full,
+      addon_name => {}
+  },
+  coalesce(var.addons_full, {}),
   )
 }
 
 resource "aws_eks_addon" "main" {
-  for_each                 = toset(local.addons)
+  for_each                 = local.addons
   cluster_name             = aws_eks_cluster.main.name
-  addon_name               = each.value.name
-  resolve_conflicts        = lookup(each.value, 'resolve_conflicts', var.addon_resolve_conflicts)
-  preserve                 = lookup(each.value, 'preserve', false)
-  service_account_role_arn = lookup(each.value, 'service_account_role_arn', null)
+  addon_name               = each.key
+  resolve_conflicts        = lookup(each.value, "resolve_conflicts", var.addon_resolve_conflicts)
+  service_account_role_arn = lookup(each.value, "service_account_role_arn", null)
 }
 
 data "aws_iam_policy_document" "nodes_assume_role_policy" {
