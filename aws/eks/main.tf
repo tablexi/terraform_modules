@@ -123,10 +123,10 @@ resource "aws_eks_cluster" "main" {
 
 locals {
   addons = merge({
-    for addon_name in var.addons:
-      addon_name => {}
-  },
-  coalesce(var.addons_full, {}),
+    for addon_name in var.addons :
+    addon_name => {}
+    },
+    coalesce(var.addons_full, {}),
   )
 }
 
