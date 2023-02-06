@@ -53,3 +53,7 @@ output "tags" {
 output "name" {
   value = aws_eks_cluster.main.name
 }
+
+output "node_role_arn" {
+  value = aws_iam_role.nodes.arn
+}
