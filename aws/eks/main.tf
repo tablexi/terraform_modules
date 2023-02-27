@@ -3,7 +3,7 @@ locals {
   tags              = merge({ Name = var.name, eks_cluster_name = var.name }, var.tags)
 
   subnet_tags = merge(local.tags, {
-    (local.elb_discovery_tag)           = true,
+    (local.elb_discovery_tag)           = 1,
     "kubernetes.io/cluster/${var.name}" = "shared"
   })
 
