@@ -17,10 +17,12 @@ resource "aws_s3_bucket" "logs" {
 
   tags = var.tags
 
-  rule {
-    bucket_key_enabled = false
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+  server_side_encryption_configuration {
+    rule {
+      bucket_key_enabled = false
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
     }
   }
 }
@@ -37,10 +39,12 @@ resource "aws_s3_bucket" "mod" {
     target_prefix = var.name
   }
 
-  rule {
-    bucket_key_enabled = false
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+  server_side_encryption_configuration {
+    rule {
+      bucket_key_enabled = false
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
     }
   }
 }
