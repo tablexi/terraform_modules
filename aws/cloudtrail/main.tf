@@ -16,6 +16,13 @@ resource "aws_s3_bucket" "logs" {
   acl           = "log-delivery-write"
 
   tags = var.tags
+
+  rule {
+    bucket_key_enabled = false
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
 }
 
 resource "aws_s3_bucket" "mod" {
@@ -28,6 +35,13 @@ resource "aws_s3_bucket" "mod" {
   logging {
     target_bucket = aws_s3_bucket.logs.id
     target_prefix = var.name
+  }
+
+  rule {
+    bucket_key_enabled = false
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
   }
 }
 
