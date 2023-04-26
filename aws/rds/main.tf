@@ -68,12 +68,6 @@ resource "aws_db_instance" "mod" {
     var.vpc_security_group_ids,
     [aws_security_group.sg_on_rds_instance.id],
   )
-
-  lifecycle {
-    ignore_changes = [
-      latest_restorable_time
-    ]
-  }
 }
 
 resource "aws_security_group" "sg_on_rds_instance" {
