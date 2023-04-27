@@ -96,11 +96,6 @@ variable "skip_final_snapshot" {
   default     = false
 }
 
-variable "source_db" {
-  description = "recplication source db"
-  default     = ""
-}
-
 variable "storage" {
   description = "Volume storage size for the RDS instance in gigabytes."
   default     = 20

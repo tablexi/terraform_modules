@@ -42,7 +42,7 @@ resource "aws_db_instance" "mod" {
   apply_immediately            = true
   auto_minor_version_upgrade   = var.auto_minor_version_upgrade
   backup_retention_period      = var.backup_retention_period
-  db_subnet_group_name         = var.source_db == "" ? local.subnet_group_name : ""
+  db_subnet_group_name         = local.subnet_group_name
   engine                       = var.engine
   engine_version               = var.engine_version
   final_snapshot_identifier    = "${var.name}-${var.env}-${var.engine}-final-snapshot"
@@ -58,7 +58,6 @@ resource "aws_db_instance" "mod" {
   password                     = "nopassword"
   performance_insights_enabled = var.performance_insights_enabled
   publicly_accessible          = var.publicly_accessible
-  replicate_source_db          = var.source_db
   skip_final_snapshot          = var.skip_final_snapshot
   storage_encrypted            = var.storage_encrypted
   storage_type                 = var.storage_type
@@ -69,12 +68,6 @@ resource "aws_db_instance" "mod" {
     var.vpc_security_group_ids,
     [aws_security_group.sg_on_rds_instance.id],
   )
-
-  lifecycle {
-    ignore_changes = [
-      latest_restorable_time
-    ]
-  }
 }
 
 resource "aws_security_group" "sg_on_rds_instance" {
