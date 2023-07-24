@@ -27,6 +27,7 @@ resource "aws_elasticache_cluster" "mod" {
   maintenance_window   = var.maintenance_window
   node_type            = var.node_type
   port                 = local.port
+  provider             = var.provider
   parameter_group_name = local.parameter_group_name
   security_group_ids   = [aws_security_group.sg_on_elasticache_instance.id]
   subnet_group_name    = aws_elasticache_subnet_group.mod.name
@@ -47,6 +48,7 @@ resource "aws_elasticache_replication_group" "mod" {
   number_cache_clusters         = var.num_nodes
   parameter_group_name          = aws_elasticache_parameter_group.mod[0].id
   port                          = local.port
+  provider                      = var.provider
   replication_group_description = "${var.name} ${var.env} ${var.engine} instance"
   replication_group_id          = local.cluster_name
   security_group_ids            = [aws_security_group.sg_on_elasticache_instance.id]
@@ -61,6 +63,7 @@ resource "aws_elasticache_parameter_group" "mod" {
   name        = local.parameter_group_name
   family      = local.family
   description = "${var.name} ${var.env} env ${var.engine} cluster param group"
+  provider    = var.provider
 
   dynamic "parameter" {
     for_each = var.parameters
@@ -79,6 +82,7 @@ resource "aws_elasticache_subnet_group" "mod" {
   name        = "${local.cluster_name}-${var.engine}-subnet"
   description = "${local.cluster_name}-${var.engine}-subnet"
   subnet_ids  = var.subnets
+  provider    = var.provider
 
   lifecycle {
     create_before_destroy = true
@@ -89,6 +93,7 @@ resource "aws_security_group" "sg_on_elasticache_instance" {
   name        = "${var.engine}-${var.name}_${var.env}"
   description = "${var.engine} to ${var.name}_${var.env}"
   vpc_id      = var.vpc_id
+  provider    = var.provider
 
   ingress {
     from_port       = local.port

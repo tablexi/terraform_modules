@@ -63,6 +63,10 @@ variable "port" {
   default = ""
 }
 
+variable "provider" {
+  default = ""
+}
+
 variable "security_groups_for_ingress" {
   description = "Security groups which should be allowed ingress on the ElastiCache instance."
   default     = []
