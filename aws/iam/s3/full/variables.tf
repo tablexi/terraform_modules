@@ -18,3 +18,7 @@ variable "roles" {
   default = []
 }
 
+variable "groups" {
+  type    = list(string)
+  default = []
+}
