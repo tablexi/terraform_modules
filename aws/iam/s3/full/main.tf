@@ -30,5 +30,6 @@ resource "aws_iam_policy_attachment" "mod" {
   name       = "s3-${var.name}-${var.env}-access"
   users      = var.users
   roles      = var.roles
+  groups     = var.groups
   policy_arn = aws_iam_policy.mod.arn
 }
