@@ -266,6 +266,8 @@ data "aws_iam_policy_document" "cluster-autoscaler-trust-relationship" {
   }
 }
 
+# Recommended Policy
+# https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md#full-cluster-autoscaler-features-policy-recommended
 data "aws_iam_policy_document" "cluster-autoscaler" {
   version = "2012-10-17"
 
@@ -274,10 +276,15 @@ data "aws_iam_policy_document" "cluster-autoscaler" {
       "autoscaling:DescribeAutoScalingGroups",
       "autoscaling:DescribeAutoScalingInstances",
       "autoscaling:DescribeLaunchConfigurations",
+      "autoscaling:DescribeScalingActivities",
       "autoscaling:DescribeTags",
+      "ec2:DescribeInstanceTypes",
+      "ec2:DescribeLaunchTemplateVersions",
       "autoscaling:SetDesiredCapacity",
       "autoscaling:TerminateInstanceInAutoScalingGroup",
-      "ec2:DescribeLaunchTemplateVersions",
+      "ec2:DescribeImages",
+      "ec2:GetInstanceTypesFromInstanceRequirements",
+      "eks:DescribeNodegroup"
     ]
     effect    = "Allow"
     resources = ["*"]
